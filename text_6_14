@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+class Data
+{
+	friend ostream& operator<<(ostream& out, const Data& D2);
+	friend istream& operator>>(istream& in, Data& D2);
+public:
+	Data(int year = 2025, int month = 6, int day = 14)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	bool operator>(const Data& D2)const
+	{
+		if (_year > D2._year)
+		{
+			return true;
+		}
+		else if (_year == D2._year)
+		{
+			if (_month > D2._month)
+			{
+				return true;
+			}
+			else if (_month == D2._month)
+			{
+				if (_day > D2._day)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool operator==(const Data& D2)const
+	{
+		return _year == D2._year
+			&& _month == D2._month
+			&& _day == D2._day;
+	}
+	bool operator!=(const Data& D2)const
+	{
+		return !(*this == D2);
+	}
+	bool operator>=(const Data& D2)const
+	{
+		return *this == D2 || *this > D2;
+	}
+	bool operator<(const Data& D2)const
+	{
+		return !(*this >= D2);
+	}
+	int GetMonthDay(int year, int month)
+	{
+		int day[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+		if (month == 2 && (year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+		{
+			return 29;
+		}
+		return day[month];
+	}
+	Data& operator+=(int day)
+	{
+		_day += day;
+		while (day > GetMonthDay(_year, _month))
+		{
+			_day -= GetMonthDay(_year, _month);
+			_month++;
+			if (_month == 13)
+			{
+				_month = 1;
+				_year++;
+			}
+		}
+		return *this;
+	}
+	Data& operator++(int)
+	{
+		*this += 1;
+		return *this;
+	}
+	int operator-(const Data& D2)
+	{
+		Data max = *this;
+		Data min = D2;
+		int flag = 1;
+		if (min > max)
+		{
+			max = D2;
+			min = *this;
+			flag = -1;
+		}
+		int n = 0;
+		while (min != max)
+		{
+			n++;
+			min++;
+		}
+		return flag * n;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+
+};
+ostream& operator<<(ostream& out ,const Data& D2)
+{
+	out << D2._year <<"年" <<D2._month <<"月"<< D2._day <<"日"<< endl;
+	return out;
+}
+istream& operator>>(istream& in, Data& D2)
+{
+	cout << "请输入年月日";
+	in >> D2._year>>D2._month>>D2._day;
+	return in;
+}
+int main()
+{
+	Data D1(2025, 6, 17);
+	Data D2(2025, 6, 23);
+	cin >> D1>>D2;
+	cout << D1<<D2;
+}
