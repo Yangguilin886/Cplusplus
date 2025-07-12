@@ -1,0 +1,104 @@
+#include <iostream>
+#include <iterator>
+using namespace std;
+class Data
+{
+public:
+    Data(int year, int month, int day)
+    {
+        _year = year;
+        _month = month;
+        _day = day;
+    }
+    bool operator<(const Data& D2)
+    {
+        if (_year > D2._year)
+        {
+            return false;
+        }
+        else if (_year == D2._year)
+        {
+            if (_month > D2._month)
+            {
+                return false;
+            }
+            else if (_month == D2._month)
+            {
+                if (_day >= D2._day)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+        return true;
+    }
+    int GetMonthDay(int year, int month)
+    {
+        int ret[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+        if (month == 2 && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0))
+        {
+            return 29;
+        }
+        return ret[month];
+    }
+    Data& operator+(int n)
+    {
+        _day += n;
+        if (_day > GetMonthDay(_year, _month))
+        {
+            _day -= GetMonthDay(_year, _month);
+            _month++;
+            if (_month == 13)
+            {
+                _month = 1;
+                _year++;
+            }
+        }
+        return *this;
+    }
+    int operator-(Data& D2)
+    {
+        int n = 0;
+        Data min = *this;
+        if (D2 < min)
+        {
+            min = D2;
+            while (min < *this)
+            {
+                n++;
+                min = min + 1;
+            }
+        }
+        else
+        {
+            while (min < D2)
+            {
+                n++;
+                min = min + 1;
+            }
+        }
+        return n;
+    }
+private:
+    int _year = 1;
+    int _month = 1;
+    int _day = 1;
+};
+int main()
+{
+    int n = 0, m = 0;
+    cin >> n >> m;
+    int n1 = n % 100;
+    int n2 = n % 10000;
+    n2 /= 100;
+    int n3 = n / 10000;
+    int m1 = m % 100;
+    int m2 = m % 10000;
+    m2 /= 100;
+    int m3 = m / 10000;
+    Data D1(n3, n2, n1);
+    Data D2(m3, m2, m1);
+    cout << D2 - D1+1 << endl;
+}
