@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+class A
+{
+public:
+	A(int a1=1,int a2=1)
+		:_a1(a1)
+		,_a2(a2)
+	{
+		cout << "A(a1,a2)" << endl;
+	}
+	A(const A& aa)
+		:_a1(aa._a1)
+		,_a2(aa._a2)
+	{
+		cout << "A(const A& aa)" << endl;
+	}
+	A& operator=(const A& aa)
+	{
+		cout << "(operator(const A& aa))" << endl;;
+		if (this != &aa)
+		{
+			_a1 = aa._a1;
+			_a2 = aa._a2;
+		}
+		return *this;
+	}
+	A& operator++()
+	{
+		_a1 += 1;
+		_a2 += 1;
+		return *this;
+	}
+	~A()
+	{
+		cout << "~A()"<< endl;
+	}
+	void print()
+	{
+		cout << "Fuck print->"<<_a1 <<" " << _a2 << endl;
+	}
+private:
+	int _a1=1;
+	int _a2 = 1;
+};
+A Fuck1()
+{
+	A aa;
+	return aa;
+}
+A Fuck2()
+{
+	A aa;
+	++aa;
+	return aa;
+}
+//int main()
+//{
+//	A aa1 = {1,1};
+//	Fuck1().print();
+//	Fuck2().print();
+//	return 0;
+//}
+//int main()
+//{
+//	int* ret = new int(1);
+//	int* n = new int[10];
+//	delete ret;
+//	delete[] n;
+//	int* n1 = new int(0);
+//	int* n2 = new int[10] {1, 2, 3, 4};
+//}
+struct ListNode
+{
+	int val;
+	struct ListNode* next;
+	ListNode(int n)
+		:val(n)
+		,next(nullptr)
+	{}
+};
+int main()
+{
+	A* n = new A(1);
+	A* n1 = new A[3]{ {1,1},{2,2},{3,3} };
+	A* n2 = new A[3]{ A(1,1),A(2,2),A(3,3) };
+	delete n;
+	delete[] n1;
+	ListNode* m1 = new ListNode(1);
+	ListNode* m2 = new ListNode(1);
+	ListNode* m3 = new ListNode(1);
+	ListNode* m4 = new ListNode(1);
+	m1->next = m2;
+	m2->next = m3;
+	m3->next = m4;
+}
