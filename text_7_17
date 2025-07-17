@@ -1,0 +1,43 @@
+//#include <iostream>
+//using namespace std;
+//class A
+//{
+//public:
+//	A(int a)
+//		:_a(a)
+//	{ }
+//	~A()
+//	{
+//		cout << "~A() "<< endl;
+//	}
+//private:
+//	int _a;
+//};
+//int main()
+//{
+//	A* p1 = new A(1);
+//	delete p1;
+//	A* p2 = (A*)malloc(sizeof(A));
+//	new (p2)A(1);
+//	p2->~A();
+//}
+template <class T>
+void Swap(T& a, T& b)
+{
+	T tmp = a;
+	a = b;
+	b = tmp;
+}
+template<class T1,class T2>
+void  fuck(const T1& a, const T2& b)
+{
+}
+int main()
+{
+	int a = 1, b = 2;
+	double i = 1.2, j = 3.6;
+	Swap(a, b);
+	Swap(i, j);
+	fuck(a, i);
+	fuck(b, j);
+}
