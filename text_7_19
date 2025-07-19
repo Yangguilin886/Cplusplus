@@ -1,0 +1,85 @@
+//#include <iostream>
+//using namespace std;
+//template<class T>
+//void Swap(T& a, T& b)
+//{
+//	T tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+//template<class T>
+//int ADD(const T& a, const T& b)
+//{
+//	return a + b;
+//}
+//int main()
+//{
+//	int a = 1, b = 2;
+//	double i = 1.2, j = 2.3;
+//	Swap(a, b);
+//	Swap(i, j);
+//	swap(a, b);
+//	swap(i, j);
+//	cout << ADD(a, b) << endl;
+//}
+//#include <iostream>
+//using namespace std;
+//template<class T>
+//class Stack
+//{
+//public:
+//	Stack(T n=4)
+//		:_a(new T[n])
+//		,_size(0)
+//		,_capacity(n)
+//	{ }
+//	void push(const T& x);
+//private:
+//	T* _a;
+//	size_t _size;
+//	size_t _capacity;
+//};
+//template <class T>
+//void Stack<T>::push(const T& x)
+//{
+//	if (_size == _capacity)
+//	{
+//		T* tmp = new T[_capacity * 2];
+//		memcpy(tmp, _a, sizeof(T) * _size);
+//		delete[] _a;
+//		_a = tmp;
+//		_capacity *= 2;
+//	}
+//	_a[_size] = x;
+//	_size++;
+//}
+//int main()
+//{
+//	Stack<int> p;
+//	p.push(1);
+//	p.push(2);
+//	p.push(3);
+//	p.push(4);
+//	Stack<double> p1;
+//	p1.push(1.0);
+//	p1.push(2.0);
+//	p1.push(3.0);
+//}
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+	string s1("hello world");
+	cout << s1 << endl;
+	string s2;
+	cout << s2 << endl;
+	string s3(s1, 6, 5);
+	cout << s3 << endl;
+	string s4(s1);
+	cout << s4 << endl;
+	string s5(s1, 0);
+	cout << s5 << endl;
+	string s6(5, 'x');
+	cout << s6 << endl;
+}
