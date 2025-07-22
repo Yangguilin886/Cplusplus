@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int ret[26];
+        memset(ret,0,sizeof(int)*26);
+        for(auto ch: s)
+        {
+            int m=ch-97;
+            ret[m]++;
+        }
+        int flag=0;
+        for(auto ch: s)
+        {
+            int m=ch-97;
+            if(ret[m]==1)
+            {
+                return flag;
+            }
+            flag++;
+        }
+        return -1;
+    }
+};
