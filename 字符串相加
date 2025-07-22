@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int end1=num1.size()-1,end2=num2.size()-1;
+        string sub;
+        int flag=0;
+        while(end1>=0||end2>=0)
+        {
+            int a= end1>=0? (num1[end1]-'0'):0;
+            int b= end2>=0? (num2[end2]-'0'):0;
+            end1--;
+            end2--;
+            int ret=a+b+flag;
+            flag=ret/10;
+            ret=ret%10;
+            sub+=(ret+'0');
+        }
+        if(flag>0)
+        {
+            sub+='1';
+        }
+        reverse(sub.begin(),sub.end());
+        return sub;
+    }
+};
