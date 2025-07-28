@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+void textstring()
+{
+	string s("hello");
+	s.push_back(' ');
+	s.append("world");
+	s += ("xxxxxxxxxxx");
+	cout << s << endl;
+	s.insert(0, "aaaaa ");
+	cout << s << endl;
+
+	s.insert(5, "zzzz");
+	cout << s << endl;
+
+	char ch = 'a';
+	s.insert(0, 1, ch);
+	cout << s << endl;
+
+}
+void textstring1()
+{
+	string s("hello world");
+	s.erase(0, 1);
+	cout << s << endl;
+
+	s.erase(s.begin());
+	cout << s << endl;
+
+	s.erase(--s.end());
+	cout << s << endl;
+
+	s.erase(6);
+	cout << s << endl;
+
+	string ss("hello world");
+	ss.replace(5, 1, "%%");
+	cout << ss << endl;
+
+	string sss("hello world hello xiaoyang ");
+	size_t pos = sss.find(" ");
+	while (pos != string::npos)
+	{
+		sss.replace(pos, 1, "%%");
+		pos = sss.find(" ");
+	}
+	cout << sss << endl;
+
+	string tmp;
+	for (auto ch : sss)
+	{
+		if (ch == ' ')
+		{
+			tmp += "%%";
+		}
+		else
+		{
+			tmp += ch;
+		}
+	}
+	cout << tmp << endl;
+}
+void textstring2()
+{
+	string s("text.cpp");
+	size_t pos=s.find('.');
+	string sum = s.substr(pos);
+	cout << sum << endl;
+
+	string ss("asdkjjwl uefwhkiadlwkk qiuefkb qwfilehn");
+	pos = ss.find_first_of("abs");
+	while (pos != string::npos)
+	{
+		ss[pos] = '*';
+		pos = ss.find_first_of("abs");
+	}
+	cout << ss << endl;
+
+	string sss("skjdlfuh lfwekj ufwelkhi whfle");
+	pos = sss.find_last_of("abc");
+	while (pos != string::npos)
+	{
+		sss[pos] = '*';
+		pos = sss.find_last_of("abs");
+	}
+	cout << sss << endl;
+
+}
+void textstring3()
+{
+	string s("hello");
+	string s1 = s + "world";
+	cout << s1 << endl;
+
+	string s2 = "world" + s;
+	cout << s2 << endl;
+}
+int main()
+{
+	textstring3();
+}
