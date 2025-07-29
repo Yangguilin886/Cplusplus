@@ -1,0 +1,96 @@
+       typedef char* iterator;
+
+   public:
+       void reverse(int n)
+       {
+           if (n > _capacity)
+           {
+               char* tmp = new char[n + 1];
+               strcpy(tmp, _str);
+               delete[] _str;
+               _str = tmp;
+               _capacity = n;
+           }
+       }
+       string(const char* str = "")
+       {
+           _size = strlen(str);
+           _capacity = _size;
+           _str = new char[_capacity+1];
+           strcpy(_str, str);
+       }
+
+       string(const string& s)
+       {
+           _capacity = s.capacity();
+           _str = new char[_capacity];
+           for (int i = 0; i < s.size(); i++)
+           {
+               _str += s[i];
+           }
+           _size = s.size();
+       }
+
+       string& operator=(const string& s)
+       {
+           if (_capacity < s.size())
+           {
+               reverse(s.size() < 2 * _capacity ? 2 * _capacity : s.size());
+           }
+           for (int i = 0; i < s.size(); i++)
+           {
+               _str += s[i];
+           }
+           _size = s.size();
+           return *this;
+       }
+
+       ~string()
+       {
+           delete[] _str;
+           _str = nullptr;
+           _size = _capacity = 0;
+       }
+
+       iterator begin()
+       {
+           return _str;
+       }
+
+       iterator end()
+       {
+           return _str + _size;
+       }
+
+       void push_back(char c)
+       {
+           if (_size == _capacity)
+           {
+               reverse(_capacity == 0 ? 4 : _capacity * 2);
+           }
+           _str[_size] = c;
+           _size++;
+       }
+
+       string& operator+=(char c)
+       {
+           push_back(c);
+           return *this;
+       }
+
+       void append(const char* str)
+       {
+           int n = strlen(str);
+           if (n + _size > _capacity)
+           {
+               reverse(n + _size < 2 * _capacity ? 2 * _capacity : n + _size);
+           }
+           strcpy(_str + _size, str);
+           _size = n + _size;
+       }
+
+       string& operator+=(const char* str)
+       {
+           append(str);
+           return *this;
+       }
