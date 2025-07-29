@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        size_t pos=s.find(" ");
+        int m=0;
+        int left,right;
+        while(pos!=string::npos)
+        {
+            left=m;
+            right=pos-1;
+            while(left<right)
+            {
+                swap(s[left],s[right]);
+                left++;
+                right--;
+            }
+            m=pos+1;
+            pos=s.find(" ",pos+1);
+        }
+        left=m;
+        right=s.size()-1;
+        while(left<right)
+        {
+            swap(s[left],s[right]);
+            left++;
+            right--;
+        }
+        return s;
+    }
+};
