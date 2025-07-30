@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int n=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]>='a'&&s[i]<='z')
+            {
+                s[n++]=s[i];
+            }
+            if(s[i]>='A'&&s[i]<='Z')
+            {
+                s[n++]=s[i]+32;
+            }
+            if(s[i]>=48&&s[i]<=57)
+            {
+                s[n++]=s[i];
+            }
+        }
+        int left=0,right=n-1;
+        while(left<right)
+        {
+            if(s[left]!=s[right])
+            {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
