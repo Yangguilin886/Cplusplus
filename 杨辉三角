@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ret(numRows);
+        for(size_t i=0;i<numRows;i++)
+        {
+            ret[i].resize(i+1,1);
+        }
+        for(size_t i=0;i<ret.size();i++)
+        {
+            for(size_t j=0;j<ret[i].size();j++)
+            {
+                if(j==0||j==ret[i].size()-1)
+                {
+                    continue;
+                }
+                else
+                {
+                    ret[i][j]=ret[i-1][j]+ret[i-1][j-1];
+                }
+            }
+        }
+        return ret;
+    }
+};
