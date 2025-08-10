@@ -1,0 +1,137 @@
+#include<assert.h>
+namespace man
+{
+	template<class T>
+	class vector
+	{
+	public:
+		typedef T* iterator;
+		typedef const T* const_iterator;
+		iterator begin()
+		{
+			return _start;
+		}
+		const iterator begin()const
+		{
+			return _start;
+		}
+		iterator end()
+		{
+			return _finish;
+		}
+		const iterator end()const
+		{
+			return _finish;
+		}
+		size_t capacity()
+		{
+			return _end_of_storage - _start;
+		}
+		size_t size()
+		{
+			return _finish - _start;
+		}
+		void reserve(size_t n)
+		{
+			if (n > capacity())
+			{
+				T* tmp = new T[n];
+				memcpy(tmp, _start, size()*sizeof(T));
+				size_t oldsize = size();
+				delete[] _start;
+				_start = tmp;
+				_finish = _start + oldsize;
+				_end_of_storage = _start + n;
+			}
+		}
+		void push_back(const T& x)
+		{
+			if (_end_of_storage == _finish)
+			{
+				reserve(capacity() == 0 ? 4 : capacity() * 2);
+			}
+			*_finish = x;
+			++_finish;
+		}
+		T& operator[](size_t x)
+		{
+			return _start[x];
+		}
+		const T& operator[](size_t x)const
+		{
+			return _start[x];
+		}
+		bool empty()
+		{
+			return _start == _finish;
+		}
+		void pop_back()
+		{
+			assert(empty());
+			--_finish;
+		}
+		void insert(iterator pos, const T& x)
+		{
+			size_t old_size = pos - _start;
+			if (_finish == _end_of_storage)
+			{
+				reserve(capacity() == 0 ? 4 : capacity() * 2);
+				pos = _start + old_size;
+			}
+			iterator end = _finish-1;
+			while (end >= pos)
+			{
+				*(end+1) = *end;
+				--end;
+			}
+			*pos = x;
+			++_finish;
+		}
+	private:
+		iterator _start = nullptr;
+		iterator _finish = nullptr;
+		iterator _end_of_storage = nullptr;
+	};
+	template<class T>
+	void print_vector(const vector<T>& v)
+	{
+		/*typename vector<T>::const_iterator it = v.begin();*/
+		auto it = v.begin();
+		while (it != v.end())
+		{
+			cout << *it << ' ';
+			++it;
+		}
+		cout << endl;
+		for (auto ch : v)
+		{
+			cout << ch << ' ';
+		}
+		cout << endl;
+	}
+	void text_vector1()
+	{
+		vector<int> v;
+		v.push_back(1);
+		v.push_back(2);
+		v.push_back(3);
+		v.push_back(4);
+		v.push_back(5);
+		print_vector(v);
+	}
+	void text_vector2()
+	{
+		vector<int> v;
+		v.push_back(1);
+		v.push_back(2);
+		v.push_back(3);
+		v.push_back(4);
+		v.insert(v.begin()+2, 35);
+		print_vector(v);
+		int x;
+		cin >> x;
+		auto pos = find(v.begin(), v.end(),x);
+		v.insert(pos, 100);
+		print_vector(v);
+	}
+}
