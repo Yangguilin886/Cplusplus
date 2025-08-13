@@ -1,0 +1,174 @@
+#include<iostream>
+#include<list>
+using namespace std;
+void text_list1()
+{
+	list<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(5);
+
+	list<int>::iterator it = v.begin();
+	while (it != v.end())
+	{
+		cout << *it << ' ';
+		++it;
+	}
+	cout << endl;
+
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+struct A
+{
+public:
+	A(int a1=0,int a2=0)
+		:_a1(a1)
+		,_a2(a2)
+	{ }
+private:
+	int _a1 = 0;
+	int _a2 = 0;
+};
+void text_list2()
+{
+	list<int> v;
+	v.push_back(1);
+	v.emplace_back(2);
+	v.emplace_back(3);
+	v.emplace_back(4);
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+
+	list<A> v1;
+	A a1(1, 2);
+	v1.push_back(a1);
+	v1.push_back(A(2, 5));
+	v1.emplace_back(2, 3);
+}
+void text_list3()
+{
+	list<int> v;
+	v.push_back(1);
+	v.emplace_back(2);
+	v.emplace_back(3);
+	v.emplace_back(4);
+
+	list<int>::iterator it = v.begin();
+	int x = 0;
+	cin >> x;
+	while (x--)
+	{
+		it++;
+	}
+	v.insert(it, 10);
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+
+	cin >> x;
+	it = find(v.begin(), v.end(), x);
+	if (it != v.end())
+	{
+		v.erase(it);
+	}
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+void text_list4()
+{
+	list<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(5);
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+	/*v.reverse();*/
+	reverse(v.begin(), v.end());
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+void text_list5()
+{
+	list<int> v;
+	v.push_back(1);
+	v.push_back(20);
+	v.push_back(3);
+	v.push_back(14);
+	v.push_back(5);
+	v.push_back(6);
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+
+	/*v.sort();*/
+	greater<int> gt;
+	v.sort(gt);
+	/*v.sort(greater<int>());*/
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+void text_list6()
+{
+	list<int> first;
+	first.push_back(1);
+	first.push_back(2);
+	first.push_back(3);
+
+	list<int> last;
+	last.push_back(4);
+	last.push_back(5);
+	last.push_back(6);
+
+	first.merge(last);
+	for (auto ch : first)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+void text_list7()
+{
+	list<int> v;
+	v.push_back(1);
+	v.push_back(4);
+	v.push_back(4);
+	v.push_back(4);
+	v.push_back(5);
+	v.unique();
+	for (auto ch : v)
+	{
+		cout << ch << ' ';
+	}
+	cout << endl;
+}
+int main()
+{
+	text_list7();
+}
