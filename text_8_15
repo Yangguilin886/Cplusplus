@@ -1,0 +1,235 @@
+namespace ovo
+{
+	template<class T>
+	struct list_node
+	{
+		T _data;
+		list_node<T>* next;
+		list_node<T>* prev;
+		list_node(const T& data)
+			:_data(data)
+			,next(nullptr)
+			,prev(nullptr)
+		{ }
+	};
+	template<class T,class Ref,class Ptr>
+	struct list_iterator
+	{
+		typedef list_node<T> node;
+		typedef list_iterator<T,Ref,Ptr> self;
+		node* _node;
+		list_iterator(node* node)
+			:_node(node)
+		{}
+		Ref operator*()
+		{
+			return _node->_data;
+		}
+		Ptr operator->()
+		{
+			return &_node._data;
+		}
+		self& operator++()
+		{
+			_node = _node->next;
+			return *this;
+		}
+		self& operator--()
+		{
+			_node = _node->prev;
+			return *this;
+		}
+		bool operator!=(const self& s)const
+		{
+			return _node != s._node;
+		}
+		bool operator==(const self& s)const
+		{
+			return _node == s._node;
+		}
+	};
+	template<class T>
+	class list
+	{
+		typedef list_node<T> node;
+	public:
+		typedef list_iterator<T,T&,T*> iterator;
+		typedef list_iterator<T, const T&, const T*> const_iterator;
+		void emptr()
+		{
+			_head = new node(T());
+			_head->next = _head;
+			_head->prev = _head;
+			_size = 0;
+		}
+		list()
+		{
+			emptr();
+		}
+		list(const list<T>& lt)
+		{
+			emptr();
+			for (auto e : lt)
+			{
+				push_back(e);
+			}
+		}
+		~list()
+		{
+			clear();
+			delete _head;
+			_head = nullptr;
+			_size = 0;
+		}
+		void clear()
+		{
+			auto it = begin();
+			while (it != end())
+			{
+				it=erase(it);
+			}
+		}
+		list<T>& operator=(const list<T>& lt)
+		{
+			clear();
+			for (auto e : lt)
+			{
+				push_back(e);
+			}
+			return *this;
+		}
+		void push_back(const T& x)
+		{
+			node* newnode = new node(x);
+			node* tail = _head->prev;
+			tail->next = newnode;
+			newnode->prev = tail;
+			newnode->next = _head;
+			_head->prev = newnode;
+			_size++;
+		}
+		void push_front(const T& x)
+		{
+			insert(begin(), x);
+		}
+		void pop_back()
+		{
+			erase(--end());
+		}
+		void pop_front()
+		{
+			erase(begin());
+		}
+		iterator begin()
+		{
+			iterator it = _head->next;
+			return it;
+		}
+		iterator begin()const
+		{
+			iterator it = _head->next;
+			return it;
+		}
+		iterator end()
+		{
+			return _head;
+		}
+		iterator end()const
+		{
+			return _head;
+		}
+		iterator insert(iterator pos,const T& x)
+		{
+			node* cur = pos._node;
+			node* prev = cur->prev;
+			node* newnode = new node(x);
+			prev->next = newnode;
+			newnode->prev = prev;
+			newnode->next = cur;
+			cur->prev = newnode;
+			++_size;
+			return newnode;
+		}
+		iterator erase(iterator pos)
+		{
+			node* cur = pos._node;
+			node* prev = cur->prev;
+			node* next = cur->next;
+			prev->next = next;
+			next->prev = prev;
+			delete cur;
+			--_size;
+			return next;
+		}
+		void print()
+		{
+			auto it = begin();
+			while (it != end())
+			{
+				cout << *it << " ";
+				++it;
+			}
+			cout << endl;
+		}
+	private:
+		node* _head;
+		size_t _size;
+	};
+	void text_list1()
+	{
+		list<int> lt;
+		lt.push_back(1);
+		lt.push_back(2);
+		lt.push_back(3);
+		lt.push_back(4);
+
+		list<int>::iterator it = lt.begin();
+		while (it != lt.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+	}
+	void text_list2()
+	{
+		list<int> lt;
+		lt.push_back(1);
+		lt.push_back(2);
+		lt.push_back(3);
+		lt.push_back(4);
+
+		list<int>::iterator it = lt.begin();
+		lt.insert(it, 10);
+		*it += 100;
+		it = lt.begin();
+		while (it != lt.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+	}
+	void text_list3()
+	{
+		list<int> lt;
+		lt.push_back(1);
+		lt.push_back(2);
+		lt.push_back(3);
+		lt.push_back(4);
+
+		list<int> lt1(lt);
+		lt.print();
+		lt1.print();
+
+		list<int> lt2;
+		lt2.push_back(10);
+		lt2.push_back(20);
+		lt2.push_back(30);
+		lt2.push_back(40);
+
+		lt = lt2;
+		lt.print();
+		lt2.print();
+	}
+}
