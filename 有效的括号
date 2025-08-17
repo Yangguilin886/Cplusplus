@@ -1,0 +1,57 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<int> ret;
+        string::iterator it=s.begin();
+        while(it!=s.end())
+        {
+            if(*it=='(')
+            {
+                ret.push(1);
+            }
+            if(*it==')')
+            {
+                if(!ret.empty()&&ret.top()==1)
+                {
+                    ret.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if(*it=='[')
+            {
+                ret.push(2);
+            }
+            if(*it==']')
+            {
+                if(!ret.empty()&&ret.top()==2)
+                {
+                    ret.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if(*it=='{')
+            {
+                ret.push(3);
+            }
+            if(*it=='}')
+            {
+                if(!ret.empty()&&ret.top()==3)
+                {
+                    ret.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            ++it;
+        }
+        return ret.empty();
+    }
+};
