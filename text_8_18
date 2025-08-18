@@ -1,0 +1,56 @@
+namespace ovo
+{
+	template<class T ,class Con>
+	class stack
+	{
+	public:
+		void push(const T& x)
+		{
+			_st.push_back(x);
+		}
+		void pop()
+		{
+			_st.pop_back();
+		}
+		T& top()const
+		{
+			return _st.back();
+		}
+		size_t size()
+		{
+			return _st.size();
+		}
+	private:
+		Con _st;
+	};
+}
+namespace pvp
+{
+	template<class T, class Con>
+	class queue
+	{
+	public:
+		void push(const T& x)
+		{
+			_qu.push_back(x);
+		}
+		void pop()
+		{
+			_qu.pop_front();
+		}
+		T& front()
+		{
+			return _qu.front();
+		}
+		T& back()
+		{
+			return _qu.back();
+		}
+		size_t size()
+		{
+			return _qu.size();
+		}
+	private:
+		Con _qu;
+	};
+}
