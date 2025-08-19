@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+      sort(nums.begin(),nums.end());
+      vector<int>::iterator it=nums.begin();
+      int max=0;
+      while(it!=nums.end()-1)
+      {
+        if(abs(*it-*(it+1))>max)
+        {
+            max=abs(*it-*(it+1));
+        }
+        ++it;
+      } 
+      return max;
+    }
+};
