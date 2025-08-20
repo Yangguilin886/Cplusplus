@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countSegments(string s) {
+        if(s.size()==0)
+        {
+            return 0;
+        }
+        if(s.size()==1&&s[0]!=' ')
+        {
+            return 1;
+        }
+        string::iterator it=s.begin()+1;
+        int flag=0;
+        while(it!=s.end())
+        {
+            if(*it==' '&&*(it-1)!=' ')
+            {
+                flag++;
+            }
+            if(it==s.end()-1&&*it!=' ')
+            {
+                flag++;
+            }
+            ++it;
+        }
+        return flag;
+    }
+};
