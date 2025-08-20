@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string shiftingLetters(string s, vector<int>& shifts) {
+        vector<int> ret;
+        vector<int>::iterator it=shifts.begin();
+        int max=0;
+        while(it!=shifts.end())
+        {
+            *it%=26;
+            max+=*it;
+            ++it;
+        }
+        it=shifts.begin();
+        ret.push_back(max);
+        while(it!=shifts.end()-1)
+        {
+            max-=*it;
+            ret.push_back(max);
+            ++it;
+        }
+        for(size_t i=0;i<s.size();i++)
+        {
+            int n=s[i]-'a'+ret[i];
+            n%=26;
+            s[i]='a'+n;
+        }
+        return s;
+    }
+};
