@@ -1,0 +1,13 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        vector<int>::iterator it=nums2.begin();
+        nums1.resize(m);
+        while(it!=nums2.begin()+n)
+        {
+            nums1.push_back(*it);
+            ++it;
+        }
+        sort(nums1.begin(),nums1.end());
+    }
+};
