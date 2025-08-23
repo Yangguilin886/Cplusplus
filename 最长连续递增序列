@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int findLengthOfLCIS(vector<int>& nums) {
+        int max=1;
+        vector<int>::iterator it=nums.begin()+1;
+        int n=1;
+        while(it!=nums.end())
+        {
+            if(*it>*(it-1))
+            {
+                n++;
+            }
+            else
+            {
+                if(n>max)
+                {
+                    max=n;
+                }
+                n=1;
+            }
+            ++it;
+        }
+        if(n>max)
+        {
+            max=n;
+        }
+        return max;
+    }
+};
