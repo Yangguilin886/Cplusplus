@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int calPoints(vector<string>& operations) {
+        vector<int> ret;
+        int flag=0;
+        for(auto e:operations)
+        {
+            int n=ret.size();
+            if(e=="+")
+            {
+                flag+=ret[n-1]+ret[n-2];
+                ret.push_back(ret[n-1]+ret[n-2]);
+            }
+            else if(e=="D")
+            {
+                flag+=ret[n-1]*2;
+                ret.push_back(ret[n-1]*2);
+            }
+            else if(e=="C")
+            {
+                flag-=ret[n-1];
+                ret.pop_back();
+            }
+            else
+            {
+                int m=std::stoi(e);
+                flag+=m;
+                ret.push_back(m);
+            }
+        }
+        return flag;
+    }
+};
