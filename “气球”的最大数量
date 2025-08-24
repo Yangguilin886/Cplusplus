@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int maxNumberOfBalloons(string text) {
+        vector<int> ret(5,0);
+        for(auto e:text)
+        {
+            if(e=='a')
+            {
+                ret[0]++;
+            }
+            if(e=='b')
+            {
+                ret[1]++;
+            }
+            if(e=='l')
+            {
+                ret[2]++;
+            }
+            if(e=='o')
+            {
+                ret[3]++;
+            }
+            if(e=='n')
+            {
+                ret[4]++;
+            }
+        }
+        int min=10000000;
+        if(ret[0]<min)
+        {
+            min=ret[0];
+        }
+        if(ret[1]<min)
+        {
+            min=ret[1];
+        }
+        if(ret[2]/2<min)
+        {
+            min=ret[2]/2;
+        }
+        if(ret[3]/2<min)
+        {
+            min=ret[3]/2;
+        }
+        if(ret[4]<min)
+        {
+            min=ret[4];
+        }
+        return min;
+    }
+};
