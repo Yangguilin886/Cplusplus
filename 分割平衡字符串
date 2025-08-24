@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int balancedStringSplit(string s) {
+       int left=0,right=0;
+       int n=0;
+       for(auto e:s)
+       {
+        if(e=='R')
+        {
+            right++;
+            if(left==right)
+            {
+                n++;
+            }
+        }
+        if(e=='L')
+        {
+            left++;
+            if(left==right)
+            {
+                n++;
+            }
+        }
+       } 
+       return n;
+    }
+};
