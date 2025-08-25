@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        int max=0;
+        for(auto e:nums)
+        {
+            if(e>max)
+            {
+                max=e;
+            }
+        }
+        vector<int> ret(max+1,0);
+        for(auto e:nums)
+        {
+            ret[e]++;
+        }
+        int flag=0;
+        vector<int> tmp;
+        while(k--)
+        {
+            max=0;
+            for(size_t i=0;i<ret.size();i++)
+            {
+                if(ret[i]>max)
+                {
+                    max=ret[i];
+                    flag=i;
+                }
+            }
+            tmp.push_back(flag);
+            ret[flag]=0;
+        }
+        return tmp;
+    }
+};
