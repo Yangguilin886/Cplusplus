@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        if(nums.size()==1)
+        {
+            return true;
+        }
+        vector<int> ret;
+        vector<int>::iterator it=nums.begin();
+        while(it!=nums.end()-1)
+        {
+            if(*it<*(it+1))
+            {
+                ret.push_back(-1);
+            }
+            if(*it>*(it+1))
+            {
+                ret.push_back(1);
+            }
+            ++it;
+        }
+        if(ret.begin()==ret.end())
+        {
+            return true;
+        }
+        int flag=1;
+        it=ret.begin();
+        while(it!=ret.end()-1)
+        {
+            if(*it!=*(it+1))
+            {
+                flag=0;
+                break;
+            }
+            ++it;
+        }
+        return flag;
+    }
+};
