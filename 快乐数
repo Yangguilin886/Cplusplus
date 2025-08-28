@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int numsof(int n)
+    {
+        int flag=0;
+        while(n>0)
+        {
+            flag+=(n%10)*(n%10);
+            n/=10;
+        }
+        return flag;
+    }
+    bool isHappy(int n) {
+        int fast=numsof(n),slow=n;
+        while(fast!=slow)
+        {
+            fast=numsof(fast);
+            fast=numsof(fast);
+            slow=numsof(slow);
+        }
+        if(fast==1)
+        {
+            return true;
+        }
+        return false;
+    }
+};
