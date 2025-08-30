@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<string> findRelativeRanks(vector<int>& score) {
+        vector<int> ret;
+        for(auto e:score)
+        {
+            ret.push_back(e);
+        }
+        sort(ret.begin(),ret.end(),greater<int>());
+        vector<string> tmp;
+        for(auto e: score)
+        {
+            size_t i=0;
+            for(i=0;i<ret.size();i++)
+            {
+                if(e==ret[i])
+                {
+                    break;
+                }
+            }
+            if(i==0)
+            {
+                tmp.push_back("Gold Medal");
+            }
+            else if(i==1)
+            {
+                tmp.push_back("Silver Medal");
+            }
+            else if(i==2)
+            {
+                tmp.push_back("Bronze Medal");
+            }
+            else
+            {
+                tmp.push_back(to_string(i+1));
+            }
+        }
+        return tmp;
+    }
+};
