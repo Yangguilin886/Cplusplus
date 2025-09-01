@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ret;
+        for(size_t i=0;i<nums.size();i++)
+        {
+            if(target>0&&nums[i]>target)
+            {
+                break;
+            }
+            if(i>0&&nums[i]==nums[i-1])
+            {
+                continue;
+            }
+            for(size_t j=i+1;j<nums.size();j++)
+            {
+                if(target>0&&nums[j]+nums[i]>target)
+                {
+                    break;
+                }
+                if(j>i+1&&nums[j]==nums[j-1])
+                {
+                    continue;
+                }
+                int left=j+1,right=nums.size()-1;
+                while(left<right)
+                {
+                    
+                    long long sum=(long long)target-nums[i]-nums[j];
+                    if(nums[left]+nums[right]<sum)
+                    {
+                        left++;
+                    }
+                    else if(nums[left]+nums[right]>sum)
+                    {
+                        --right;
+                    }
+                    else
+                    {
+                        ret.push_back({nums[i],nums[j],nums[left],nums[right]});
+                        --right;
+                        ++left;
+                        while(left<right&&nums[left]==nums[left-1])
+                        {
+                            ++left;
+                        }
+                        while(left<right&&nums[right]==nums[right+1])
+                        {
+                            --right;
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+};
