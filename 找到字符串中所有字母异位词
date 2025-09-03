@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ret;
+        int hash1[26]={0};
+        int hash2[26]={0};
+        for(size_t i=0;i<p.size();i++)
+        {
+            hash1[p[i]-'a']++;
+        }
+        int n=p.size();
+        int count=0;
+        for(int left=0,right=0;right<s.size();right++)
+        {
+            hash2[s[right]-'a']++;
+            if(hash2[s[right]-'a']<=hash1[s[right]-'a'])
+            {
+                count++;
+            }
+            if(right-left+1>n)
+            {
+                hash2[s[left]-'a']--;
+                if(hash2[s[left]-'a']<hash1[s[left]-'a'])
+                {
+                   count--;
+                }
+                left++;
+            }
+            if(count==n)
+            {
+                ret.push_back(left);
+            }
+        }
+        return ret;
+    }
+};
