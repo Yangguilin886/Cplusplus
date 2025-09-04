@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string ret;
+        int len=100000,flag=-1;
+        int hash1[58]={0};
+        int hash2[58]={0};
+        for(auto e:t)
+        {
+            hash1[e-'A']++;
+        }
+        int count=0;
+        for(int left=0,right=0;right<s.size();right++)
+        {
+            hash2[s[right]-'A']++;
+            if(hash2[s[right]-'A']<=hash1[s[right]-'A'])
+            {
+                count++;
+            }
+            while(count==t.size())
+            {
+                if(len>right-left+1)
+                {
+                    len=right-left+1;
+                    flag=left;
+                }
+                hash2[s[left]-'A']--;
+                if(hash2[s[left]-'A']<hash1[s[left]-'A'])
+                {
+                    count--;
+                }
+                left++;
+            }
+        }
+        if(flag!=-1)
+        {
+            for(int i=flag;i<flag+len;i++)
+            {
+               ret.push_back(s[i]);
+            }
+        }
+        return ret;
+    }
+};
