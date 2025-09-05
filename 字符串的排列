@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n=s1.size();
+        int hash1[26]={0};
+        for(auto e:s1)
+        {
+            hash1[e-'a']++;
+        }
+        int hash2[26]={0};
+        for(int left=0,right=0,count=0;right<s2.size();right++)
+        {
+            hash2[s2[right]-'a']++;
+            if(hash2[s2[right]-'a']<=hash1[s2[right]-'a'])
+            {
+                count++;
+            }
+            if(right-left+1>n)
+            {
+                hash2[s2[left]-'a']--;
+                if(hash2[s2[left]-'a']<hash1[s2[left]-'a'])
+                {
+                    count--;
+                }
+                left++;
+            }
+            if(count==n)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
