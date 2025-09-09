@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        vector<int> ret=arr;
+        while(ret.size()>k)
+        {
+            if(abs(ret.front()-x)>abs(ret.back()-x))
+            {
+                ret.erase(ret.begin());
+            }
+            else
+            {
+                ret.erase(ret.end());
+            }
+        }
+        return ret;
+    }
+};
