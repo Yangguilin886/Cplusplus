@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int left=0;
+        int sum=0;
+        vector<char>::iterator right=chars.begin();
+        while(right!=chars.end())
+        {
+            if(right==chars.begin()||*right==*(right-1))
+            {
+                sum++;
+            }
+            if(right!=chars.begin()&&*right!=*(right-1))
+            {
+                if(sum>1)
+                {
+                    chars[left++]=*(right-1);
+                    int ret[4];
+                    int flag=0;
+                    while(sum>0)
+                    {
+                       ret[flag++]=sum%10;
+                       sum/=10;
+                    }
+                    for(int i=flag-1;i>=0;i--)
+                    {
+                        chars[left++]=(char)(ret[i]+'0');
+                    }
+                }
+                else
+                {
+                    chars[left++]=*(right-1);
+                }
+                sum=1;
+            }
+            ++right;
+        }
+        if(sum>1)
+        {
+            chars[left++]=*(right-1);
+            int ret[4];
+            int flag=0;
+            while(sum>0)
+            {
+                ret[flag++]=sum%10;
+                sum/=10;
+            }
+            for(int i=flag-1;i>=0;i--)
+            {
+                chars[left++]=(char)(ret[i]+'0');
+            }
+        }
+        else
+        {
+            chars[left++]=*(right-1);
+        }
+        return left;
+    }
+};
