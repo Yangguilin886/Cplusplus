@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        int left=0,right=c;
+        if(c>sqrt(INT_MAX))
+        {
+            right=sqrt(INT_MAX);
+        }
+        while(left<=right)
+        {
+            long long n=(long long)left*left;
+            if(n>c)
+            {
+                break;
+            }
+            long long m=(long long)left*left+(long long)right*right;
+            if(m>c)
+            {
+                right--;
+            }
+            if(m<c)
+            {
+                left++;
+            }
+            if(m==c)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
