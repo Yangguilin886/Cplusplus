@@ -1,0 +1,37 @@
+class MyCalendar {
+public:
+    MyCalendar() {
+        
+    }
+    
+    bool book(int s1, int s2) {
+        int left=0,right=ret.size()-1;
+        while(left<=right)
+        {
+            int mid=left+(right-left)/2;
+            if(s2<=ret[mid][0])
+            {
+                right=mid-1;
+            }
+            else if(s1>=ret[mid][1])
+            {
+                left=mid+1;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        vector<vector<int>>::iterator it=ret.begin()+left;
+        ret.insert(it,{s1,s2});
+        return true;
+    }
+private:
+    vector<vector<int>> ret;
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(startTime,endTime);
+ */
