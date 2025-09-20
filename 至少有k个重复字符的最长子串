@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int fundcount(string s,int k,int count)
+    {
+        int left=0,right=0;
+        int v1=0,v2=0;
+        int ret[26]={0};
+        int len=0;
+        while(right<s.size())
+        {
+            int n=s[right]-'a';
+            if(ret[n]==0)
+            {
+                v1++;
+            }
+            ret[n]++;
+            if(ret[n]==k)
+            {
+                v2++;
+            }
+            while(v1>count)
+            {
+                int m=s[left]-'a';
+                if(ret[m]==k)
+                {
+                    v2--;
+                }
+                ret[m]--;
+                if(ret[m]==0)
+                {
+                    v1--;
+                }
+                left++;
+            }
+            if(v1==v2)
+            {
+                len=max(len,right-left+1);
+            }
+            right++;
+        }
+        return len;
+    }
+    int longestSubstring(string s, int k) {
+        int len=0;
+        for(int i=1;i<=26;i++)
+        {
+            len=max(len,fundcount(s,k,i));
+        }
+        return len;
+    }
+};
