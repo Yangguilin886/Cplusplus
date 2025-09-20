@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int findBestValue(vector<int>& arr, int target) {
+        sort(arr.begin(),arr.end());
+        if(arr[arr.size()-1]<=target/arr.size())
+        {
+            return arr[arr.size()-1];
+        }
+        unordered_map<int,int> hash;
+        vector<int> dp(arr.size(),0);
+        dp[0]=arr[0];
+        for(int i=1;i<arr.size();i++)
+        {
+            dp[i]=dp[i-1]+arr[i];
+        }
+        for(int i=target/arr.size();i<=arr[arr.size()-1];i++)
+        {
+            int left=0,right=arr.size()-1;
+            while(left<right)
+            {
+                int mid=left+(right-left)/2;
+                if(arr[mid]<i)
+                {
+                    left=mid+1;
+                }
+                else
+                {
+                    right=mid;
+                }
+            }
+            int n=0;
+            if(left==0)
+            {
+                n=(arr.size()-left)*i;
+            }
+            else
+            {
+                n=dp[left-1]+(arr.size()-left)*i;
+            }
+            hash[i]=abs(n-target);
+        }
+        int left=target/arr.size(),right=arr[arr.size()-1];
+        while(left<right)
+        {
+            int mid=left+(right-left)/2;
+            if(hash[mid]>hash[mid+1])
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid;
+            }
+        }
+        return left;
+    }
+};
