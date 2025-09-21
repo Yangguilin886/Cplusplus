@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+        const int MODULO = 1000000007;
+        vector<int> dp;
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            sum+=nums[i];
+            int m=0;
+            dp.push_back(sum);
+            for(int j=0;j<i;j++)
+            {
+                m+=nums[j];
+                dp.push_back(sum-m);
+            }
+        }
+        sort(dp.begin(),dp.end());
+        int ret=0;
+       for(int i=left-1;i<right;i++)
+       {
+        ret=(ret+dp[i])%MODULO;
+       }
+        return ret;
+    }
+};
