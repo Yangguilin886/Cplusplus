@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
+        int n=0;
+        sort(arr2.begin(),arr2.end());
+        for(auto e: arr1)
+        {
+            bool flag=true;
+            vector<int>::iterator it=lower_bound(arr2.begin(),arr2.end(),e-d);
+            if(it!=arr2.end()&&*it<=e+d)
+            {
+                flag=false;
+            }
+            if(flag)
+            {
+                n++;
+            }
+        }
+        return n;
+    }
+};
