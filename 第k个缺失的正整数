@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        vector<int> ret;
+        int n=0;
+        for(int i=1;i<=2000;i++)
+        {
+            if(n<arr.size()&&i==arr[n])
+            {
+                n++;
+            }
+            else
+            {
+                ret.push_back(i);
+            }
+        }
+        return ret[k-1];
+    }
+};
