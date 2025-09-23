@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int left=0,ret=0;
+        int tmp[3]={0};
+        for(auto e:s)
+        {
+            tmp[e-'a']++;
+            while(tmp[0]&&tmp[1]&&tmp[2])
+            {
+                tmp[s[left]-'a']--;
+                left++;
+            }
+            ret+=left;
+        }
+        return ret;
+    }
+};
