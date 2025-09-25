@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int specialArray(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<int> ret(nums[nums.size()-1]+1);
+        for(int i=0;i<=nums[nums.size()-1];i++)
+        {
+            int tmp=0;
+            while(tmp<nums.size())
+            {
+                if(nums[tmp]>=i)
+                {
+                    break;
+                }
+                tmp++;
+            }
+            ret[i]=nums.size()-tmp;
+        }
+        int left=1,right=nums[nums.size()-1];
+        while(left<=right)
+        {
+            int mid=left+(right-left)/2;
+            if(ret[mid]==mid)
+            {
+                return mid;
+            }
+            if(ret[mid]<mid)
+            {
+                right=mid-1;
+            }
+            if(ret[mid]>mid)
+            {
+                left=mid+1;
+            }
+        }
+        return -1;
+    }
+};
