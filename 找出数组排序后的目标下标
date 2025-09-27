@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> targetIndices(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int flag=0;
+        int left=0,right=nums.size()-1;
+        while(left<right)
+        {
+            int mid=left+(right-left)/2;
+            if(nums[mid]<target)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid;
+            }
+        }
+        flag=left;
+        left=0,right=nums.size()-1;
+        while(left<right)
+        {
+            int mid=left+(right-left+1)/2;
+            if(nums[mid]<=target)
+            {
+                left=mid;
+            }
+            else
+            {
+                right=mid-1;
+            }
+        }
+        vector<int> ret;
+        if(left==flag)
+        {
+            if(nums[left]==target)
+            {
+                ret.push_back(left);
+            }
+            return ret;
+        }
+        for(int i=flag;i<=left;i++)
+        {
+            ret.push_back(i);
+        }
+        return ret;
+    }
+};
