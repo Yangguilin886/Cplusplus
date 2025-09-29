@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
+        sort(items.begin(),items.end());
+        vector<int> ret(queries.size());
+        int flag=0;
+        for(int i=0;i<items.size();i++)
+        {
+            if(flag>items[i][1])
+            {
+                items[i][1]=flag;
+            }
+            else
+            {
+                flag=items[i][1];
+            }
+        }
+        for(int i=0;i<queries.size();i++)
+        {
+            int left=0,right=items.size()-1;
+            while(left<right)
+            {
+                int mid=left+(right-left+1)/2;
+                if(items[mid][0]<=queries[i])
+                {
+                    left=mid;
+                }
+                else
+                {
+                    right=mid-1;
+                }
+            }
+            if(items[left][0]<=queries[i])
+            ret[i]=items[left][1];
+        }
+        return ret;
+    }
+};
