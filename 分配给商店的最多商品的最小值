@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minimizedMaximum(int n, vector<int>& ques) {
+        int max=0;
+        for(int i=0;i<ques.size();i++)
+        {
+            if(ques[i]>max)
+            {
+                max=ques[i];
+            }
+        }
+        int left=1,right=max;
+        while(left<right)
+        {
+            int mid=left+(right-left)/2;
+            int m=0;
+            for(int i=0;i<ques.size();i++)
+            {
+                m+=ques[i]/mid;
+                if(ques[i]%mid!=0)
+                {
+                    m++;
+                }
+            }
+            if(m>n)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid;
+            }
+        }
+        return left;
+    }
+};
