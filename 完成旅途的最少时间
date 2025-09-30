@@ -1,0 +1,25 @@
+class Solution {
+public:
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        sort(time.begin(),time.end());
+        long long left=1,right=100000000000000;
+        while(left<right)
+        {
+            long long mid=left+(right-left)/2;
+            long long n=0;
+            for(int i=0;i<time.size();i++)
+            {
+                n+=mid/time[i];
+            }
+            if(n<totalTrips)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid;
+            }
+        }
+        return left;
+    }
+};
