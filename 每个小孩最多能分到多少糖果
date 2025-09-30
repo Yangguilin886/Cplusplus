@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int maximumCandies(vector<int>& candies, long long k) {
+        long long n=0;
+        for(int i=0;i<candies.size();i++)
+        {
+            n+=candies[i];
+        }
+        if(n<k)
+        {
+            return 0;
+        }
+        sort(candies.begin(),candies.end());
+        int left=1,right=candies[candies.size()-1];
+        while(left<right)
+        {
+            int mid=left+(right-left+1)/2;
+            n=0;
+            for(int i=0;i<candies.size();i++)
+            {
+                n+=candies[i]/mid;
+            }
+            if(n<k)
+            {
+                right=mid-1;
+            }
+            else
+            {
+                left=mid;
+            }
+        }
+        return left;
+    }
+};
