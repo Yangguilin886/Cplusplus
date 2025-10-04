@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isUnique(string astr) {
+        if(astr.size()>26)
+        {
+            return false;
+        }
+        int n=0;
+        for(int i=0;i<astr.size();i++)
+        {
+            if((n>>(astr[i]-'a')&1)==0)
+            {
+                n=n|(1<<(astr[i]-'a'));
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
