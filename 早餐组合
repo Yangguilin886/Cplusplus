@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int breakfastNumber(vector<int>& staple, vector<int>& drinks, int x) {
+        int n=1000000007;
+        long long ret=0;
+        sort(staple.begin(),staple.end());
+        for(int i=0;i<drinks.size();i++)
+        {
+            int left=0,right=staple.size()-1;
+            while(left<right)
+            {
+                int mid=left+(right-left+1)/2;
+                if(drinks[i]+staple[mid]<=x)
+                {
+                    left=mid;
+                }
+                else
+                {
+                    right=mid-1;
+                }
+            }
+            if(left==0&&drinks[i]+staple[left]>x)
+            {
+                ret+=0;
+            }
+            else
+            ret+=left+1;
+        }
+        return ret%n;
+    }
+};
