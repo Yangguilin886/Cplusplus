@@ -1,0 +1,25 @@
+class Solution {
+public:
+    struct KV
+    {
+        bool operator()(const pair<string,int>& k1,const pair<string,int>& k2)
+        {
+            return k1.second>k2.second;
+        }
+    };
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        map<string,int> ret;
+        for(int i=0;i<words.size();i++)
+        {
+            ret[words[i]]++;
+        }
+        vector<pair<string,int>> v(ret.begin(),ret.end());
+        stable_sort(v.begin(),v.end(),KV());
+        vector<string> tmp;
+        for(int i=0;i<k;i++)
+        {
+            tmp.push_back(v[i].first);
+        }
+        return tmp;
+    }
+};
