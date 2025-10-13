@@ -1,0 +1,29 @@
+class StreamRank {
+public:
+    StreamRank() {
+    }
+    
+    void track(int x) {
+        int n=getRankOfNumber(x);
+        ret.insert(ret.begin()+n,x);
+    }
+    
+    int getRankOfNumber(int x) {
+        int left=0,right=ret.size()-1;
+        while(left<=right)
+        {
+            int mid=left+(right-left);
+            if(ret[mid]<=x)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid-1;
+            }
+        }
+        return left;
+    }
+private:
+    vector<int> ret;
+};
