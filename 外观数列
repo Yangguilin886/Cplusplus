@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        string ret;
+        ret+="1";
+        if(n==1)
+        {
+            return ret;
+        }
+        for(int i=1;i<n;i++)
+        {
+            string tmp;
+            int left=0,right=0;
+            for(right=0;right<ret.size();)
+            {
+                while(right<ret.size()&&ret[left]==ret[right])
+                {
+                    right++;
+                }
+                tmp+=to_string(right-left);
+                tmp+=ret[left];
+                left=right;
+            }
+            ret.clear();
+            ret=tmp;
+        }
+        return ret;
+    }
+};
