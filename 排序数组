@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void sortnums(vector<int>& nums,int left,int right)
+    {
+        if(left>=right)
+        {
+            return ;
+        }
+        int ret=rand()%(right-left)+left;
+        int key=nums[ret];
+        int l=left-1,r=right+1;
+        int i=left;
+        while(i<r)
+        {
+            if(nums[i]<key)
+            {
+                swap(nums[i++],nums[++l]);
+            }
+            else if(nums[i]==key)
+            {
+                ++i;
+            }
+            else
+            {
+                swap(nums[i],nums[--r]);
+            }
+        }
+        sortnums(nums,left,l);
+        sortnums(nums,r,right);
+    }
+    vector<int> sortArray(vector<int>& nums) {
+        sortnums(nums,0,nums.size()-1);
+        return nums;
+    }
+};
