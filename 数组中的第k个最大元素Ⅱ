@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int sortnums(vector<int>& nums,int l,int r,int k)
+    {
+        if(l==r)
+        {
+            return nums[r];
+        }
+        int left=l-1,right=r+1;
+        int ret=rand()%(r-l)+l;
+        int key=nums[ret];
+        int i=l;
+        while(i<right)
+        {
+            if(nums[i]<key)
+            {
+                swap(nums[i++],nums[++left]);
+            }
+            else if(nums[i]==key)
+            {
+                i++;
+            }
+            else
+            {
+                swap(nums[i],nums[--right]);
+            }
+        }
+        int c=r-right+1,b=right-left-1;
+        if(c>=k)
+        {
+            return sortnums(nums,right,r,k);
+        }
+        else if(b+c>=k)
+        {
+            return key;
+        }
+        else
+        {
+            return sortnums(nums,l,left,k-(b+c));
+        }
+    }
+    int findKthLargest(vector<int>& nums, int k) {
+        return sortnums(nums,0,nums.size()-1,k);
+    }
+};
