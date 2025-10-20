@@ -1,0 +1,50 @@
+class Solution {
+public:
+    void qsort(vector<int>& arr,int l,int r,int k)
+    {
+        if(l>=r)
+        {
+            return;
+        }
+        int m=rand()%(r-l+1)+l;
+        int ret=arr[m];
+        int left=l-1,right=r+1,i=l;
+        while(i<right)
+        {
+            if(arr[i]<ret)
+            {
+                swap(arr[i++],arr[++left]);
+            }
+            else if(arr[i]==ret)
+            {
+                ++i;
+            }
+            else
+            {
+                swap(arr[i],arr[--right]);
+            }
+        }
+        int a=left-l+1,b=right-1-left;
+        if(a>k)
+        {
+            qsort(arr,l,left,k);
+        }
+        else if(a+b>=k)
+        {
+            return;
+        }
+        else
+        {
+            qsort(arr,right,r,k-a-b);
+        }
+    }
+    vector<int> smallestK(vector<int>& arr, int k) {
+        vector<int> ret;
+        qsort(arr,0,arr.size()-1,k);
+        for(int i=0;i<k;i++)
+        {
+            ret.push_back(arr[i]);
+        }
+        return ret;
+    }
+};
