@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        if(r*c>mat.size()*mat[0].size()||r*c<mat.size()*mat[0].size())
+        {
+            return mat;
+        }
+        vector<vector<int>> ret(r,vector<int>(c));
+        int i=0,j=0;
+        for(int k=0;k<mat.size();k++)
+        {
+            for(int h=0;h<mat[0].size();h++)
+            {
+                ret[i][j]=mat[k][h];
+                j++;
+                if(j==c)
+                {
+                    j=0;
+                    i++;
+                }
+            }
+        }
+        return ret;
+    }
+};
