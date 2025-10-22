@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        int tmp[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+        vector<vector<int>> ret(n,vector<int>(n));
+        int i=0,j=0,flag=0;
+        for(int k=1;k<=n*n;k++)
+        {
+            ret[i][j]=k;
+            int x=i+tmp[flag][0];
+            int y=j+tmp[flag][1];
+            if(x<0||x>=n||y<0||y>=n||ret[x][y]!=0)
+            {
+                flag=(flag+1)%4;
+            }
+            i+=tmp[flag][0];
+            j+=tmp[flag][1];
+        }
+        return ret;
+    }
+};
