@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void qsort(vector<int>& nums,int& n,int left,int right)
+    {
+        if(left>=right)
+        {
+            return;
+        }
+        int mid=left+(right-left)/2;
+        qsort(nums,n,left,mid);
+        qsort(nums,n,mid+1,right);
+        int i=left,j=mid+1;
+        vector<int> ret(right-left+1);
+        int m=0;
+        while(i<=mid&&j<=right)
+        {
+            if(nums[i]<=nums[j])
+            {
+                ret[m++]=nums[i++];
+            }
+            else
+            {
+                n+=mid-i+1;
+                ret[m++]=nums[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            ret[m++]=nums[i++];
+        }
+        while(j<=right)
+        {
+            ret[m++]=nums[j++];
+        }
+        for(int i=0;i<ret.size();i++)
+        {
+            nums[i+left]=ret[i];
+        }
+    }
+    int reversePairs(vector<int>& nums) {
+        int n=0;
+        qsort(nums,n,0,nums.size()-1);
+        return n;
+    }
+};
