@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int totalMoney(int n) {
+        int ret=0;
+        int flag=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(i%7==0)
+            {
+                ret+=7+flag;
+                flag=i/7;
+            }
+            else
+            {
+                ret+=(i%7)+flag;
+            }
+        }
+        return ret;
+    }
+};
