@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        int ret[2]={0};
+        for(int i=0;i<students.size();i++)
+        {
+            ret[students[i]]++;
+        }
+        for(int i=0;i<sandwiches.size();i++)
+        {
+            if(ret[sandwiches[i]]>0)
+            {
+                ret[sandwiches[i]]--;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return ret[0]+ret[1];
+    }
+};
