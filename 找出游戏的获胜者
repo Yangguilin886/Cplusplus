@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        vector<int> ret(n);
+        for(int i=1;i<=n;i++)
+        {
+            ret[i-1]=i;
+        }
+        int m=0;
+        while(ret.size()>1)
+        {
+            m+=(k-1);
+            m%=ret.size();
+            ret.erase(ret.begin()+m);
+        }
+        return ret[0];
+    }
+};
