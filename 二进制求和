@@ -1,0 +1,49 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int left=0,right=a.size()-1;
+        while(left<right)
+        {
+            swap(a[left],a[right]);
+            left++;
+            right--;
+        }
+        left=0;
+        right=b.size()-1;
+        while(left<right)
+        {
+            swap(b[left++],b[right--]);
+        }
+        int flag=0;
+        int i=0,j=0;
+        string ret;
+        while(i<a.size()&&j<b.size())
+        {
+            int n=(a[i++]-'0')+(b[j++]-'0')+flag;
+            flag=n/2;
+            ret+=to_string(n%2);
+        }
+        while(i<a.size())
+        {
+            int n=(a[i++]-'0')+flag;
+            flag=n/2;
+            ret+=to_string(n%2);
+        }
+        while(j<b.size())
+        {
+            int n=(b[j++]-'0')+flag;
+            flag=n/2;
+            ret+=to_string(n%2);
+        }
+        if(flag)
+        {
+            ret+=to_string(flag);
+        }
+        left=0,right=ret.size()-1;
+        while(left<right)
+        {
+            swap(ret[left++],ret[right--]);
+        }
+        return ret;
+    }
+};
