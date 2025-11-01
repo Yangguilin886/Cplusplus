@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findFinalValue(vector<int>& nums, int ret) {
+        int flag=1;
+        while(flag)
+        {
+            int m=0;
+            for(int i=0;i<nums.size();i++)
+            {
+                if(nums[i]==ret)
+                {
+                    ret=ret*2;
+                    m=1;
+                    break;
+                }
+            }
+            if(m==0)
+            {
+                flag=0;
+            }
+        }
+        return ret;
+    }
+};
