@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minLength(string s) {
+        vector<char> ret;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='B')
+            {
+                if(ret.size()&&ret.back()=='A')
+                {
+                    ret.pop_back();
+                }
+                else
+                {
+                    ret.push_back(s[i]);
+                }
+            }
+            else if(s[i]=='D')
+            {
+                if(ret.size()&&ret.back()=='C')
+                {
+                    ret.pop_back();
+                }
+                else
+                {
+                    ret.push_back(s[i]);
+                }
+            }
+            else
+            {
+                ret.push_back(s[i]);
+            }
+        }
+        return ret.size();
+    }
+};
