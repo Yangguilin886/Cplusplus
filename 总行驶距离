@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int distanceTraveled(int n, int m) {
+        int ret=0;
+        while(n>=5)
+        {
+            n-=5;
+            ret+=5;
+            if(m>=1)
+            {
+                n+=1;
+                m--;
+            }
+        }
+        if(n)
+        {
+            ret+=n;
+        }
+        return ret*10;
+    }
+};
