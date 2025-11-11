@@ -1,0 +1,58 @@
+class MedianFinder {
+public:
+    MedianFinder() {
+    }
+    
+    void addNum(int num) {
+        int x=left.size(),y=right.size();
+        if(x==y)
+        {
+            if(left.empty()||num<=left.top())
+            {
+                left.push(num);
+            }
+            if(num>left.top())
+            {
+                right.push(num);
+                int n=right.top();
+                right.pop();
+                left.push(n);
+            }
+        }
+        else
+        {
+            if(num<=left.top())
+            {
+                left.push(num);
+                int n=left.top();
+                left.pop();
+                right.push(n);
+            }
+            else
+            {
+                right.push(num);
+            }
+        }
+    }
+    
+    double findMedian() {
+        if(left.size()==right.size())
+        {
+            return (left.top()+right.top())*1.0/2;
+        }
+        else
+        {
+            return left.top();
+        }
+    }
+private:
+    priority_queue<int> left;
+    priority_queue<int,vector<int>,greater<int>> right;
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
