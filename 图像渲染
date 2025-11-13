@@ -1,0 +1,41 @@
+class Solution {
+    typedef pair<int,int> PII;
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int flag=image[sr][sc];
+        if(color==flag)
+        {
+            return image;
+        }
+        queue<PII> ret;
+        ret.push({sr,sc});
+        while(ret.size())
+        {
+            int n=ret.size();
+            for(int i=0;i<n;i++)
+            {
+                int x=ret.front().first;
+                int y=ret.front().second;
+                image[x][y]=color;
+                if(x-1>=0&&image[x-1][y]==flag)
+                {
+                    ret.push({x-1,y});
+                }
+                if(x+1<image.size()&&image[x+1][y]==flag)
+                {
+                    ret.push({x+1,y});
+                }
+                if(y-1>=0&&image[x][y-1]==flag)
+                {
+                    ret.push({x,y-1});
+                }
+                if(y+1<image[0].size()&&image[x][y+1]==flag)
+                {
+                    ret.push({x,y+1});
+                }
+                ret.pop();
+            }
+        }
+        return image;
+    }
+};
