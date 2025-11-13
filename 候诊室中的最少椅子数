@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minimumChairs(string s) {
+        int max_i=0,n=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='E')
+            {
+                n++;
+            }
+            else
+            {
+                n--;
+            }
+            max_i=max(max_i,n);
+        }
+        return max_i;
+    }
+};
