@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxOperations(vector<int>& nums) {
+        if(nums.size()<2)
+        {
+            return 0;
+        }
+        int n=0,i=0,flag=nums[0]+nums[1];
+        for(int i=0;i<nums.size();i+=2)
+        {
+            if(nums[i]+nums[i+1]!=flag)
+            {
+                break;
+            }
+            n++;
+        }
+        return n;
+    }
+};
