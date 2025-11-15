@@ -1,0 +1,43 @@
+class Solution {
+    int dp1[4]={1,-1,0,0};
+    int dp2[4]={0,0,1,-1};
+    typedef pair<int,int> PII;
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int m=grid.size(),n=grid[0].size();
+        vector<vector<bool>> ret(m,vector<bool>(n,false));
+        queue<PII> tmp;
+        int max_i=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==1&&ret[i][j]==false)
+                {
+                    int sum=0;
+                    tmp.push({i,j});
+                    ret[i][j]=true;
+                    while(tmp.size())
+                    {
+                        int x=tmp.front().first;
+                        int y=tmp.front().second;
+                        tmp.pop();
+                        sum++;
+                        for(int k=0;k<4;k++)
+                        {
+                            int a=x+dp1[k];
+                            int b=y+dp2[k];
+                            if(a>=0&&a<m&&b>=0&&b<n&&grid[a][b]==1&&ret[a][b]==false)
+                            {
+                                tmp.push({a,b});
+                                ret[a][b]=true;
+                            }
+                        }
+                    }
+                    max_i=max(max_i,sum);
+                }
+            }
+        }
+        return max_i;
+    }
+};
