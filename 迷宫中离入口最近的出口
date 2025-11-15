@@ -1,0 +1,45 @@
+class Solution {
+    typedef pair<int,int> PII;
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+public:
+    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+        int m=maze.size(),n=maze[0].size();
+        vector<vector<bool>> ret(m,vector<bool>(n,false));
+        queue<PII> tmp;
+        tmp.push({entrance[0],entrance[1]});
+        int op=0;
+        ret[entrance[0]][entrance[1]]=true;
+        while(tmp.size())
+        {
+            int sum=tmp.size();
+            op++;
+            int flag=0;
+            for(int i=0;i<sum;i++)
+            {
+                auto [a,b]=tmp.front();
+                tmp.pop();
+                for(int k=0;k<4;k++)
+                {
+                    int x=a+dx[k];
+                    int y=b+dy[k];
+                    if(x>=0&&x<m&&y>=0&&y<n&&ret[x][y]==false&&maze[x][y]=='.')
+                    {
+                        if(x==0||x==m-1||y==0||y==n-1)
+                        {
+                            flag=1;
+                            break;
+                        }
+                        tmp.push({x,y});
+                        ret[x][y]=true;
+                    }
+                }
+                if(flag)
+                {
+                    return op;
+                }
+            }
+        }
+        return -1;
+    }
+};
