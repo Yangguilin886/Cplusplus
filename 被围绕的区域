@@ -1,0 +1,70 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+    typedef pair<int,int> PII;
+public:
+    void solve(vector<vector<char>>& board) {
+        int m=board.size(),n=board[0].size();
+        vector<vector<bool>> ret(m,vector<bool>(n,false));
+        for(int i=0;i<n;i++)
+        {
+            if(board[0][i]=='O'&&ret[0][i]==false)
+            {
+                bfs(board,ret,0,i);
+            }
+            if(board[m-1][i]=='O'&&ret[m-1][i]==false)
+            {
+                bfs(board,ret,m-1,i);
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            if(board[i][0]=='O'&&ret[i][0]==false)
+            {
+                bfs(board,ret,i,0);
+            }
+            if(board[i][n-1]=='O'&&ret[i][n-1]==false)
+            {
+                bfs(board,ret,i,n-1);
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(board[i][j]=='O')
+                {
+                    board[i][j]='X';
+                }
+                if(board[i][j]=='w')
+                {
+                    board[i][j]='O';
+                }
+            }
+        }
+    }
+    void bfs(vector<vector<char>>& board,vector<vector<bool>>& ret,int i,int j)
+    {
+        int m=board.size(),n=board[0].size();
+        queue<PII> tmp;
+        tmp.push({i,j});
+        board[i][j]='w';
+        while(tmp.size())
+        {
+            int x=tmp.front().first;
+            int y=tmp.front().second;
+            tmp.pop();
+            for(int k=0;k<4;k++)
+            {
+                int a=x+dx[k];
+                int b=y+dy[k];
+                if(a>=0&&a<m&&b>=0&&b<n&&board[a][b]=='O'&&ret[a][b]==false)
+                {
+                    tmp.push({a,b});
+                    ret[a][b]=true;
+                    board[a][b]='w';
+                }
+            }
+        }
+    }
+};
