@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> getFinalState(vector<int>& nums, int k, int m) {
+        while(k--)
+        {
+            int n=0,min_i=10000000;
+            for(int i=0;i<nums.size();i++)
+            {
+                if(nums[i]<min_i)
+                {
+                    n=i;
+                    min_i=nums[i];
+                }
+            }
+            nums[n]=nums[n]*m;
+        }
+        return nums;
+    }
+};
