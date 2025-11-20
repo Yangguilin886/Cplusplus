@@ -1,0 +1,45 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+public:
+    vector<vector<int>> highestPeak(vector<vector<int>>& nums) {
+        int n=nums.size(),m=nums[0].size();
+        vector<vector<int>> ret(n,vector<int>(m));
+        vector<vector<bool>> val(n,vector<bool>(m,false));
+        queue<pair<int,int>> tmp;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(nums[i][j]==1)
+                {
+                    val[i][j]=true;
+                    tmp.push({i,j});
+                }
+            }
+        }
+        int sum=0;
+        while(tmp.size())
+        {
+            sum++;
+            int k=tmp.size();
+            while(k--)
+            {
+                auto [a,b]=tmp.front();
+                tmp.pop();
+                for(int i=0;i<4;i++)
+                {
+                    int x=a+dx[i];
+                    int y=b+dy[i];
+                    if(x>=0&&x<n&&y>=0&&y<m&&val[x][y]==false)
+                    {
+                        ret[x][y]=sum;
+                        tmp.push({x,y});
+                        val[x][y]=true;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+};
