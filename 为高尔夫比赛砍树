@@ -1,0 +1,68 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+public:
+    int cutOffTree(vector<vector<int>>& nums) {
+        vector<int> ret;
+        int n=nums.size(),m=nums[0].size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(nums[i][j]>1)
+                {
+                    ret.push_back(nums[i][j]);
+                }
+            }
+        }
+        sort(ret.begin(),ret.end());
+        int bx=0,by=0,sum=0;
+        for(int i=0;i<ret.size();i++)
+        {
+            auto see=bfs(nums,bx,by,ret[i]);
+            if(see.second==-1)return -1;
+            sum+=see.second;
+            bx=see.first[0];
+            by=see.first[1];
+        }
+        return sum;
+    }
+    pair<vector<int>,int> bfs(vector<vector<int>>& nums,int bx,int by,int flag)
+    {
+        if(nums[bx][by]==flag)
+        {
+            return {{bx,by},0};
+        }
+        int n=nums.size(),m=nums[0].size();
+        vector<vector<bool>> ret(n,vector<bool>(m,false));
+        queue<pair<int,int>> tmp;
+        tmp.push({bx,by});
+        ret[bx][by]=true;
+        int sum=0;
+        while(tmp.size())
+        {
+            int k=tmp.size();
+            sum++;
+            while(k--)
+            {
+                auto [a,b]=tmp.front();
+                tmp.pop();
+                for(int i=0;i<4;i++)
+                {
+                    int x=a+dx[i];
+                    int y=b+dy[i];
+                    if(x>=0&&x<n&&y>=0&&y<m&&ret[x][y]==false&&nums[x][y]!=0)
+                    {
+                        ret[x][y]=true;
+                        if(nums[x][y]==flag)
+                        {
+                            return {{x,y},sum};
+                        }
+                        tmp.push({x,y});
+                    }
+                }
+            }
+        }
+        return {{bx,by},-1};
+    }
+};
