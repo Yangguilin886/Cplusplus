@@ -1,0 +1,58 @@
+class Solution {
+    int dx[8]={1,-1,0,0,1,-1,1,-1};
+    int dy[8]={0,0,1,-1,1,-1,-1,1};
+public:
+    void gameOfLife(vector<vector<int>>& nums) {
+        int n=nums.size(),m=nums[0].size();
+        vector<vector<int>> ret(n,vector<int>(m));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                int sum=0;
+                for(int k=0;k<8;k++)
+                {
+                    int x=i+dx[k];
+                    int y=j+dy[k];
+                    if(x>=0&&x<n&&y>=0&&y<m&&nums[x][y]==1)
+                    {
+                        sum++;
+                    }
+                }
+                if(nums[i][j])
+                {
+                    if(sum<2)
+                    {
+                        ret[i][j]=0;
+                    }
+                    else if(sum==2||sum==3)
+                    {
+                        ret[i][j]=1;
+                    }
+                    else
+                    {
+                        ret[i][j]=0;
+                    }
+                }
+                else
+                {
+                    if(sum==3)
+                    {
+                        ret[i][j]=1;
+                    }
+                    else
+                    {
+                        ret[i][j]=0;
+                    }
+                }
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                nums[i][j]=ret[i][j];
+            }
+        }
+    }
+};
