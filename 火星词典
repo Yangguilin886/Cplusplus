@@ -1,0 +1,81 @@
+class Solution {
+    unordered_map<char,unordered_set<char>> ret;
+    unordered_map<char,int> tmp;
+public:
+    string alienOrder(vector<string>& words) {
+        int n=words.size();
+        for(auto e:words)
+        {
+            for(auto s:e)
+            {
+                tmp[s]=0;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                int flag=0;
+                add(words[i],words[j],flag);
+                if(flag)
+                {
+                    return "";
+                }
+            }
+        }
+        queue<char> q;
+        for(auto [a,b]:tmp)
+        {
+            if(b==0)
+            {
+                q.push(a);
+            }
+        }
+        string cur;
+        while(q.size())
+        {
+            char m=q.front();
+            q.pop();
+            cur+=m;
+            for(auto e:ret[m])
+            {
+                tmp[e]--;
+                if(tmp[e]==0)
+                {
+                    q.push(e);
+                }
+            }
+        }
+        for(auto& [a,b]:tmp)
+        {
+            if(b!=0)
+            {
+                return "";
+            }
+        }
+        return cur;
+    }
+    void add(string& s1,string& s2,int& flag)
+    {
+        int n=min(s1.size(),s2.size());
+        int i=0;
+        for(;i<n;i++)
+        {
+            if(s1[i]!=s2[i])
+            {
+                int a=s1[i];
+                int b=s2[i];
+                if(!ret.count(a)||!ret[a].count(b))
+                {
+                    ret[a].insert(b);
+                    tmp[b]++;
+                }
+                break;
+            }
+        }
+        if(i==s2.size()&&i<s1.size())
+        {
+            flag=1;
+        }
+    }
+};
