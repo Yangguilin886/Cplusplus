@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int giveGem(vector<int>& gem, vector<vector<int>>& op) {
+        for(int i=0;i<op.size();i++)
+        {
+            int x=op[i][0],y=op[i][1];
+            gem[y]+=gem[x]/2;
+            gem[x]-=gem[x]/2;
+        }
+        int max_i=0,min_i=1000;
+        for(int i=0;i<gem.size();i++)
+        {
+            if(gem[i]>max_i)
+            {
+                max_i=gem[i];
+            }
+            if(gem[i]<min_i)
+            {
+                min_i=gem[i];
+            }
+        }
+        return max_i-min_i;
+    }
+};
