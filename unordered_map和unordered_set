@@ -1,0 +1,247 @@
+#pragma once
+#include<vector>
+#include<iostream>
+using namespace std;
+
+template<class K>
+struct HashFunc
+{
+	size_t operator()(const K& key)
+	{
+		return (size_t)key;
+	}
+};
+
+template<>
+struct HashFunc<string>
+{
+	size_t operator()(const string& s)
+	{
+		size_t n = 0;
+		for (auto& e : s)
+		{
+			n += e;
+			n *= 131;
+		}
+		return n;
+	}
+};
+namespace hash_bucket
+{
+	template<class T>
+	struct HashNode
+	{
+		T _data;
+		HashNode* _next;
+		HashNode(const T& data)
+			:_data(data)
+			,_nexr(nullptr)
+		{}
+	};
+	template<class K, class T, class KeyOfT, class Hash>
+	class HashTable;
+
+	template<class K,class T,class Ref,class Ptr,class KeyOfT,class Hash>
+	struct HTIterator
+	{
+		typedef HashNode<T> Node;
+		typedef HashTable<K,T, KeyOfT, Hash> HT;
+		typedef HTIterator<K,T, Ref, Ptr, KeyOfT, Hash> Self;
+		Node* _node;
+		HT* _ht;
+		HTIterator(Node* node,HT* ht)
+			:_node(node)
+			,_ht(ht)
+		{ }
+
+		Ref operator* ()
+		{
+			return _node->_data;
+		}
+
+		Ptr operator-> ()
+		{
+			return &_node->_data;
+		}
+
+		bool operator!=(const Self& s)
+		{
+			return s._node != _node;
+		}
+
+		Self& operator++()
+		{
+			if (_node->next)
+			{
+				_node = _node->_next;
+			}
+			else
+			{
+				KeyOfT kot;
+				Hash hash;
+				size_t hash1 = hash(kot(_node->_data)) % _ht->_tables.size();
+				hash1++;
+				while (hash1 < _ht->_tables.size())
+				{
+					_node = _ht->_tables[hash1];
+					if (_node)
+					{
+						break;
+					}
+					else
+					{
+						hash1++;
+					}
+				}
+				if (hash1 == _ht->_tables.size())
+				{
+					_node = nullptr;
+				}
+			}
+			return *this;
+		}
+	};
+	template<class K,class T,class KeyOfT,class Hash>
+	class HashTable
+	{
+		template<class K, class T, class Ref, class Ptr, class KeyOfT, class Hash>
+		friend struct HTIterator;
+		typedef HashNode<T> Node;
+	public:
+		typedef HTIterator<K,T, T*, T&, KeyOfT, Hash> iterator;
+		typedef HTItreator<K,T, const T*, const T& KeyOfT, Hash> Constiterator;
+		inline unsigned long __stl_next_prime(unsigned long n)
+		{
+			// Note: assumes long is at least 32 bits.
+			static const int __stl_num_primes = 28;
+			static const unsigned long __stl_prime_list[__stl_num_primes] = {
+				53, 97, 193, 389, 769,
+				1543, 3079, 6151, 12289, 24593,
+				49157, 98317, 196613, 393241, 786433,
+				1572869, 3145739, 6291469, 12582917, 25165843,
+				50331653, 100663319, 201326611, 402653189, 805306457,
+				1610612741, 3221225473, 4294967291
+			};
+			const unsigned long* first = __stl_prime_list;
+			const unsigned long* last = __stl_prime_list + __stl_num_primes;
+			const unsigned long* pos = lower_bound(first, last, n);
+			return pos == last ? *(last - 1) : *pos;
+		}
+		HashTable()
+			:_tables(__stl_next_prime(0))
+			,_n(0)
+		{ }
+		iterator Begin()
+		{
+			for (int i = 0; i < _tables.size(); i++)
+			{
+				Node* cur = _tables[i];
+				if (cur)
+				{
+					return iterator(cur, this);
+				}
+			}
+			return End();
+		}
+		Constiterator Begin() const
+		{
+			for (int i = 0; i < _tables.size(); i++)
+			{
+				Node* cur = _tables[i];
+				if (cur)
+				{
+					return Constiterator(cur, this);
+				}
+			}
+			return End();
+		}
+		iterator End()
+		{
+			return iterator(nullptr, this);
+		}
+		Constiterator End() const
+		{
+			return Constiterator(nullptr, this);
+		}
+		bool Insert(const T& data)
+		{
+			KeyOfT kot;
+			if (Find(kot(data)))
+			{
+				return false;
+			}
+			Hash hash;
+			if (_n == _tables.size())
+			{
+				vector<Node*> newTable(__stl_next_prime(_tables.size() + 1));
+				for (int i = 0; i < _tables.size(); i++
+				{
+					Node* cur=_tables[i];
+					while (cur)
+					{
+						Node* next=cur->next;
+						stiz_t hash1=hash(kot(cur->_data))%newTable.size();
+						cur->next=newTable[hash1];
+						newTable[hash1]=cur;
+						cur=next;
+					}
+					_tables[i] = nullptr;
+				}
+				_tables.swap(newTable);
+			}
+			size_t hash1 = hash(kot(data)) % _tables.size();
+			Node* newNode = new Node(data);
+			newNode->_next = _tables[hash1];
+			_tables[hash1] = newNode;
+			++_n;
+			return true;
+		}
+		bool Find(const K& key)
+		{
+			KeyOfT kot;
+			Hash hash;
+			size_t hash1 = hash(kot(key)) % _tables.size();
+			Node* cur = _tables[hash1];
+			while (cur)
+			{
+				if (kot(cur->_data) == key)
+				{
+					return true;
+				}
+				cur = cur->_next;
+			}
+			return false;
+		}
+		bool Erase(const K& key)
+		{
+			KeyOfT kot;
+			Hash hash;
+			size_t hash1 = hash(kot(key)) % _tables.size();
+			Node* prev = nullptr;
+			Node* cur = _tables[hash1];
+			while (cur)
+			{
+				if (kot(cur->_data) == key)
+				{
+					if (prev == nullptr)
+					{
+						_tables[hash1] = _tables[hash1]->next;
+					}
+					else
+					{
+						prev->_next = cur->_next;
+					}
+					delete cur;
+					--_n;
+					return true;
+				}
+				prev = cur;
+				cur = cur->_next;
+			}
+			return false;
+		}
+	private:
+		vector<Node*> _tables;
+		size_t _n;
+	};
+}
