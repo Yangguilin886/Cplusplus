@@ -1,0 +1,25 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    int n=0;
+    cin>>n;
+    vector<int> ret;
+    for(int i=0;i<n;i++)
+    {
+        int a=0;
+        cin>>a;
+        ret.push_back(a);
+    }
+    long long sum1=0;
+    long long sum2=0;
+    for(int i=0;i<n;i++)
+    {
+        sum1+=ret[i];
+        sum2+=(long long)ret[i]*ret[i];
+    }
+    long a=(sum1*sum1-sum2)/2;
+    cout<<a<<endl;
+    return 0;
+}
