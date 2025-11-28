@@ -1,0 +1,63 @@
+#include<iostream>
+#include<vector>
+void Getmonthday(int& year,int& month,int& day)
+{
+    int tmp[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+    if(day==tmp[month]+1)
+    {
+        day=1;
+        month++;
+    }
+    if(month==13)
+    {
+        month=1;
+        year++;
+    }
+}
+using namespace std;
+int main()
+{
+    int n=0;
+    cin>>n;
+    int sum1=0,sum2=0;
+    while((sum1 == 0 || sum2 == 0)&&n<100000000)
+    {
+        n++;
+        vector<int> ret;
+        int year=n/10000;
+        int month=(n%10000)/100;
+        int day=n%100;
+        Getmonthday(year,month,day);
+        int flag=year*10000+month*100+day;
+        n=flag;
+        while(flag>0)
+        {
+            ret.push_back(flag%10);
+            flag/=10;
+        }
+        int left=0,right=ret.size()-1;
+        int flag1=0;
+        while(left<right)
+        {
+            if(ret[left]!=ret[right])
+            {
+                flag1=1;
+                break;
+            }
+            left++;
+            right--;
+        }
+        if(flag1==0)
+        {
+            if(sum1==0)
+            sum1=n;
+            if(ret[0]==ret[2]&&ret[1]==ret[3])
+            {
+                sum2=n;
+            }
+        }
+    }
+    cout<<sum1<<endl;
+    cout<<sum2<<endl;
+    return 0;
+}
