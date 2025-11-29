@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int n,k;
+    cin>>n>>k;
+    int ret[505][505]={0};
+    ret[1][0]=1;
+    int mod=123456;
+    for(int i=2;i<n;i++)
+    {
+        ret[i][0]=2;
+        for(int j=0;j<=i;j++)
+        {
+            ret[i+1][j]+=(ret[i][j]*(j+1))%mod;
+            ret[i+1][j+1]+=(ret[i][j]*2)%mod;
+            ret[i+1][j+2]+=(ret[i][j]*(i-j-2))%mod;
+        }
+    }
+    cout<<ret[n][k-1]%mod<<endl;
+    return 0;
+}
