@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cmath>
+#include<unordered_map>
+using namespace std;
+int main()
+{
+    int a,b;
+    cin>>a>>b;
+    unordered_map<int,int> ret;
+    for(int i=1;i<=b;i++)
+    {
+        int n=sqrt(i);
+        if(n*n==i)
+        {
+            ret[i]=1;
+        }
+    }
+    for(int i=a;i<=b;i++)
+    {
+        if(ret.count(i))
+        {
+            for(int j=10;j<i;j*=10)
+            {
+                int n=i%j;
+                int m=i/j;
+                if(ret.count(n)&&ret.count(m))
+                {
+                    cout<<i<<endl;
+                    break;
+                }
+            }
+        }
+    }
+    return 0;
+}
