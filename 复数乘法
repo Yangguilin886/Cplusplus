@@ -1,0 +1,107 @@
+class Solution {
+public:
+    string complexNumberMultiply(string nums1, string nums2) {
+        string s1,s2;
+        int i=0,flag1=1,flag2=1;
+        if(nums1[0]=='-')
+        {
+            flag1=-1;
+            i++;
+        }
+        for(;i<nums1.size();i++)
+        {
+            if(nums1[i]=='+')
+            {
+                i++;
+                if(nums1[i]=='-')
+                {
+                    flag2=-1;
+                    i++;
+                }
+                break;
+            }
+            s1+=nums1[i];
+        }
+        for(;i<nums1.size();i++)
+        {
+            if(nums1[i]=='i')
+            break;
+            s2+=nums1[i];
+        }
+        int a=0,b=0;
+        for(int i=0;i<s1.size();i++)
+        {
+            a=a*10+(s1[i]-'0');
+        }
+        a*=flag1;
+        for(int i=0;i<s2.size();i++)
+        {
+            b=b*10+(s2[i]-'0');
+        }
+        b*=flag2;
+
+        string s3,s4;
+        int flag3=1,flag4=1;
+        i=0;
+        if(nums2[0]=='-')
+        {
+            i++;
+            flag3=-1;
+        }
+        for(;i<nums2.size();i++)
+        {
+            if(nums2[i]=='+')
+            {
+                i++;
+                if(nums2[i]=='-')
+                {
+                    flag4=-1;
+                    i++;
+                }
+                break;
+            }
+            s3+=nums2[i];
+        }
+        for(;i<nums2.size();i++)
+        {
+            if(nums2[i]=='i')
+            {
+                break;
+            }
+            s4+=nums2[i];
+        }
+        int c=0,d=0;
+        for(int i=0;i<s3.size();i++)
+        {
+            c=c*10+(s3[i]-'0');
+        }
+        c*=flag3;
+        for(int i=0;i<s4.size();i++)
+        {
+            d=d*10+(s4[i]-'0');
+        }
+        d*=flag4;
+
+        string ret;
+        ret+=(to_string(a*c-b*d));
+        if(a*d+c*b>0)
+        {
+            ret+='+';
+            ret+=(to_string(a*d+c*b));
+            ret+='i';
+        }
+        else if(a*d+c*b<0)
+        {
+            ret+='+';
+            ret+=(to_string(a*d+c*b));
+            ret+='i';
+        }
+        else
+        {
+            ret+='+';
+            ret+=(to_string(0));
+            ret+='i';
+        }
+        return ret;
+    }
+};
