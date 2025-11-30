@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& tmp) {
+        vector<int> ret;
+        for(int i=0;i<tmp.size();i++)
+        {
+            int j=tmp[i][1];
+            nums[j]+=tmp[i][0];
+            int m=0;
+            for(int i=0;i<nums.size();i++)
+            {
+                if(nums[i]%2==0)
+                {
+                    m+=nums[i];
+                }
+            }
+            ret.push_back(m);
+        }
+        return ret;
+    }
+};
