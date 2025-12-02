@@ -1,0 +1,52 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+int n=0,f[15],s[15],p[15],book[15];
+bool flag=false;
+void dfs(int llar,int time)
+{
+    if(llar==n+1)
+    {
+        flag=true;
+        return;
+    }
+    if(flag)return;
+
+    for(int i=1;i<=n;i++)
+    {
+        if(!book[i])
+        {
+            if(f[i]+s[i]<time)
+            {
+                return;
+            }
+            book[i]=1;
+            int a=f[i];
+            a=max(time,a);
+            dfs(llar+1,a+p[i]);
+            book[i]=0;
+        }
+    }
+    return;
+}
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--)
+    {
+        cin>>n;
+        memset(book,0,sizeof(book));
+        flag=false;
+        for(int i=1;i<=n;i++)
+        {
+            cin>>f[i]>>s[i]>>p[i];
+        }
+        for(int i=1;i<=n;i++)
+        {
+            dfs(1,-1);
+        }
+        if(flag)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+}
