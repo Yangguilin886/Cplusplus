@@ -1,0 +1,26 @@
+class Solution {
+public:
+    double dfs(double x,int n)
+    {
+        if(n==0)
+        {
+            return 1;
+        }
+        double tmp=dfs(x,n/2);
+        if(n%2)
+        {
+            return x*tmp*tmp;
+        }
+        return tmp*tmp;
+    }
+    double myPow(double x, int n) {
+        long long t=(long long)n;
+        if(n<0)
+        {
+            x=1/x;
+            t=abs((long long)n);
+        }
+        double ret=dfs(x,t);
+        return ret;
+    }
+};
