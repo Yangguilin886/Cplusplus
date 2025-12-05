@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void dfs(ListNode* root,ListNode* prev)
+    {
+        if(root==nullptr)return ;
+        if(root->next==nullptr)
+        {
+            prev->next=root;
+            prev=root;
+            return;
+        }
+        int k=2;
+        while(k--)
+        {
+            ListNode* next=root->next;
+            root->next=prev->next;
+            prev->next=root;
+            root=next;
+        }
+        prev=prev->next->next;
+        dfs(root,prev);
+    }
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* newhead=new ListNode(0);
+        ListNode* prev=newhead;
+        ListNode* root=head;
+        dfs(root,prev);
+        return newhead->next;
+    }
+};
