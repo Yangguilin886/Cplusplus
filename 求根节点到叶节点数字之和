@@ -1,0 +1,19 @@
+class Solution {
+public:
+    void prevTree(TreeNode* root,int n,int& ret)
+    {
+        if(root==nullptr)return ;
+        n=n*10+root->val;
+        if(root->left==nullptr&&root->right==nullptr)
+        {
+            ret+=n;
+        }
+        prevTree(root->left,n,ret);
+        prevTree(root->right,n,ret);
+    }
+    int sumNumbers(TreeNode* root) {
+        int ret=0;
+        prevTree(root,0,ret);
+        return ret;
+    }
+};
