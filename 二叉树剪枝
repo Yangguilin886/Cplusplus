@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isbool(TreeNode* root)
+    {
+        if(root==nullptr)return true;
+        if(root->val==1)return false;
+        return isbool(root->left)&&isbool(root->right);
+    }
+    void prevTree(TreeNode* root)
+    {
+        if(root==nullptr)return ;
+        if(root->left&&isbool(root->left))
+        {
+            root->left=nullptr;
+        }
+        if(root->right&&isbool(root->right))
+        {
+            root->right=nullptr;
+        }
+        prevTree(root->left);
+        prevTree(root->right);
+    }
+    TreeNode* pruneTree(TreeNode* root) {
+        if(isbool(root))
+        return nullptr;
+        prevTree(root);
+        return root;
+    }
+};
