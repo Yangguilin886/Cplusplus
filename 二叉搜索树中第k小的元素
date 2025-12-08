@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void orderTree(TreeNode* root,int& n,int& k)
+    {
+        if(root==nullptr)return ;
+        orderTree(root->left,n,k);
+        if(k==1)
+        {
+            n=root->val;
+            k--;
+            return ;
+        }
+        k--;
+        orderTree(root->right,n,k);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        int n=0;
+        orderTree(root,n,k);
+        return n;
+    }
+};
