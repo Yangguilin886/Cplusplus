@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int nxt[100005][26];
+string To_string(int L,int R)
+{
+    vector<pair<int,char>> ret;
+    for(int i=0;i<26;i++)
+    {
+        int pos=nxt[L][i];
+        if(pos<=R)
+        {
+            ret.push_back({pos,(char)('a'+i)});
+        }
+    }
+    sort(ret.begin(),ret.end());
+    string tmp;
+    for(auto e:ret)
+    {
+        tmp+=e.second;
+    }
+    return tmp;
+}
+int main()
+{
+    string s;
+    cin>>s;
+    int n=s.size();
+    for(int i=0;i<26;i++)
+    {
+        nxt[n+1][i]=n+1;
+    }
+    for(int i=n;i>=1;i--)
+    {
+        int char_a=s[i-1]-'a';
+        for(int j=0;j<26;j++)
+        {
+            if(j==char_a)
+            {
+                nxt[i][j]=i;
+            }
+            else
+            {
+                nxt[i][j]=nxt[i+1][j];
+            }
+        }
+    }
+    int m=0;
+    cin>>m;
+    while(m--)
+    {
+        int x1,y1,x2,y2;
+        cin>>x1>>y1>>x2>>y2;
+        string s1=To_string(x1,y1);
+        string s2=To_string(x2,y2);
+        int len1=s1.size();
+        int len2=s2.size();
+        int a=0;
+        int max_len=max(len1,len2);
+        for(int i=0;i<max_len;i++)
+        {
+            if(i>=len1||i>=len2||s1[i]!=s2[i])
+            {
+                a++;
+            }
+        }
+        cout<<a<<endl;
+    }
+    return 0;
+}
