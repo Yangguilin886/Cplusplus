@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void prevTree(TreeNode* root,vector<string>& ret,string s)
+    {
+        if(root==nullptr) return;
+        if(root->left==nullptr&&root->right==nullptr)
+        {
+            s+=to_string(root->val);
+            ret.push_back(s);
+        }
+        s+=to_string(root->val);
+        s+="->";
+        prevTree(root->left,ret,s);
+        prevTree(root->right,ret,s);
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        string s;
+        vector<string> ret;
+        prevTree(root,ret,s);
+        return ret;
+    }
+};
