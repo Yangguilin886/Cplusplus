@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int TreeHight(TreeNode* root)
+    {
+        if(root==nullptr)return 0;
+        int max_i=max(TreeHight(root->left),TreeHight(root->right));
+        return max_i+1;
+    }
+    void prevTree(TreeNode* root,int& flag)
+    {
+        if(root==nullptr)return ;
+        if(abs(TreeHight(root->left)-TreeHight(root->right))>1)
+        {
+            flag=0;
+            return ;
+        }
+        prevTree(root->left,flag);
+        prevTree(root->right,flag);
+    }
+    bool isBalanced(TreeNode* root) {
+        int flag=1;
+        prevTree(root,flag);
+        return flag;
+    }
+};
