@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+int ret[100005];
+int tmp[100005];
+int max_i;
+int u[200005];
+int v[200005];
+int find(int x)
+{
+    return (x==ret[x]?x:ret[x]=find(ret[x]));
+}
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)
+    {
+        ret[i]=i;
+    }
+    for(int i=1;i<=m;i++)
+    {
+        cin>>u[i]>>v[i];
+    }
+    for(int i=m;i;i--)
+    {
+        tmp[find(u[i])]=max(tmp[find(u[i])],tmp[find(v[i])])+1;
+        ret[find(v[i])]=find(u[i]);
+    }
+    for(int i=1;i<=n;i++)
+    {
+        max_i=max(max_i,tmp[i]);
+    }
+    cout<<max_i<<endl;
+    return 0;
+}
