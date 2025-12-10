@@ -1,0 +1,38 @@
+class BSTIterator {
+public:
+    void orderTree(TreeNode* root,vector<int>& ret)
+    {
+        if(root==nullptr)
+        {
+            return;
+        }
+        orderTree(root->left,ret);
+        ret.push_back(root->val);
+        orderTree(root->right,ret);
+    }
+    BSTIterator(TreeNode* root)
+    {
+        _root=root;
+        flag=0;
+    }
+    
+    int next() {
+        vector<int> ret;
+        orderTree(_root,ret);
+        return ret[flag++];
+    }
+    
+    bool hasNext() {
+        vector<int> ret;
+        orderTree(_root,ret);
+        if(flag!=ret.size())
+        {
+            return true;
+        }
+        else
+        return false;
+    }
+private:
+   TreeNode* _root;
+   int flag;
+};
