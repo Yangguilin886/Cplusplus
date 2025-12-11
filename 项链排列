@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    int a,b,c;
+    cin>>a>>b>>c;
+    if(min(a+b-1,min(a,b)*2)<c||(c!=0&&(a==0||b==0))||(c==0&&a!=0&&b!=0))
+    {
+        cout<<-1<<endl;
+    }
+    else
+    {
+        if(c%2)
+        {
+            c++;
+            int p1=a-c/2;
+            for(int i=0;i<p1;i++)
+            {
+                cout<<'L';
+            }
+            for(int i=1;i<=c;i++)
+            {
+                cout<<(i%2==1?'L':'Q');
+                if(i%2==0)
+                {
+                    b--;
+                }
+                else
+                {
+                    a--;
+                }
+            }
+            for(int i=0;i<b;i++)
+            {
+                cout<<'Q';
+            }
+        }
+        else
+        {
+            int p1=a-c/2;
+            bool flag=false;
+            if(p1<=0)
+            {
+                cout<<'Q';
+                b--;
+                flag=true;
+            }
+            for(int i=1;i<p1;i++)
+            {
+                cout<<'L';
+            }
+            for(int i=1;i<=c;i++)
+            {
+                cout<<(i%2==1?'L':'Q');
+                if(i%2==0)
+                {
+                    b--;
+                }
+            }
+            for(int i=0;i<b;i++)
+            {
+                cout<<'Q';
+            }
+            if(!flag)
+            {
+                cout<<'L';
+            }
+        }
+    }
+    return 0;
+}
