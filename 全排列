@@ -1,0 +1,29 @@
+class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
+    bool check[11]={false};
+public:
+    void dfs(vector<int>& nums)
+    {
+        if(tmp.size()==nums.size())
+        {
+            ret.push_back(tmp);
+            return ;
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(check[i]==false)
+            {
+                tmp.push_back(nums[i]);
+                check[i]=true;
+                dfs(nums);
+                tmp.pop_back();
+                check[i]=false;
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        dfs(nums);
+        return ret;
+    }
+};

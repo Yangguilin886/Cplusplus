@@ -1,0 +1,81 @@
+class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
+    bool check[11]={false};
+public:
+    bool issame(vector<int>& tmp)
+    {
+        for(int i=0;i<ret.size();i++)
+        {
+            int flag=1;
+            if(ret[i].size()!=tmp.size())continue;
+            for(int j=0;j<tmp.size();j++)
+            {
+                if(ret[i][j]!=tmp[j])
+                {
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag)return true;
+        }
+        return false;
+    }
+    void dfs(vector<int>& nums)
+    {
+        if(tmp.size()==nums.size())
+        {
+            if(!issame(tmp))
+            {
+                ret.push_back(tmp);
+            }
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(check[i]==false)
+            {
+                tmp.push_back(nums[i]);
+                check[i]=true;
+                dfs(nums);
+                tmp.pop_back();
+                check[i]=false;
+            }
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        dfs(nums);
+        return ret;
+    }
+};
+
+//优化
+class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
+    bool check[11]={false};
+public:
+    void dfs(vector<int>& nums)
+    {
+        if(tmp.size()==nums.size())
+        {
+            ret.push_back(tmp);
+        }
+        unordered_map<int,int> hash;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(check[i]==false&&!hash.count(nums[i]))
+            {
+                tmp.push_back(nums[i]);
+                check[i]=true;
+                dfs(nums);
+                tmp.pop_back();
+                check[i]=false;
+                hash[nums[i]]=0;
+            }
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        dfs(nums);
+        return ret;
+    }
+};
