@@ -1,0 +1,38 @@
+class Solution {
+    vector<string> ret;
+    string tmp;
+public:
+    void dfs(vector<string>& sum,int n)
+    {
+        if(n==sum.size())
+        {
+            ret.push_back(tmp);
+            return ;
+        }
+        for(int i=0;i<sum[n].size();i++)
+        {
+            tmp+=sum[n][i];
+            dfs(sum,n+1);
+            tmp.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string s) {
+        vector<string> sum;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='2')
+            {
+                sum.push_back("abc");
+            }
+            if(s[i]=='3')sum.push_back("def");
+            if(s[i]=='4')sum.push_back("ghi");
+            if(s[i]=='5')sum.push_back("jkl");
+            if(s[i]=='6')sum.push_back("mno");
+            if(s[i]=='7')sum.push_back("pqrs");
+            if(s[i]=='8')sum.push_back("tuv");
+            if(s[i]=='9')sum.push_back("wxyz");
+        }
+        dfs(sum,0);
+        return ret;
+    }
+};

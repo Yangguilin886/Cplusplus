@@ -1,0 +1,31 @@
+class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
+public:
+    void dfs(vector<int>& nums,int n)
+    {
+        if(n==nums.size())
+        {
+            ret.push_back(tmp);
+            return ;
+        }
+        tmp.push_back(nums[n]);
+        dfs(nums,n+1);
+        tmp.pop_back();
+        dfs(nums,n+1);
+    }
+    int subsetXORSum(vector<int>& nums) {
+        dfs(nums,0);
+        int n=0;
+        for(int i=0;i<ret.size();i++)
+        {
+            int m=0;
+            for(int j=0;j<ret[i].size();j++)
+            {
+                m^=ret[i][j];
+            }
+            n+=m;
+        }
+        return n;
+    }
+};
