@@ -1,0 +1,21 @@
+class Solution {
+    int n=0;
+public:
+    void dfs(vector<int>& nums,int target,int sum,int i)
+    {
+        if(i==nums.size())
+        {
+            if(sum==target)
+            {
+                n++;
+            }
+            return;
+        }
+        dfs(nums,target,sum+nums[i],i+1);
+        dfs(nums,target,sum-nums[i],i+1);
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        dfs(nums,target,0,0);
+        return n;
+    }
+};
