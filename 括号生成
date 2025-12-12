@@ -1,0 +1,32 @@
+class Solution {
+    vector<string> ret;
+    string tmp;
+    int a=0,b=0;
+public:
+    void dfs(int n)
+    {
+        if(a==n&&b==n)
+        {
+            ret.push_back(tmp);
+            return;
+        }
+        if(a<b||a>n||b>n)
+        {
+            return ;
+        }
+        tmp+='(';
+        a++;
+        dfs(n);
+        tmp.pop_back();
+        a--;
+        tmp+=')';
+        b++;
+        dfs(n);
+        b--;
+        tmp.pop_back();
+    }
+    vector<string> generateParenthesis(int n) {
+        dfs(n);
+        return ret;
+    }
+};
