@@ -1,0 +1,32 @@
+class Solution {
+    vector<string> ret;
+    string tmp;
+public:
+    void dfs(string s,int i)
+    {
+        if(i==s.size())
+        {
+            ret.push_back(tmp);
+            return;
+        }
+        tmp.push_back(s[i]);
+        dfs(s,i+1);
+        tmp.pop_back();
+        if(s[i]>='a'&&s[i]<='z')
+        {
+            tmp.push_back(s[i]-32);
+            dfs(s,i+1);
+            tmp.pop_back();
+        }
+        else if(s[i]>='A'&&s[i]<='Z')
+        {
+            tmp.push_back(s[i]+32);
+            dfs(s,i+1);
+            tmp.pop_back();
+        }
+    }
+    vector<string> letterCasePermutation(string s) {
+        dfs(s,0);
+        return ret;
+    }
+};
