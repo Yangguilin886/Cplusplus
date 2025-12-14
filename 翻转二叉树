@@ -1,0 +1,16 @@
+class Solution {
+public:
+    void prevTree(TreeNode* root)
+    {
+        if(root==nullptr)return ;
+        TreeNode* next=root->right;
+        root->right=root->left;
+        root->left=next;
+        prevTree(root->left);
+        prevTree(root->right);
+    }
+    TreeNode* invertTree(TreeNode* root) {
+        prevTree(root);
+        return root;
+    }
+};
