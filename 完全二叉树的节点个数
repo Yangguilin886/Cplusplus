@@ -1,0 +1,15 @@
+class Solution {
+    int n=0;
+public:
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)return ;
+        n++;
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int countNodes(TreeNode* root) {
+        dfs(root);
+        return n;
+    }
+};
