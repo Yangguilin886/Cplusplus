@@ -1,0 +1,30 @@
+class Solution {
+    int max_i=INT_MIN;
+public:
+    int AddTree(TreeNode* root)
+    {
+        if(root==nullptr)
+        {
+            return 0;
+        }
+        int n=AddTree(root->left);
+        int m=AddTree(root->right);
+        int flag=root->val+max(n,m);
+        return max(root->val,flag);
+    }
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)return ;
+        int n=0;
+        n+=root->val;
+        n=max(n,n+AddTree(root->left));
+        n=max(n,n+AddTree(root->right));
+        max_i=max(max_i,n);
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int maxPathSum(TreeNode* root) {
+        dfs(root);
+        return max_i;
+    }
+};
