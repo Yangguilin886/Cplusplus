@@ -1,0 +1,71 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> ret;
+        for(auto e:tokens)
+        {
+            if(e=="+"||e=="-"||e=="*"||e=="/")
+            {
+                int right=ret.top();
+                ret.pop();
+                int left=ret.top();
+                ret.pop();
+                int n=0;
+                if(e=="+")
+                {
+                    n=left+right;
+                }
+                else if(e=="-")
+                {
+                    n=left-right;
+                }
+                else if(e=="*")
+                {
+                    n=left*right;
+                }
+                else
+                {
+                    n=left/right;
+                }
+                ret.push(n);
+            }
+            else
+            {
+                ret.push(stoi(e));
+            }
+        }
+        return ret.top();
+    }
+};
+
+//优化
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> ret;
+        map<string,function<int(int,int)>> tmp=
+        {
+            {"+",[](int x,int y){return x+y;}},
+            {"-",[](int x,int y){return x-y;}},
+            {"*",[](int x,int y){return x*y;}},
+            {"/",[](int x,int y){return x/y;}}
+        };
+        for(auto& e:tokens)
+        {
+            if(tmp.count(e))
+            {
+                int right=ret.top();
+                ret.pop();
+                int left=ret.top();
+                ret.pop();
+                int m=tmp[e](left,right);
+                ret.push(m);
+            }
+            else
+            {
+                ret.push(stoi(e));
+            }
+        }
+        return ret.top();
+    }
+};
