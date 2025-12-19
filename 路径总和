@@ -1,0 +1,28 @@
+class Solution {
+    int flag=0;
+    int target=0;
+public:
+    void dfs(TreeNode* root,int n)
+    {
+        if(root==nullptr)
+        {
+            return;
+        }
+        n+=root->val;
+        if(n==target&&root->left==nullptr&&root->right==nullptr)
+        {
+            flag=1;
+        }
+        dfs(root->left,n);
+        dfs(root->right,n);
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        target=targetSum;
+        dfs(root,0);
+        if(flag)
+        {
+            return true;
+        }
+        return false;
+    }
+};
