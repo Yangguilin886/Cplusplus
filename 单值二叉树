@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool dfs(TreeNode* root,int flag)
+    {
+        if(root==nullptr)return true;
+        if(root->val!=flag)
+        {
+            return false;
+        }
+        return dfs(root->left,flag)&&dfs(root->right,flag);
+    }
+    bool isUnivalTree(TreeNode* root) {
+        if(root==nullptr)return true;
+        int flag=root->val;
+        return dfs(root,flag);
+    }
+};
