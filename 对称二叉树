@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root==nullptr)return true;
+        queue<TreeNode*> ret;
+        ret.push(root);
+        while(ret.size())
+        {
+            int n=ret.size();
+            vector<int> tmp;
+            while(n--)
+            {
+                if(ret.front()->left)
+                {
+                    tmp.push_back(ret.front()->left->val);
+                    ret.push(ret.front()->left);
+                }
+                else
+                {
+                    tmp.push_back(-101);
+                }
+                if(ret.front()->right)
+                {
+                    tmp.push_back(ret.front()->right->val);
+                    ret.push(ret.front()->right);
+                }
+                else
+                {
+                    tmp.push_back(-101);
+                }
+                ret.pop();
+            }
+            int left=0,right=tmp.size()-1;
+            while(left<=right)
+            {
+                if(tmp[left++]!=tmp[right--])
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
