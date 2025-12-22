@@ -1,0 +1,30 @@
+class Solution {
+    vector<int> ret;
+public:
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)
+        {
+            return ;
+        }
+        ret.push_back(root->val);
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int findSecondMinimumValue(TreeNode* root) {
+        dfs(root);
+        sort(ret.begin(),ret.end());
+        unordered_map<int,int> hash;
+        int flag=0;
+        for(int i=0;i<ret.size();i++)
+        {
+            if(hash[ret[i]]==0)
+            {
+                flag++;
+            }
+            hash[ret[i]]++;
+            if(flag==2)return ret[i];
+        }
+        return -1;
+    }
+};
