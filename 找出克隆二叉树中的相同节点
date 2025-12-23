@@ -1,0 +1,15 @@
+class Solution {
+    TreeNode* ret=nullptr;
+public:
+    void dfs(TreeNode* root,TreeNode* cur,TreeNode* flag)
+    {
+        if(root==nullptr)return;
+        if(root==flag)ret=cur;
+        dfs(root->left,cur->left,flag);
+        dfs(root->right,cur->right,flag);
+    }
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        dfs(original,cloned,target);
+        return ret;
+    }
+};
