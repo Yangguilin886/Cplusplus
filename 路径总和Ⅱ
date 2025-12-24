@@ -1,0 +1,23 @@
+class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
+public:
+    void dfs(TreeNode* root,int n,int targetSum)
+    {
+        if(root==nullptr)return;
+        n+=root->val;
+        tmp.push_back(root->val);
+        if(n==targetSum&&root->left==nullptr&&root->right==nullptr)
+        {
+            vector<int> sum=tmp;
+            ret.push_back(sum);
+        }
+        dfs(root->left,n,targetSum);
+        dfs(root->right,n,targetSum);
+        tmp.pop_back();
+    }
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        dfs(root,0,targetSum);
+        return ret;
+    }
+};
