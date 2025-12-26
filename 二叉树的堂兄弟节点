@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void TreeHight(TreeNode* root,int x,int& n,int m)
+    {
+        if(root==nullptr)return;
+        if(root->val==x)
+        {
+            n=m;
+            return;
+        }
+        TreeHight(root->left,x,n,m+1);
+        TreeHight(root->right,x,n,m+1);
+    }
+    bool dfs(TreeNode* root,int x,int y)
+    {
+        if(root==nullptr)return true;
+        if(root->left&&root->right&&((root->right->val==y&&root->left->val==x)||(root->right->val==x&&root->left->val==y)))
+        {
+            return false;
+        }
+        return dfs(root->left,x,y)&&dfs(root->right,x,y);
+    }
+    bool isCousins(TreeNode* root, int x, int y) {
+        int n1=0,n2=0;
+        TreeHight(root,x,n1,0);
+        TreeHight(root,y,n2,0);
+        if(n1!=n2)return false;
+        return dfs(root,x,y);
+    }
+};
