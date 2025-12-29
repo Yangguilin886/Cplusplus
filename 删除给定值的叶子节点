@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void dfs(TreeNode* root,int target)
+    {
+        if(root==nullptr)
+        {
+            return;
+        }
+        if(root->left&&root->left->left==nullptr&&root->left->right==nullptr&&root->left->val==target)
+        {
+            root->left=nullptr;
+        }
+        if(root->right&&root->right->left==nullptr&&root->right->right==nullptr&&root->right->val==target)
+        {
+            root->right=nullptr;
+        }
+        dfs(root->left,target);
+        dfs(root->right,target);
+    }
+    void prev(TreeNode* root,int target)
+    {
+        if(root==nullptr)return;
+        prev(root->left,target);
+        prev(root->right,target);
+        dfs(root,target);
+    }
+    TreeNode* removeLeafNodes(TreeNode* root, int target) {
+        prev(root,target);
+        if(root->left==nullptr&&root->right==nullptr&&root->val==target)return nullptr;
+        return root;
+    }
+};
