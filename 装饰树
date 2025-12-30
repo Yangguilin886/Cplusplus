@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)
+        {
+            return;
+        }
+        if(root->left)
+        {
+            TreeNode* newnode=new TreeNode(-1);
+            newnode->left=root->left;
+            root->left=newnode;
+            dfs(root->left->left);
+        }
+        else
+        {
+            dfs(root->left);
+        }
+        if(root->right)
+        {
+            TreeNode* newnode=new TreeNode(-1);
+            newnode->right=root->right;
+            root->right=newnode;
+            dfs(root->right->right);
+        }
+        else
+        {
+            dfs(root->right);
+        }
+    }
+    TreeNode* expandBinaryTree(TreeNode* root) {
+        dfs(root);
+        return root;
+    }
+};
