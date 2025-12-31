@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        vector<int> ret;
+        if(root==nullptr)return ret;
+        while(q.size())
+        {
+            int n=q.size();
+            int max_i=INT_MIN;
+            while(n--)
+            {
+                max_i=max(max_i,q.front()->val);
+                if(q.front()->left)
+                {
+                    q.push(q.front()->left);
+                }
+                if(q.front()->right)
+                {
+                    q.push(q.front()->right);
+                }
+                q.pop();
+            }
+            ret.push_back(max_i);
+        }
+        return ret;
+    }
+};
