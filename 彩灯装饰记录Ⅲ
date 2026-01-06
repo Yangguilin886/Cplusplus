@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<vector<int>> decorateRecord(TreeNode* root) {
+        queue<TreeNode*> q;
+        vector<vector<int>> ret;
+        if(root==nullptr)return ret;
+        int flag=1;
+        q.push(root);
+        while(q.size())
+        {
+            int n=q.size();
+            vector<int> tmp;
+            while(n--)
+            {
+                TreeNode* cur=q.front();
+                q.pop();
+                tmp.push_back(cur->val);
+                if(cur->left)
+                {
+                    q.push(cur->left);
+                }
+                if(cur->right)
+                {
+                    q.push(cur->right);
+                }
+            }
+            if(flag)
+            {
+                ret.push_back(tmp);
+                flag=0;
+            }
+            else
+            {
+                reverse(tmp.begin(),tmp.end());
+                ret.push_back(tmp);
+                flag=1;
+            }
+        }
+        return ret;
+    }
+};
