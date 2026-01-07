@@ -1,0 +1,24 @@
+class Solution {
+    vector<int> ret;
+public:
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)return;
+        ret.push_back(root->val);
+        dfs(root->left);
+        dfs(root->right);
+    }
+    TreeNode* increasingBST(TreeNode* root) {
+        dfs(root);
+        TreeNode* prev=new TreeNode(-1);
+        TreeNode* cur=prev;
+        sort(ret.begin(),ret.end());
+        for(int i=0;i<ret.size();i++)
+        {
+            TreeNode* newnode=new TreeNode(ret[i]);
+            cur->right=newnode;
+            cur=cur->right;
+        }
+        return prev->right;
+    }
+};
