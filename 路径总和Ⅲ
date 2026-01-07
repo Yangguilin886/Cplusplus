@@ -1,0 +1,28 @@
+class Solution {
+    int n=0;
+    int target=0;
+public:
+    void SumTree(TreeNode* root,long long m)
+    {
+        if(root==nullptr)return;
+        m+=root->val;
+        if(m==target)
+        {
+            n++;
+        }
+        SumTree(root->left,m);
+        SumTree(root->right,m);
+    }
+    void dfs(TreeNode* root)
+    {
+        if(root==nullptr)return;
+        SumTree(root,0);
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int pathSum(TreeNode* root, int targetSum) {
+        target=targetSum;
+        dfs(root);
+        return n;
+    }
+};
