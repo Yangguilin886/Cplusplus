@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        int n=0;
+        long long sum=0;
+        long long a=(long long)dividend;
+        long long b=(long long)divisor;
+        int flag=1;
+        if(a*b<0)
+        {
+            a=abs(a);
+            b=abs(b);
+            flag=-1;
+        }
+        if(a>=0)
+        {
+            long long c=b;
+            while(a>=c)
+            {
+                sum+=c/b;
+                a-=c;
+                c+=b;
+            }
+            while(a>=b)
+            {
+                sum++;
+                a-=b;
+            }
+        }
+        else
+        {
+            long long c=b;
+            while(a<=c)
+            {
+                sum+=c/b;
+                a-=c;
+                c+=b;
+            }
+            while(a<=b)
+            {
+                sum++;
+                a-=b;
+            }
+        }
+        sum*=flag;
+        if(sum>INT_MAX)
+        n=INT_MAX;
+        else if(sum<INT_MIN)
+        {
+            n=INT_MIN;
+        }
+        else
+        {
+            n=sum;
+        }
+        return n;
+    }
+};
