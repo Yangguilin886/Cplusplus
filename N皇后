@@ -1,0 +1,46 @@
+class Solution {
+    int m=0;
+    bool col[20]={false};
+    bool dig1[20]={false};
+    bool dig2[20]={false};
+    vector<string> q;
+    vector<vector<string>> ret;
+public:
+    void dfs(int x,int y)
+    {
+        if(x==m)
+        {
+            ret.push_back(q);
+            return;
+        }
+        string sum;
+        for(int i=0;i<m;i++)
+        {
+            sum+=".";
+        }
+        for(int i=0;i<m;i++)
+        {
+            sum[i]='Q';
+            if(col[i]||dig1[i-x+m]||dig2[x+i])
+            {
+                sum[i]='.';
+                continue;
+            }
+            q.push_back(sum);
+            col[i]=true;
+            dig1[i-x+m]=true;
+            dig2[x+i]=true;
+            dfs(x+1,0);
+            col[i]=false;
+            dig1[i-x+m]=false;
+            dig2[x+i]=false;
+            q.pop_back();
+            sum[i]='.';
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        m=n;
+        dfs(0,0);
+        return ret;
+    }
+};
