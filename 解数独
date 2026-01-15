@@ -1,0 +1,56 @@
+class Solution {
+    bool col[9][10]={false};
+    bool row[10][9]={false};
+    bool dig[3][3][10]={false};
+public:
+    bool dfs(vector<vector<char>>& board)
+    {
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(board[i][j]=='.')
+                {
+                    for(int k=1;k<10;k++)
+                    {
+                        if(col[i][k]||row[k][j]||dig[i/3][j/3][k])
+                        {
+                            continue;
+                        }
+                        board[i][j]=k+'0';
+                        col[i][k]=true;
+                        row[k][j]=true;
+                        dig[i/3][j/3][k]=true;
+                        if(dfs(board))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            board[i][j]='.';
+                            col[i][k]=false;
+                            row[k][j]=false;
+                            dig[i/3][j/3][k]=false;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(board[i][j]!='.')
+                {
+                    int n=board[i][j]-'0';
+                    col[i][n]=row[n][j]=dig[i/3][j/3][n]=true;
+                }
+            }
+        }
+        dfs(board);
+    }
+};
