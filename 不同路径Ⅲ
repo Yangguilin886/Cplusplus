@@ -1,0 +1,55 @@
+class Solution {
+    bool ret[21][21]={false};
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+    int sum=0;
+public:
+    void dfs(vector<vector<int>>& grid,int x,int y)
+    {
+        if(grid[x][y]==2)
+        {
+            int flag=1;
+            for(int i=0;i<grid.size();i++)
+            {
+                for(int j=0;j<grid[0].size();j++)
+                {
+                    if(grid[i][j]==0&&ret[i][j]==false)
+                    {
+                        flag=0;
+                        break;
+                    }
+                }
+                if(flag==0)break;
+            }
+            if(flag)
+            {
+                sum++;
+            }
+        }
+        for(int i=0;i<4;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            if(a>=0&&a<grid.size()&&b>=0&&b<grid[0].size()&&grid[a][b]!=-1&&!ret[a][b])
+            {
+                ret[a][b]=true;
+                dfs(grid,a,b);
+                ret[a][b]=false;
+            }
+        }
+    }
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    ret[i][j]=true;
+                    dfs(grid,i,j);
+                }
+            }
+        }
+        return sum;
+    }
+};
