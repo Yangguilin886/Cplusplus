@@ -1,0 +1,26 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+    bool ret[51][51]={false};
+public:
+    void dfs(vector<vector<int>>& image, int x, int y, int color,int flag)
+    {
+        for(int i=0;i<4;i++)
+        {
+            int a=x+dx[i];
+            int b=dy[i]+y;
+            if(a>=0&&a<image.size()&&b>=0&&b<image[0].size()&&image[a][b]==flag&&!ret[a][b])
+            {
+                image[a][b]=color;
+                ret[a][b]=true;
+                dfs(image,a,b,color,flag);
+            }
+        }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int flag=image[sr][sc];
+        image[sr][sc]=color;
+        dfs(image,sr,sc,color,flag);
+        return image;
+    }
+};
