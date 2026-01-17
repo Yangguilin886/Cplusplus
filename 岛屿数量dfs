@@ -1,0 +1,35 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+    bool ret[301][301]={false};
+public:
+    void dfs(vector<vector<char>>& grid,int x,int y)
+    {
+        for(int i=0;i<4;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            if(a>=0&&a<grid.size()&&b>=0&&b<grid[0].size()&&grid[a][b]=='1'&&!ret[a][b])
+            {
+                ret[a][b]=true;
+                dfs(grid,a,b);
+            }
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n=0;
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                if(grid[i][j]=='1'&&!ret[i][j])
+                {
+                    n++;
+                    ret[i][j]=true;
+                    dfs(grid,i,j);
+                }
+            }
+        }
+        return n;
+    }
+};
