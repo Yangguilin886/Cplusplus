@@ -1,0 +1,69 @@
+class Solution {
+    int n=0,m=0;
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+public:
+    void dfs(vector<vector<int>>& h,vector<vector<bool>>& ret,vector<vector<int>>& tmp,int x,int y)
+    {
+        for(int i=0;i<4;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            if(a>=0&&a<n&&b>=0&&b<m&&!ret[a][b]&&h[a][b]>=h[x][y])
+            {
+                ret[a][b]=true;
+                tmp[a][b]+=-1;
+                dfs(h,ret,tmp,a,b);
+            }
+        }
+    }
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& h) {
+        n=h.size();
+        m=h[0].size();
+        vector<vector<int>> tmp(n,vector<int>(m));
+        vector<vector<bool>> ret1(n,vector<bool>(m,false));
+        vector<vector<bool>> ret2(n,vector<bool>(m,false));
+        for(int i=0;i<n;i++)
+        {
+            if(!ret1[i][0])
+            {
+                tmp[i][0]+=-1;
+                ret1[i][0]=true;
+                dfs(h,ret1,tmp,i,0);
+            }
+            if(!ret2[i][m-1])
+            {
+                tmp[i][m-1]+=-1;
+                ret2[i][m-1]=true;
+                dfs(h,ret2,tmp,i,m-1);
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            if(!ret1[0][i])
+            {
+                tmp[0][i]+=-1;
+                ret1[0][i]=true;
+                dfs(h,ret1,tmp,0,i);
+            }
+            if(!ret2[n-1][i])
+            {
+                tmp[n-1][i]+=-1;
+                ret2[n-1][i]=true;
+                dfs(h,ret2,tmp,n-1,i);
+            }
+        }
+        vector<vector<int>> sum;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(tmp[i][j]==-2)
+                {
+                    sum.push_back({i,j});
+                }
+            }
+        }
+        return sum;
+    }
+};
