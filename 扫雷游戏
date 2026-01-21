@@ -1,0 +1,57 @@
+class Solution {
+    bool ret[51][51]={false};
+    int dx[8]={1,-1,0,0,1,-1,1,-1};
+    int dy[8]={0,0,1,-1,1,-1,-1,1};
+public:
+    void dfs(vector<vector<char>>& board,int x,int y)
+    {
+        int n=0;
+        for(int i=0;i<8;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            if(a>=0&&a<board.size()&&b>=0&&b<board[0].size()&&board[a][b]=='M')n++;
+        }
+        if(n)
+        {
+            board[x][y]=n+'0';
+            return;
+        }
+        board[x][y]='B';
+        for(int i=0;i<8;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            if(a>=0&&a<board.size()&&b>=0&&b<board[0].size()&&!ret[a][b]&&board[a][b]!='M')
+            {
+                ret[a][b]=true;
+                dfs(board,a,b);
+            }
+        }
+    }
+    vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+        if(board[click[0]][click[1]]=='M')
+        {
+            board[click[0]][click[1]]='X';
+            return board;
+        }
+        int n=0;
+        for(int i=0;i<8;i++)
+        {
+            int a=click[0]+dx[i];
+            int b=click[1]+dy[i];
+            if(a>=0&&a<board.size()&&b>=0&&b<board[0].size()&&board[a][b]=='M')n++;
+        }
+        if(n)
+        {
+            board[click[0]][click[1]]=n+'0';
+        }
+        else
+        {
+            ret[click[0]][click[1]]=true;
+            board[click[0]][click[1]]='B';
+            dfs(board,click[0],click[1]);
+        }
+        return board;
+    }
+};
