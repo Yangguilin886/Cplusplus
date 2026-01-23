@@ -1,0 +1,16 @@
+class Solution {
+    int ret[101][101]={0};
+public:
+    int dfs(int x,int y)
+    {
+        if(x==0||y==0)return 0;
+        if(x==1&&y==1)return 1;
+        if(ret[x][y])return ret[x][y];
+        int sum=dfs(x-1,y)+dfs(x,y-1);
+        ret[x][y]=sum;
+        return sum;
+    }
+    int uniquePaths(int m, int n) {
+        return dfs(m,n);
+    }
+};
