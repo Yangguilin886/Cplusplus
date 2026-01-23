@@ -1,0 +1,20 @@
+class Solution {
+    int ret[101];
+public:
+    int dfs(int n)
+    {
+        if(n==0)return 0;
+        if(n==1)return 1;
+        if(ret[n]!=-1)
+        {
+            return ret[n];
+        }
+        int sum=(dfs(n-1)+dfs(n-2))%1000000007;
+        ret[n]=sum;
+        return sum;
+    }
+    int fib(int n) {
+        memset(ret,-1,sizeof ret);
+        return dfs(n);
+    }
+};
