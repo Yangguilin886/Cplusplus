@@ -1,0 +1,20 @@
+class Solution {
+    int sum[201][201]={0};
+public:
+    int dfs(int x,int y)
+    {
+        if(x>=y)return 0;
+        if(sum[x][y])return sum[x][y];
+        int ret=INT_MAX;
+        for(int i=x;i<=y;i++)
+        {
+            int tmp=max(dfs(x,i-1),dfs(i+1,y))+i;
+            ret=min(ret,tmp);
+        }
+        sum[x][y]=ret;
+        return ret;
+    }
+    int getMoneyAmount(int n) {
+        return dfs(1,n);
+    }
+};
