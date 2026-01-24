@@ -1,0 +1,29 @@
+class Solution {
+    int tmp[2501]={0};
+public:
+    int dfs(vector<int>& nums,int x)
+    {
+        if(tmp[x])
+        {
+            return tmp[x];
+        }
+        int ret=1;
+        for(int i=x+1;i<nums.size();i++)
+        {
+            if(nums[i]>nums[x])
+            {
+                ret=max(ret,dfs(nums,i)+1);
+            }
+        }
+        tmp[x]=ret;
+        return ret;
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int ret=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            ret=max(dfs(nums,i),ret);
+        }
+        return ret;
+    }
+};
