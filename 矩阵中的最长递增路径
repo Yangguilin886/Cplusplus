@@ -1,0 +1,36 @@
+class Solution {
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,1,-1};
+    int max_i=0;
+    int sum[201][201]={0};
+public:
+    int dfs(vector<vector<int>>& nums,int x,int y)
+    {
+        int ret=1;
+        for(int i=0;i<4;i++)
+        {
+            int a=x+dx[i];
+            int b=y+dy[i];
+            int n=1;
+            if(a>=0&&a<nums.size()&&b>=0&&b<nums[0].size()&&nums[x][y]<nums[a][b])
+            {
+                if(sum[a][b])n+=sum[a][b];
+                else
+                n+=dfs(nums,a,b);
+            }
+            ret=max(n,ret);
+        }
+        sum[x][y]=ret;
+        return ret;
+    }
+    int longestIncreasingPath(vector<vector<int>>& nums) {
+        for(int i=0;i<nums.size();i++)
+        {
+            for(int j=0;j<nums[0].size();j++)
+            {
+                max_i=max(dfs(nums,i,j),max_i);
+            }
+        }
+        return max_i;
+    }
+};
