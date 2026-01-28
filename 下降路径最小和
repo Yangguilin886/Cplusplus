@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& nums) {
+        int dp[101][101]={0};
+        for(int i=0;i<nums[0].size();i++)
+        {
+            dp[0][i]=nums[0][i];
+        }
+        for(int i=1;i<nums.size();i++)
+        {
+            for(int j=0;j<nums[0].size();j++)
+            {
+                int a=INT_MAX,b=INT_MAX,c=INT_MAX;
+                if(j-1>=0)a=dp[i-1][j-1];
+                b=dp[i-1][j];
+                if(j+1<nums[0].size())c=dp[i-1][j+1];
+                a=min(a,b);
+                a=min(a,c);
+                dp[i][j]=a+nums[i][j];
+            }
+        }
+        int n=dp[nums.size()-1][0];
+        for(int i=0;i<nums[0].size();i++)
+        {
+            n=min(n,dp[nums.size()-1][i]);
+        }
+        return n;
+    }
+};
