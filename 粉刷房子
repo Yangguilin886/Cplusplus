@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minCost(vector<vector<int>>& costs) {
+        int f[101]={0};
+        int g[101]={0};
+        int h[101]={0};
+        f[0]=costs[0][0];
+        g[0]=costs[0][1];
+        h[0]=costs[0][2];
+        for(int i=1;i<costs.size();i++)
+        {
+            f[i]=min(g[i-1],h[i-1])+costs[i][0];
+            g[i]=min(f[i-1],h[i-1])+costs[i][1];
+            h[i]=min(f[i-1],g[i-1])+costs[i][2];
+        }
+        int n=f[costs.size()-1];
+        n=min(n,g[costs.size()-1]);
+        n=min(n,h[costs.size()-1]);
+        return n;
+    }
+};
