@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& nums) {
+        int f[100001]={0};
+        int g[100001]={0};
+        f[0]=nums[0];
+        for(int i=1;i<nums.size();i++)
+        {
+            f[i]=min(f[i-1],nums[i]);
+            int n=nums[i]-f[i-1];
+            g[i]=max(g[i-1],n);
+        }
+        return g[nums.size()-1];
+    }
+};
