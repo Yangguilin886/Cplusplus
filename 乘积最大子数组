@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int max_i=nums[0];
+        int dp[100000]={0};
+        int df[100000]={0};
+        df[0]=nums[0];
+        dp[0]=nums[0];
+        for(int i=1;i<nums.size();i++)
+        {
+            int n=nums[i];
+            if(nums[i]>=0)
+            {
+                dp[i]=max(dp[i-1]*nums[i],nums[i]);
+                df[i]=min(df[i-1]*nums[i],nums[i]);
+            }
+            else
+            {
+                dp[i]=max(df[i-1]*nums[i],nums[i]);
+                df[i]=min(dp[i-1]*nums[i],nums[i]);
+            }
+            max_i=max(max_i,dp[i]);
+        }
+        return max_i;
+    }
+};
