@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int dp[5001]={0};
+        int sum=0;
+        for(int i=2;i<nums.size();i++)
+        {
+            int a=nums[i-2],b=nums[i-1],c=nums[i];
+            if(c-b==b-a)
+            {
+                dp[i]=dp[i-1]+1;
+            }
+            else
+            {
+                dp[i]=0;
+            }
+            sum+=dp[i];
+        }
+        return sum;
+    }
+};
