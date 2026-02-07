@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_map<string,int> hash;
+        for(auto& e:wordDict)
+        {
+            hash[e]=1;
+        }
+        s=' '+s;
+        bool dp[302]={false};
+        dp[0]=true;
+        for(int i=1;i<s.size();i++)
+        {
+            for(int j=i;j>=1;j--)
+            {
+                if(dp[j-1]&&hash.count(s.substr(j,i-j+1)))
+                {
+                    dp[i]=true;
+                    break;
+                }
+            }
+        }
+        return dp[s.size()-1];
+    }
+};
