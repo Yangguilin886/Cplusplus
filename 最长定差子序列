@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int longestSubsequence(vector<int>& arr, int flag) {
+        unordered_map<int,int> hash;
+        hash[arr[0]]=1;
+        int n=arr.size();
+        int max_i=1;
+        for(int i=1;i<n;i++)
+        {
+            if(hash.count(arr[i]-flag))
+            {
+                hash[arr[i]]=hash[arr[i]-flag]+1;
+            }
+            else
+            {
+                hash[arr[i]]=1;
+            }
+            max_i=max(max_i,hash[arr[i]]);
+        }
+        return max_i;
+    }
+};
