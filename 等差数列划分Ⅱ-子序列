@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>> dp(n,vector<int>(n,0));
+        int sum=0;
+        for(int i=1;i<nums.size();i++)
+        {
+            for(int j=i+1;j<nums.size();j++)
+            {
+                long long a=(long long)nums[i]*2-nums[j];
+                int max_i=0;
+                for(int k=0;k<i;k++)
+                {
+                    if(nums[k]==a)
+                    {
+                        max_i+=dp[k][i]+1;
+                    }
+                }
+                dp[i][j]=max_i;
+                sum+=dp[i][j];
+            }
+        }
+        return sum;
+    }
+};
