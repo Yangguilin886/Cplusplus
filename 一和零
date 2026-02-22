@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int p=strs.size();
+        vector<vector<vector<int>>> dp(p+1,vector<vector<int>>(m+1,vector<int>(n+1)));
+        for(int i=1;i<p+1;i++)
+        {
+            for(int j=0;j<=m;j++)
+            {
+                for(int k=0;k<=n;k++)
+                {
+                    int a=0,b=0;
+                    for(int v=0;v<strs[i-1].size();v++)
+                    {
+                        if(strs[i-1][v]=='0')a++;
+                        else b++;
+                    }
+                    dp[i][j][k]=dp[i-1][j][k];
+                    if(j-a>=0&&k-b>=0)
+                    {
+                        dp[i][j][k]=max(dp[i][j][k],dp[i-1][j-a][k-b]+1);
+                    }
+                }
+            }
+        }
+        return dp[p][m][n];
+    }
+};
