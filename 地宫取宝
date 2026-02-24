@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int MOD=1e9+7;
+int n,m,k;
+int ret[55][55];
+int dp[55][55][15][15];
+int dx[2]={1,0};
+int dy[2]={0,1};
+int dfs(int x,int y,int num,int max_i)
+{
+    if(x>n||y>m)return 0;
+    if(dp[x][y][max_i][num]!=-1)return dp[x][y][max_i][num];
+    long long sum=0;
+    if(x==n&&y==m)
+    {
+        if(num==k||(num==k-1&&ret[n][m]>max_i))
+        {
+            sum++;
+            sum%=MOD;
+        }
+    }
+    else
+    {
+        for(int i=0;i<2;i++)
+        {
+            int xx=x+dx[i];
+            int yy=y+dy[i];
+            sum+=dfs(xx,yy,num,max_i);
+            if(ret[x][y]>max_i)
+            {
+                sum+=dfs(xx,yy,num+1,ret[x][y]);
+            }
+        }
+    }
+    dp[x][y][max_i][num]=sum%MOD;
+    return dp[x][y][max_i][num];
+}
+int main()
+{
+    memset(dp,-1,sizeof(dp));
+    cin>>n>>m>>k;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        {
+            cin>>ret[i][j];
+        }
+    }
+    cout<<dfs(1,1,0,-1)%MOD<<endl;
+    return 0;
+}
