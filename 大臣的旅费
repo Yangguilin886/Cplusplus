@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+int N=100001;
+struct eng
+{
+    int id;
+    int dis;
+};
+vector<vector<eng>> h(N);
+vector<int> range(N);
+void dfs(int child,int father,int m)
+{
+    range[child]=m;
+    for(auto node:h[child])
+    {
+        if(node.id!=father)
+        {
+            dfs(node.id,child,m+node.dis);
+        }
+    }
+}
+int main()
+{
+    int n=0;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        int a,b,c;
+        cin>>a>>b>>c;
+        h[a].push_back({b,c});
+        h[b].push_back({a,c});
+    }
+    dfs(1,-1,0);
+    int u=1;
+    for(int i=1;i<=n;i++)
+    {
+        if(range[i]>range[u])
+        {
+            u=i;
+        }
+    }
+    dfs(u,-1,0);
+    u=1;
+    for(int i=1;i<=n;i++)
+    {
+        if(range[i]>range[u])
+        {
+            u=i;
+        }
+    }
+    int s=range[u];
+    cout<<s*10+s*(s+1)/2<<endl;
+    return 0;
+}
