@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool f(int n)
+{
+    string s=to_string(n);
+    int left=0,right=s.size()-1;
+    while(left<right)
+    {
+        if(s[left]!=s[right])return false;
+    }
+    for(int i=0;i<s.size()/2;i++)
+    {
+        if(s[i]>s[i+1])return false;
+    }
+    return true;
+}
+int main()
+{
+    int sum=0;
+    for(int i=2022;i<=2022222022;i++)
+    {
+        if(f(i))sum++;
+    }
+    cout<<sum;
+    return 0;
+}
