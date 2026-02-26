@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,m,l;
+    vector<vector<int>> dp(26);
+    cin>>n>>m>>l;
+    string s;
+    string t;
+    cin>>s;
+    cin>>t;
+    int tmp[100001];
+    memset(tmp,0,sizeof(tmp));
+    for(int i=0;i<n;i++)
+    {
+        dp[s[i]-'a'].push_back(i);
+    }
+    for(int i=1;i<m;i++)
+    {
+        int a=t[i]-'a';
+        int b=t[i-1]-'a';
+        if(a==b)continue;
+        int ans=0x3f3f3f3f;
+        bool flag=0;
+        for(auto e:dp[a])
+        {
+            for(auto p:dp[b])
+            {
+                ans=min(ans,tmp[p]+abs(e-p));
+            }
+            tmp[e]=ans;
+            if(ans<=l)flag=1;
+        }
+        if(flag==0)
+        {
+            cout<<i<<endl;
+            return 0;
+        }
+    }
+    cout<<m<<endl;
+    return 0;
+}
