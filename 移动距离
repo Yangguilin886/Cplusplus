@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int w,m,n;
+    cin>>w>>m>>n;
+    int ret=max(m,n);
+    vector<vector<int>> dp(ret/w+1,vector<int>(w));
+    int sum=1;
+    for(int i=0;i<ret/w+1;i++)
+    {
+        if(i%2==0)
+        {
+            for(int j=0;j<w;j++)
+            {
+                dp[i][j]=sum++;
+            }
+        }
+        else
+        {
+            for(int j=0;j<w;j++)
+            {
+                dp[i][j]=sum++;
+            }
+            reverse(dp[i].begin(),dp[i].end());
+        }
+    }
+    int x1=0,x2=0,y1=0,y2=0;
+    for(int i=0;i<ret/w+1;i++)
+    {
+        for(int j=0;j<w;j++)
+        {
+            if(dp[i][j]==m)
+            {
+                x1=i;
+                y1=j;
+            }
+            if(dp[i][j]==n)
+            {
+                x2=i;
+                y2=j;
+            }
+        }
+    }
+    cout<<abs(x1-x2)+abs(y1-y2)<<endl;
+    return 0;
+}
