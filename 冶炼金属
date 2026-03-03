@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int N;
+  cin>>N;
+  int dp[10001][2];
+  int max_i=0,min_i=INT_MAX;
+  for(int i=0;i<N;i++)
+  {
+    cin>>dp[i][0]>>dp[i][1];
+  }
+  for(int i=0;i<N;i++)
+  {
+    int n=dp[i][0]/dp[i][1];
+    min_i=min(min_i,n);
+    int m=dp[i][0]/(dp[i][1]+1)+1;
+    max_i=max(max_i,m);
+  }
+  cout<<max_i<<' '<<min_i<<endl;
+  return 0;
+}
