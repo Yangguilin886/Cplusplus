@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int N;
+    cin>>N;
+    int flag=0;
+    for(int i=0;i<=sqrt(N);i++)
+    {
+        for(int j=i;j<=sqrt(N);j++)
+        {
+            for(int k=j;k<=sqrt(N);k++)
+            {
+                int n=N-i*i-j*j-k*k;
+                if(static_cast<int>(sqrt(n))*static_cast<int>(sqrt(n))==n)
+                {
+                    vector<int> tmp;
+                    tmp.push_back(i);
+                    tmp.push_back(j);
+                    tmp.push_back(k);
+                    tmp.push_back(static_cast<int>(sqrt(n)));
+                    sort(tmp.begin(),tmp.end());
+                    cout<<tmp[0]<<' '<<tmp[1]<<' '<<tmp[2]<<' '<<tmp[3]<<endl;
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag)break;
+        }
+        if(flag)break;
+    }
+    return 0;
+}
