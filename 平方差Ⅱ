@@ -1,0 +1,91 @@
+#include <bits/stdc++.h>
+using namespace std;
+int ret1[105],ret2[105],ret3[205]={0};
+int tmp1[105]={0},tmp2[105]={0};
+int main()
+{
+  string s1,s2;
+  cin>>s1>>s2;
+  int r1=s1.size(),r2=s2.size();
+  int begin1=0,begin2=0;
+  if(s1[0]=='-')
+  {
+    begin1=1;
+    r1--;
+  }
+  if(s2[0]=='-')
+  {
+    begin2=1;
+    r2--;
+  }
+  for(int i=begin1;i<s1.size();i++)
+  {
+    tmp1[s1.size()-1-i]=s1[i]-'0';
+  }
+  for(int i=begin2;i<s2.size();i++)
+  {
+    tmp2[s2.size()-1-i]=s2[i]-'0';
+  }
+  int n=max(r2,r1);
+  int l1=n;
+  for(int i=0;i<l1;i++)
+  {
+    ret1[i]=tmp1[i]+tmp2[i];
+  }
+  for(int i=0;i<n;i++)
+  {
+    if(ret1[i]>=10)
+    {
+      ret1[i]%=10;
+      ret1[i+1]+=1;
+      if(i==n-1)l1++;
+    }
+  }
+  int flag=0;
+  int l2=n;
+  for(int i=0;i<n;i++)
+  {
+    ret2[i]=tmp1[i]-tmp2[i];
+  }
+  while(ret2[l2-1]==0)l2--;
+  if(ret2[l2-1]<0)
+  {
+    flag=1;
+    for(int i=0;i<l2;i++)
+    {
+      ret2[i]*=(-1);
+    }
+  }
+  for(int i=0;i<l2;i++)
+  {
+    if(ret2[i]<0)
+    {
+      ret2[i]+=10;
+      ret2[i+1]-=1;
+    }
+  }
+  while(ret2[l2-1]==0)l2--;
+  int l=l1+l2;
+  for(int i=0;i<l1;i++)
+  {
+    for(int j=0;j<l2;j++)
+    {
+      ret3[i+j]+=ret1[i]*ret2[j];
+    }
+  }
+  for(int i=0;i<l;i++)
+  {
+    if(ret3[i]>=10)
+    {
+      ret3[i+1]+=ret3[i]/10;
+      ret3[i]%=10;
+    }
+  }
+  while(ret3[l-1]==0)l--;
+  if(flag)cout<<"-";
+  for(int i=l-1;i>=0;i--)
+  {
+    cout<<ret3[i];
+  }
+  return 0;
+}
