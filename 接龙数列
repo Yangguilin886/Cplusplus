@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int N;
+  cin>>N;
+  vector<int> ret(N);
+  for(int i=0;i<N;i++)
+  {
+    cin>>ret[i];
+  }
+  vector<vector<int>> tmp(N,vector<int>(2));
+  for(int i=0;i<N;i++)
+  {
+    tmp[i][1]=ret[i]%10;
+    int n=ret[i];
+    while(n>=10)
+    {
+      n/=10;
+    }
+    tmp[i][0]=n;
+  }
+  unordered_map<int,int> hash;
+  int max_i=1;
+  hash[tmp[0][1]]=1;
+  for(int i=1;i<N;i++)
+  {
+    max_i=max(max_i,hash[tmp[i][0]]+1);
+    hash[tmp[i][1]]=max(hash[tmp[i][0]]+1,hash[tmp[i][1]]);
+  }
+  cout<<N-max_i<<endl;
+  return 0;
+}
