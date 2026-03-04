@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+unordered_map<int,int> hs;
+int f(int x,int dx)
+{
+  int pos=0x3f3f3f3f;
+  for(int i=2;i<=sqrt(x);i++)
+  {
+    if(x%i)continue;
+    while(x%i==0)
+    {
+      x/=i;
+      if(hs.count(i))
+      {
+        if(hs[i]!=dx)pos=min(pos,hs[i]);
+      }
+      else hs[i]=dx;
+    }
+  }
+  if(x>1)
+  {
+    if(hs.count(x))
+    {
+      if(hs[x]!=dx)pos=min(pos,hs[x]);
+    }
+    else hs[x]=dx;
+  }
+  if(pos<0x3f3f3f3f)return pos;
+  return 0;
+}
+int main()
+{
+  int n;
+  cin>>n;
+  vector<int> ret(n+1);
+  int i=0x3f3f3f3f,j=0;
+  for(int k=1;k<=n;k++)
+  {
+    cin>>ret[k];
+    int pos=f(ret[k],k);
+    if(pos&&pos<i)
+    {
+      i=pos;
+      j=k;
+    }
+  }
+  cout<<i<<' '<<j<<endl;
+  return 0;
+}
