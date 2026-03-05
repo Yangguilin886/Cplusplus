@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int mod=998244353;
+int ret[1010][1010];
+int n,m,a,b;
+deque<int> dp;
+int MAX[1010][1010]={0},MIN[1010][1010]={0};
+void get_max(int tmp[],int B[],int len,int k)
+{
+  dp.clear();
+  for(int i=1;i<=len;i++)
+  {
+    while(!dp.empty()&&tmp[i]>=tmp[dp.back()])
+    {
+      dp.pop_back();
+    }
+    dp.push_back(i);
+    if(dp.front()<i-k+1)dp.pop_front();
+    B[i]=tmp[dp.front()];
+  }
+}
+void get_min(int tmp[],int B[],int len,int k)
+{
+  dp.clear();
+  for(int i=1;i<=len;i++)
+  {
+    while(!dp.empty()&&tmp[i]<=tmp[dp.back()])
+    {
+      dp.pop_back();
+    }
+    dp.push_back(i);
+    if(dp.front()<i-k+1)dp.pop_front();
+    B[i]=tmp[dp.front()];
+  }
+}
+int main()
+{
+  cin>>n>>m>>a>>b;
+  for(int i=1;i<=n;i++)
+  {
+    for(int j=1;j<=m;j++)
+    {
+      cin>>ret[i][j];
+    }
+  }
+  for(int i=1;i<=n;i++)
+  {
+    get_max(ret[i],MAX[i],m,b);
+  }
+  for(int i=1;i<=n;i++)
+  {
+    get_min(ret[i],MIN[i],m,b);
+  }
+  long long sum=0;
+  int smp[1010]={0},max_i[1010]={0},min_i[1010]={0};
+  for(int i=b;i<=m;i++)
+  {
+    for(int j=1;j<=n;j++)smp[j]=MAX[j][i];
+    get_max(smp,max_i,n,a);
+    for(int j=1;j<=n;j++)smp[j]=MIN[j][i];
+    get_min(smp,min_i,n,a);
+    for(int j=a;j<=n;j++)
+    {
+      sum=(sum+(long long)(max_i[j]*min_i[j]%mod))%mod;
+    }
+  }
+  cout<<sum<<endl;
+  return 0;
+}
