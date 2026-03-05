@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int T;
+  cin>>T;
+  while(T--)
+  {
+    int n,m,k;
+    cin>>n>>m>>k;
+    long long sum=1;
+    long long left=k,right=k;
+    while(1)
+    {
+      bool flag=0;
+      left=(left-1)*m+2;
+      right=right*m+1;
+      if(left>n)break;
+      if(right>=n)
+      {
+        flag=1;
+        right=n;
+      }
+      sum+=right-left+1;
+      if(flag)break;
+    }
+    cout<<sum<<endl;
+  }
+  return 0;
+}
