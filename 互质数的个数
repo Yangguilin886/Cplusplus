@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int mod=998244353;
+unsigned long long quick_pow(unsigned long long pow,unsigned long long a)
+{
+  unsigned long long ans=1;
+  while(pow)
+  {
+    if(pow&1)ans=ans*a%mod;
+    a=a*a%mod;
+    pow=pow>>1;
+  }
+  return ans%mod;
+}
+unsigned long long Euler(unsigned long long n)
+{
+  unsigned long long pow=n;
+  for(int i=2;i<=sqrt(n);i++)
+  {
+    if(n%i)continue;
+    while(n%i==0)
+    {
+      n/=i;
+    }
+    pow=pow/i*(i-1);
+  }
+  if(n>1)pow=pow/n*(n-1);
+  return pow;
+}
+int main()
+{
+  unsigned long long a,b;
+  cin>>a>>b;
+  unsigned long long sum=0;
+  unsigned long long n=Euler(a);
+  sum+=n*quick_pow(b-1,a)%mod;
+  cout<<sum<<endl;
+  return 0;
+}
