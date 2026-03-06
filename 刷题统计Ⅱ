@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  long long a,b,n;
+  cin>>a>>b>>n;
+  long long m=a*5+2*b;
+  long long day=0;
+  day=day+7*(n/m);
+  n%=m;
+  if(n>0)
+  {
+    for(int i=1;i<=7;i++)
+    {
+      if(i>=6)n-=b;
+      else n-=a;
+      day++;
+      if(n<=0)break;
+    }
+  }
+  cout<<day<<endl;
+  return 0;
+}
