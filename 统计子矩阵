@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int n,m,k;
+  cin>>n>>m>>k;
+  vector<vector<int>> dp(505,vector<int>(505));
+  for(int i=1;i<=n;i++)
+  {
+    for(int j=1;j<=m;j++)
+    {
+      cin>>dp[i][j];
+      dp[i][j]+=dp[i-1][j];
+    }
+  }
+  long long ans=0;
+  for(int i=1;i<=n;i++)
+  {
+    for(int j=i;j<=n;j++)
+    {
+      int sum=0;
+      int left=1,right=1;
+      for(right=1;right<=m;right++)
+      {
+        sum+=dp[j][right]-dp[i-1][right];
+        while(sum>k)
+        {
+          sum-=dp[j][left]-dp[i-1][left];
+          left++;
+        }
+        ans+=right-left+1;
+      }
+    }
+  }
+  cout<<ans<<endl;
+  return 0;
+}
