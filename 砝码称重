@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int n;
+  cin>>n;
+  vector<int> ret(n+1);
+  int m=0;
+  for(int i=1;i<=n;i++)
+  {
+    cin>>ret[i];
+    m+=ret[i];
+  }
+  vector<vector<bool>> dp(n+1,vector<bool>(100001));
+  dp[0][0]=1;
+  for(int i=1;i<=n;i++)
+  {
+    for(int j=0;j<=m;j++)
+    {
+      dp[i][j]=dp[i-1][j]+dp[i-1][abs(j-ret[i])]+dp[i-1][j+ret[i]];
+    }
+  }
+  int sum=0;
+  for(int i=1;i<=m;i++)
+  {
+    if(dp[n][i])sum++;
+  }
+  cout<<sum<<endl;
+  return 0;
+}
