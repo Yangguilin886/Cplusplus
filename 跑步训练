@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+int get_month_day(int year,int month)
+{
+  int ret[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+  if(month==2)
+  {
+    if((year%4==0&&year%100!=0)||year%400==0)
+    return 29;
+    else return 28;
+  }
+  else return ret[month];
+}
+int main()
+{
+  int year=2000,month=1,day=1;
+  int sum=0;
+  int n=6;
+  while(1)
+  {
+    sum++;
+    if(day==1||n==1)sum++;
+    day++;
+    n++;
+    if(n==8)
+    {
+      n=1;
+    }
+    if(day>get_month_day(year,month))
+    {
+      day=1;
+      month++;
+    }
+    if(month>12)
+    {
+      year++;
+      month=1;
+    }
+    if(year==2020&&month==10&&day>1)break;
+  }
+  cout<<sum<<endl;
+  return 0;
+}
