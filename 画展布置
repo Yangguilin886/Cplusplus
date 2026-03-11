@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int n,m;
+  cin>>n>>m;
+  vector<int> ret(n);
+  for(int i=0;i<n;i++)
+  {
+    cin>>ret[i];
+  }
+  sort(ret.begin(),ret.end());
+  long long min_i=LLONG_MAX;
+  long long sum=0;
+  for(int left=0,right=1;right<n;right++)
+  {
+    sum+=ret[right]*ret[right]-ret[right-1]*ret[right-1];
+    if(right-left+1>m)
+    {
+      sum-=abs(ret[left]*ret[left]-ret[left+1]*ret[left+1]);
+      left++;
+    }
+    if(right-left+1==m)min_i=min(min_i,sum);
+  }
+  cout<<min_i<<endl;
+  return 0;
+}
