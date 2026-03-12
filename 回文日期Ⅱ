@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+int get_month_day(int year,int month)
+{
+  int ret[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+  if(month==2)
+  {
+    if((year%4==0&&year%100!=0)||year%400==0) return 29;
+    else return 28;
+  }
+  return ret[month];
+}
+bool issame(int year,int month,int day)
+{
+  int ret[8]={0};
+  ret[0]=day%10;
+  ret[1]=day/10;
+  ret[2]=month%10;
+  ret[3]=month/10;
+  int i=4;
+  while(i<8)
+  {
+    ret[i]=year%10;
+    year/=10;
+    i++;
+  }
+  int left=0,right=7;
+  while(left<right)
+  {
+    if(ret[left]!=ret[right])return false;
+    left++;
+    right--;
+  }
+  return true;
+}
+int main()
+{
+  int a,b;
+  cin>>a>>b;
+  int day=a%100;
+  a/=100;
+  int month=a%100;
+  a/=100;
+  int year=a;
+  int end_day=b%100;
+  b/=100;
+  int end_month=b%100;
+  b/=100;
+  int end_year=b;
+  int sum=0;
+  if(issame(year,month,day))sum++;
+  while(1)
+  {
+    if(year==end_year&&month==end_month&&day==end_day)break;
+    day++;
+    if(day>get_month_day(year,month))
+    {
+      day=1;
+      month++;
+    }
+    if(month==13)
+    {
+      year++;
+      month=1;
+    }
+    if(year==end_year&&month==end_month&&day==end_day)break;
+    if(issame(year,month,day))sum++;
+  }
+  cout<<sum<<endl;
+  return 0;
+}
