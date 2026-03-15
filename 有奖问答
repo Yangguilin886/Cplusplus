@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  vector<vector<int>> dp(31,vector<int>(100));
+  dp[1][0]=dp[1][10]=1;
+  int sum=0;
+  for(int i=2;i<=30;i++)
+  {
+    for(int j=0;j<=90;j+=10)
+    {
+      if(j==0)
+      {
+        for(int k=0;k<=90;k+=10)
+        {
+          dp[i][0]+=dp[i-1][k];
+        }
+      }
+      else
+      {
+        dp[i][j]=dp[i-1][j-10];
+        if(j==70)sum+=dp[i][j];
+      }
+    }
+  }
+  cout<<sum<<endl;
+  return 0;
+}
