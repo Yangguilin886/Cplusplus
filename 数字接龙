@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+int dx[8]={-1,-1,0,1,1,1,0,-1};
+int dy[8]={0,1,1,1,0,-1,-1,-1};
+bool egd[10][10][10][10]={false};
+vector<vector<int>> ret(10,vector<int>(10));
+bool dp[10][10]={false};
+int n,k;
+vector<string> tmp;
+void dfs(int a,int b,int sum,string s)
+{
+  if(sum==n*n&&a==n-1&&b==n-1)tmp.push_back(s);
+  for(int i=0;i<8;i++)
+  {
+    int x=a+dx[i];
+    int y=b+dy[i];
+    if(x>=0&&x<n&&y>=0&&y<n&&dp[x][y]==false&&ret[x][y]==(ret[a][b]+1)%k&&!egd[a][y][x][b]&&!egd[x][b][a][y])
+    {
+      dp[x][y]=true;
+      s+=to_string(i);
+      egd[x][y][a][b]=true;
+      dfs(x,y,sum+1,s);
+      dp[x][y]=false;
+      egd[x][y][a][b]=false;
+      s.pop_back();
+    }
+  }
+}
+int main()
+{
+  cin>>n>>k;
+  for(int i=0;i<n;i++)
+  {
+    for(int j=0;j<n;j++)
+    {
+      cin>>ret[i][j];
+    }
+  }
+  string s;
+  dp[0][0]=true;
+  dfs(0,0,1,s);
+  sort(tmp.begin(),tmp.end());
+  cout<<tmp[0]<<endl;
+  return 0;
+}
