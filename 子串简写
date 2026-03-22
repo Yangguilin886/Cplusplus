@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+#define int long long
+using namespace std;
+signed main()
+{
+  int k;
+  cin>>k;
+  string s;
+  cin>>s;
+  char p,q;
+  cin>>p>>q;
+  int sum=0;
+  int ret=0;
+  for(int i=k-1,j=0;i<s.size();i++,j++)
+  {
+    if(s[j]==p)ret++;
+    if(s[i]==q)sum+=ret;
+  }
+  cout<<sum<<endl;
+  return 0;
+}
