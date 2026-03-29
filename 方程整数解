@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int m=INT_MAX;
+  for(int i=29;i>0;i--)
+  {
+    for(int j=1;j<=29;j++)
+    {
+      for(int k=1;k<=29;k++)
+      {
+        if(i*i+j*j+k*k==1000)
+        {
+          m=min(i,min(j,k));
+        }
+        if(i*i+j*j+k*k>=1000)break;
+      }
+      if(i*i+j*j>=1000)break;
+    }
+  }
+  cout<<m<<endl;
+  return 0;
+}
