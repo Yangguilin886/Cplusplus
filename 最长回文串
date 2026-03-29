@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        int ret[127]={0};
+        for(int i=0;i<s.size();i++)
+        {
+            ret[s[i]]++;
+        }
+        int sum=0;
+        for(int i=0;i<127;i++)
+        {
+            sum+=ret[i]/2*2;
+        }
+        return sum<s.size()?sum+1:sum;
+    }
+};
