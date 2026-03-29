@@ -1,0 +1,63 @@
+class Solution {
+public:
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> ret;
+        sort(nums1.begin(),nums1.end());
+        int a=0;
+        for(int i=0;i<nums2.size();i++)
+        {
+            int flag=0;
+            for(int j=a;j<nums1.size();j++)
+            {
+                if(nums1[j]>nums2[i])
+                {
+                    ret.push_back(nums1[j]);
+                    nums1[j]=-1;
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0)
+            {
+                for(int j=a;j<nums1.size();j++)
+                {
+                    if(nums1[j]!=-1)
+                    {
+                        ret.push_back(nums1[j]);
+                        nums1[j]=-1;
+                        break;
+                    }
+                }
+            }
+            while(a<nums1.size()&&nums1[a]==-1)
+            {
+                a++;
+            }
+        }
+        return ret;
+    }
+};
+
+class Solution {
+public:
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size();
+        sort(nums1.begin(),nums1.end());
+        vector<int> dp(n);
+        for(int i=0;i<n;i++)dp[i]=i;
+        sort(dp.begin(),dp.end(),[&](int i,int j)
+        {
+            return nums2[i]<nums2[j];
+        }
+        );
+        vector<int> ret(n);
+        int left=0,right=n-1;
+        for(auto e:nums1)
+        {
+            if(e>nums2[dp[left]])ret[dp[left++]]=e;
+            else ret[dp[right--]]=e;
+        }
+        return ret;
+    }
+};
+
