@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+       int flag=-1;
+       int n=gas.size();
+       for(int i=0;i<gas.size();i++)
+       {
+        int sum=gas[i];
+        int j=i+1;
+        if(i==0)
+        {
+         while(j!=n)
+         {
+            if(j==0)sum-=cost[n-1];
+            else sum-=cost[j-1];
+            if(sum<=0)break;
+            sum+=gas[j];
+            j++;
+         }
+         if(j==n&&sum-cost[j-1]>=0)
+         {
+            flag=i;
+            break;
+         }
+        }
+        else
+        {
+            while(j!=i)
+        {
+            if(j==n)j=0;
+            if(j==0)sum-=cost[n-1];
+            else sum-=cost[j-1];
+            if(sum<=0)break;
+            sum+=gas[j];
+            j++;
+        }
+        if(j==i&&sum-cost[j-1]>=0)
+        {
+            flag=i;
+            break;
+        }
+        }
+       }
+       return flag;
+    }
+};
+
+//贪心
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n=gas.size();
+        for(int i=0;i<n;i++)
+        {
+            int sum=0;
+            int j=0;
+            for(;j<n;j++)
+            {
+                int x=(i+j)%n;
+                sum+=gas[x]-cost[x];
+                if(sum<0)break;
+            }
+            if(sum>=0)return i;
+            i=(i+j);
+        }
+        return -1;
+    }
+};
