@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n,flag=0,a[25],b[25],num=0,s[600],k1,k2;
+bool dp[23][23]={false};
+int dx[4]={0,0,1,-1};
+int dy[4]={1,-1,0,0};
+void dfs(int p,int q,int k)
+{
+  if(p<1||q<1||p>n||q>n)return;
+  if(b[p]<0||a[q]<0||flag==1)return;
+  s[k]=(p-1)*n+(q-1);
+  if(p==n&&q==n&&k1==1&&k2==1)
+  {
+    flag=1;
+    num=k;
+    return;
+  }
+  for(int i=0;i<4;i++)
+  {
+    int x=p+dx[i];
+    int y=q+dy[i];
+    if(dp[x][y])continue;
+    k1--;
+    k2--;
+    b[x]--;
+    a[y]--;
+    dp[x][y]=true;
+    dfs(x,y,k+1);
+    k1++;
+    k2++;
+    b[x]++;
+    a[y]++;
+    dp[x][y]=false;
+  }
+}
+int main()
+{
+  cin>>n;
+  for(int i=1;i<=n;i++)
+  {
+    cin>>a[i];
+    k1+=a[i];
+  }
+  for(int i=1;i<=n;i++)
+  {
+    cin>>b[i];
+    k2+=b[i];
+  }
+  dp[1][1]=true;
+  num=0;
+  dfs(1,1,1);
+  for(int i=1;i<=num;i++)
+  {
+    cout<<s[i]<<' ';
+  }
+  return 0;
+}
