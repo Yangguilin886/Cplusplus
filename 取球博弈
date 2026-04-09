@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+int ret[10],sum[10];
+char dp[1005][2][2];
+char dfs(int num,int a,int b)
+{
+  if(dp[num][a][b])return dp[num][a][b];
+  if(num<ret[1])
+  {
+    if((a&1)==(b&1))return dp[num][a][b]='0';
+    else return dp[num][a][b]=((a&1)?'+':'-');
+  }
+  char flag='-';
+  for(int i=1;i<=3;i++)
+  {
+    if(num>=ret[i])
+    {
+      char ans=dfs(num-ret[i],b,(a+ret[i])&1);
+      if(ans=='-')return dp[num][a][b]='+';
+      if(ans=='0') flag='0';
+    }
+  }
+  return dp[num][a][b]=flag;
+}
+int main()
+{
+  for(int i=1;i<=3;i++)
+  {
+    cin>>ret[i];
+  }
+  for(int i=1;i<=5;i++)
+  {
+    cin>>sum[i];
+    cout<<dfs(sum[i],0,0)<<' ';
+  }
+  return 0;
+}
