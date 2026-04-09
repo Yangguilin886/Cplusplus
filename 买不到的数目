@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  vector<int> ret(2);
+  for(int i=0;i<2;i++)cin>>ret[i];
+  sort(ret.begin(),ret.end());
+  int dp[1000001]={0};
+  dp[0]=1;
+  int max_i=0;
+  for(int i=1;i<=ret[0]*ret[1];i++)
+  {
+    if(i<ret[0])max_i=max(max_i,i);
+    else if(i>=ret[0]&&i<ret[1])
+    {
+      if(dp[i-ret[0]])dp[i]=1;
+      else max_i=i;
+    }
+    else
+    {
+      if(dp[i-ret[0]]==0&&dp[i-ret[1]]==0)max_i=i;
+      else dp[i]=1;
+    }
+  }
+  cout<<max_i;
+  return 0;
+}
