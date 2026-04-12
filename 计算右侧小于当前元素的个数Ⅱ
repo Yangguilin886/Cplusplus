@@ -1,0 +1,54 @@
+class Solution {
+public:
+    void qsort(vector<int>& nums,vector<int>& sum,vector<int>& ret,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=left+(right-left)/2;
+        qsort(nums,sum,ret,left,mid);
+        qsort(nums,sum,ret,mid+1,right);
+        int i=left,j=mid+1;
+        vector<int> tmp(right-left+1);
+        vector<int> tmp1(right-left+1);
+        int m=0;
+        while(i<=mid&&j<=right)
+        {
+            if(nums[i]<=nums[j])
+            {
+                tmp[m]=nums[j];
+                tmp1[m++]=sum[j++];
+            }
+            else
+            {
+                ret[sum[i]]+=right-j+1;
+                tmp[m]=nums[i];
+                tmp1[m++]=sum[i++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp[m]=nums[i];
+            tmp1[m++]=sum[i++];
+        }
+        while(j<=right)
+        {
+            tmp[m]=nums[j];
+            tmp1[m++]=sum[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            nums[i+left]=tmp[i];
+            sum[i+left]=tmp1[i];
+        }
+    }
+    vector<int> countSmaller(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> ret(n);
+        vector<int> sum;
+        for(int i=0;i<n;i++)
+        {
+            sum.push_back(i);
+        }
+        qsort(nums,sum,ret,0,n-1);
+        return ret;
+    }
+};
