@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int ladderLength(string begin, string end, vector<string>& word) {
+        int sum=0;
+        unordered_map<string,int> hash;
+        unordered_map<string,int> hs;
+        for(auto& e:word)
+        {
+            hash[e]=1;
+        }
+        if(!hash.count(end))return 0;
+        queue<string> q;
+        q.push(begin);
+        string res;
+        for(int i=0;i<26;i++)
+        {
+            res+='a'+i;
+        }
+        while(q.size())
+        {
+            sum++;
+            int n=q.size();
+            for(int i=0;i<n;i++)
+            {
+                string tmp=q.front();
+                q.pop();
+                for(int j=0;j<begin.size();j++)
+                {
+                    for(int k=0;k<26;k++)
+                    {
+                        string s=tmp;
+                        s[j]=res[k];
+                        if(hash.count(s)&&!hs.count(s))
+                        {
+                            q.push(s);
+                            hs[s]=1;
+                        }
+                        if(s==end)return sum+1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
