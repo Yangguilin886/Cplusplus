@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxEnvelopes(vector<vector<int>>& nums) {
+        sort(nums.begin(),nums.end(),[&](const vector<int>& v1,const vector<int>& v2)
+        {
+            return v1[0]!=v2[0]? v1[0]<v2[0]:v1[1]>v2[1];
+        });
+        vector<int> dp;
+        dp.push_back(nums[0][1]);
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i][1]>dp.back())dp.push_back(nums[i][1]);
+            else
+            {
+                int left=0,right=dp.size()-1;
+                while(left<right)
+                {
+                    int mid=left+(right-left)/2;
+                    if(dp[mid]<nums[i][1])left=mid+1;
+                    else right=mid;
+                }
+                dp[left]=nums[i][1];
+            }
+        }
+        return dp.size();
+    }
+};
