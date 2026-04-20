@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& nums) {
+        unordered_map<int,int> hs;
+        int x=0,y=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(y<++hs[nums[i]])
+            {
+                x=nums[i];
+                y=hs[nums[i]];
+            }
+        }
+        int m=0;
+        vector<int> ret(nums.size());
+        for(int i=0;i<y;i++)
+        {
+            ret[m]=x;
+            m+=2;
+        }
+        hs.erase(x);
+        for(auto& [x,y]:hs)
+        {
+            for(int i=0;i<y;i++)
+            {
+                if(m>=nums.size())m=1;
+                ret[m]=x;
+                m+=2;
+            }
+        }
+        return ret;
+    }
+};
