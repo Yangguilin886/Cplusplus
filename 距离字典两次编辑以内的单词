@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<string> twoEditWords(vector<string>& tmp, vector<string>& dic) {
+        vector<string> ret;
+        for(int i=0;i<tmp.size();i++)
+        {
+            for(int j=0;j<dic.size();j++)
+            {
+                int n=0;
+                for(int k=0;k<tmp[i].size();k++)
+                {
+                    if(tmp[i][k]!=dic[j][k])n++;
+                }
+                if(n<=2)
+                {
+                    ret.push_back(tmp[i]);
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+};
