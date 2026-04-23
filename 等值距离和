@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<long long> distance(vector<int>& nums) {
+        vector<long long> ret(nums.size());
+        unordered_map<int,vector<int>> hs;
+        for(int i=0;i<nums.size();i++)
+        {
+            hs[nums[i]].push_back(i);
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(hs[nums[i]].size()==2)
+            {
+                ret[i]=abs(hs[nums[i]][1]-hs[nums[i]][0]);
+            }
+            else if(hs[nums[i]].size()<2)
+            {
+                continue;
+            }
+            else
+            {
+                for(int j=0;j<nums.size();j++)
+                {
+                    if(nums[j]==nums[i])ret[i]+=abs(i-j);
+                }
+            }
+        }
+        return ret;
+    }
+};
