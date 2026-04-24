@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> ret;
+    vector<int> tmp;
+    void dfs(vector<int> nums,int i,int sum)
+    {
+        if(sum==0)ret.push_back(tmp);
+        if(i>=nums.size())return;
+        if(sum<nums[i])return;
+        tmp.push_back(nums[i]);
+        dfs(nums,i+1,sum-nums[i]);
+        tmp.pop_back();
+        i++;
+        while(i<nums.size()&&nums[i]==nums[i-1])
+        {
+            i++;
+        }
+        dfs(nums,i,sum);
+    }
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        dfs(nums,0,target);
+        return ret;
+    }
+};
