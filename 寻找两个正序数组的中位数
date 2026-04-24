@@ -1,0 +1,90 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size(),m=nums2.size();
+        double sum=0;
+        int left=0,right=0;
+        int flag=0;
+        if((n+m)%2)
+        {
+            while(left<n&&right<m)
+            {
+                if(flag==(n+m+1)/2-1)
+                {
+                    sum+=min(nums1[left],nums2[right]);
+                    break;
+                }
+                if(nums1[left]<nums2[right])left++;
+                else right++;
+                flag++;
+            }
+            while(left<n&&sum==0)
+            {
+                if(flag==(n+m+1)/2-1)
+                {
+                    sum+=nums1[left];
+                    break;
+                }
+                left++;
+                flag++;
+            }
+            while(right<m&&sum==0)
+            {
+                if(flag==(n+m+1)/2-1)
+                {
+                    sum+=nums2[right];
+                    break;
+                }
+                right++;
+                flag++;
+            }
+            return sum;
+        }
+        else
+        {
+            while(left<n&&right<m)
+            {
+                if(flag==(n+m)/2-1)
+                {
+                    sum+=min(nums1[left],nums2[right]);
+                }
+                if(flag==(n+m)/2)
+                {
+                    sum+=min(nums1[left],nums2[right]);
+                    flag++;
+                    break;
+                }
+                if(nums1[left]<nums2[right])left++;
+                else right++;
+                flag++;
+            }
+            while(left<n&&flag<=(n+m)/2)
+            {
+                if(flag==(n+m)/2-1)
+                {
+                    sum+=nums1[left];
+                }
+                if(flag==(n+m)/2)
+                {
+                    sum+=nums1[left];
+                }
+                left++;
+                flag++;
+            }
+            while(right<m&&flag<=(n+m)/2)
+            {
+                if(flag==(n+m)/2-1)
+                {
+                    sum+=nums2[right];
+                }
+                if(flag==(n+m)/2)
+                {
+                    sum+=nums2[right];
+                }
+                right++;
+                flag++;
+            }
+            return sum/2;
+        }
+    }
+};
