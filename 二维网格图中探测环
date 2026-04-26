@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int dx[4]={1,-1,0,0};
+    int dy[4]={0,0,-1,1};
+    int n,m;
+    int dp[505][505]={false};
+    bool dfs(vector<vector<char>>& grid,int a,int b,int pa,int pb)
+    {
+        dp[a][b]=true;
+        for(int i=0;i<4;i++)
+        {
+            int x=a+dx[i];
+            int y=b+dy[i];
+            if((x!=pa||y!=pb)&&x>=0&&x<n&&y>=0&&y<m&&grid[x][y]==grid[a][b]&&(dp[x][y]||dfs(grid,x,y,a,b)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool containsCycle(vector<vector<char>>& grid) {
+        n=grid.size();
+        m=grid[0].size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(!dp[i][j]&&dfs(grid,i,j,-1,-1))return true;
+            }
+        }
+        return false;
+    }
+};
