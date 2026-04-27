@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int path[6][4]={{0,1,0,1},{1,0,1,0},{0,0,1,1},{0,1,1,0},{1,0,0,1},{1,1,0,0}};
+    int move[4][2]={{-1,0},{0,1},{1,0},{0,-1}};
+    bool dp[301][301]={false};
+    int n,m;
+    bool dfs(vector<vector<int>>& grid,int a,int b)
+    {
+        if(a==n-1&&b==m-1)return true;
+        dp[a][b]=true;
+        int k=grid[a][b]-1;
+        bool flag=false;
+        for(int i=0;i<4;i++)
+        {
+            if(path[k][i])
+            {
+                int x=a+move[i][0],y=b+move[i][1];
+                if(x>=0&&x<n&&y>=0&&y<m&&dp[x][y]==false)
+                {
+                    int t=grid[x][y]-1;
+                    if(path[t][(i+2)%4]) flag|=dfs(grid,x,y);
+                }
+            }
+        }
+        return flag;
+    }
+    bool hasValidPath(vector<vector<int>>& grid) {
+        n=grid.size();
+        m=grid[0].size();
+        return dfs(grid,0,0);
+    }
+};
