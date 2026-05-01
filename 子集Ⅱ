@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> ret;
+    vector<int> tmp;
+    void dfs(vector<int>& nums,int i)
+    {
+        if(i==nums.size())
+        {
+            ret.push_back(tmp);
+            return;
+        }
+        int x=nums[i];
+        tmp.push_back(x);
+        dfs(nums,i+1);
+        tmp.pop_back();
+        i++;
+        while(i<nums.size()&&nums[i]==x)i++;
+        dfs(nums,i);
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        dfs(nums,0);
+        return ret;
+    }
+};
