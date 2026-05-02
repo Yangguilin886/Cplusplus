@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int rotatedDigits(int n) {
+        int dp[10]={0,0,1,-1,-1,1,1,-1,0,1};
+        int sum=0;
+        for(int i=1;i<=n;i++)
+        {
+            string s=to_string(i);
+            bool flag1=true,flag2=false;
+            for(auto e:s)
+            {
+                if(dp[e-'0']==-1)flag1=false;
+                if(dp[e-'0']==1)flag2=true;
+            }
+            if(flag1&&flag2)sum++;
+        }
+        return sum;
+    }
+};
