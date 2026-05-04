@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<string> ret;
+    int path[4]={0};
+    void dfs(string s,int i,int j,int n)
+    {
+        if(i==s.size())
+        {
+            if(j==4)
+            {
+                ret.push_back(s.substr(0,path[0])+'.'+s.substr(path[0],path[1]-path[0])+'.'+s.substr(path[1],path[2]-path[1])+'.'+s.substr(path[2]));
+            }
+            return;
+        }
+        if(j==4)return;
+        n=n*10+(s[i]-'0');
+        if(n>255)return;
+        if(n>0)
+        {
+            dfs(s,i+1,j,n);
+        }
+        path[j]=i+1;
+        dfs(s,i+1,j+1,0);
+    }
+    vector<string> restoreIpAddresses(string s) {
+        dfs(s,0,0,0);
+        return ret;
+    }
+};
