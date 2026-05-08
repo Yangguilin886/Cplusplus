@@ -1,0 +1,50 @@
+const int t=1'000'001;
+vector<int> prime[t];
+int init = [] {
+    for (int i = 2; i < t; i++) {
+        if (prime[i].empty()) {
+            for (int j = i; j <t; j += i) { 
+                prime[j].push_back(i);
+            }
+        }
+    }
+    return 0;
+}();
+class Solution {
+public:
+    int minJumps(vector<int>& nums) {
+        int n=nums.size();
+        unordered_map<int,vector<int>> hs;
+        for(int i=0;i<n;i++)
+        {
+            for(int p:prime[nums[i]])
+            {
+                hs[p].push_back(i);
+            }
+        }
+        vector<bool> dp(n);
+        dp[0]=true;
+        vector<int> ret={0};
+        for(int cnt=0;;cnt++)
+        {
+            auto tmp=ret;
+            ret.clear();
+            for(int i:tmp)
+            {
+                if(i==n-1)return cnt;
+                auto& sum=hs[nums[i]];
+                sum.push_back(i+1);
+                if(i>0)sum.push_back(i-1);
+                for(int j:sum)
+                {
+                    if(!dp[j])
+                    {
+                        ret.push_back(j);
+                        dp[j]=true;
+                    }
+                }
+                sum.clear();
+            }
+        }
+    }
+};
