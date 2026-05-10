@@ -1,0 +1,88 @@
+class Solution {
+public:
+    void qs(vector<int>& ret,vector<int>& dp,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ret,dp,left,mid);
+        qs(ret,dp,mid+1,right);
+        int i=left,j=mid+1;
+        vector<int> tmp1(right-left+1);
+        vector<int> tmp2(right-left+1);
+        int m=0;
+        while(i<=mid&&j<=right)
+        {
+            if(ret[i]>ret[j])
+            {
+                tmp1[m]=ret[i];
+                tmp2[m++]=dp[i++];
+            }
+            else
+            {
+                tmp1[m]=ret[j];
+                tmp2[m++]=dp[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ret[i];
+            tmp2[m++]=dp[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ret[j];
+            tmp2[m++]=dp[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ret[left+i]=tmp1[i];
+            dp[left+i]=tmp2[i];
+        }
+    }
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        vector<int> ret;
+        vector<int> dp;
+        int left=0,right=0;
+        for(;right<nums.size();right++)
+        {
+            if(nums[right]!=nums[left])
+            {
+                if(ret.size()==k)
+                {
+                    qs(ret,dp,0,k-1);
+                    if(right-left>ret.back())
+                    {
+                        ret.pop_back();
+                        dp.pop_back();
+                        ret.push_back(right-left);
+                        dp.push_back(nums[left]);
+                    }
+                }
+                else
+                {
+                    ret.push_back(right-left);
+                    dp.push_back(nums[left]);
+                }
+                left=right;
+            }
+        }
+        if(ret.size()==k)
+        {
+            qs(ret,dp,0,k-1);
+            if(right-left>ret.back())
+            {
+                ret.pop_back();
+                dp.pop_back();
+                ret.push_back(right-left);
+                dp.push_back(nums[left]);
+            }
+        }
+        else
+        {
+            ret.push_back(right-left);
+            dp.push_back(nums[left]);
+        }
+        return dp;
+    }
+};
