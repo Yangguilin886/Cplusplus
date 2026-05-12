@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int minimumEffort(vector<vector<int>>& tasks) {
+        ranges::sort(tasks,{},[](auto& t)
+        {
+            return t[0]-t[1];
+        });
+        int ant=0;
+        int s=0;
+        for(auto& t:tasks)
+        {
+            int a=t[0],m=t[1];
+            ant=max(ant,s+m);
+            s+=a;
+        }
+        return ant;
+    }
+};
