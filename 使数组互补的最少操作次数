@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minMoves(vector<int>& nums, int limit) {
+        vector<int> dp(2*limit+2);
+        int n=nums.size();
+        for(int i=0;i<nums.size()/2;i++)
+        {
+            int A=nums[i],B=nums[n-1-i];
+            int l=2,r=2*limit;
+            dp[l]+=2;
+            dp[r+1]-=2;
+            l=min(A,B)+1;
+            r=max(A,B)+limit;
+            dp[l]+=-1;
+            dp[r+1]-=-1;
+            l=A+B;
+            r=A+B;
+            dp[l]+=-1;
+            dp[r+1]-=-1;
+        }
+        int ant=nums.size(),sum=0;
+        for(int i=2;i<=2*limit;i++)
+        {
+            sum+=dp[i];
+            if(sum<ant)ant=sum;
+        }
+        return ant;
+    }
+};
