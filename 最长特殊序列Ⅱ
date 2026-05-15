@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool f(string s,string t)
+    {
+        int i=0;
+        for(auto c:t)
+        {
+            if(s[i]==c&&++i==s.size())return true;
+        }
+        return false;
+    }
+    int findLUSlength(vector<string>& strs) {
+        int ant=-1;
+        int n=strs.size();
+        for(int i=0;i<n;i++)
+        {
+            if((int)strs[i].length()<=ant)continue;
+            int flag=0;
+            for(int j=0;j<n;j++)
+            {
+                if(j!=i&&f(strs[i],strs[j]))
+                {
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0)
+            {
+                ant=strs[i].length();
+            }
+        }
+        return ant;
+    }
+};
