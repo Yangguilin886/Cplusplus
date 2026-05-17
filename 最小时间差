@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findMinDifference(vector<string>& time) {
+        auto timesum=[](string& s)
+        {
+            return (s[0]-'0')*600+(s[1]-'0')*60+(s[3]-'0')*10+(s[4]-'0')*1;
+        };
+        auto mintime=[timesum](string& s1,string& s2)
+        {
+            int t1=timesum(s1);
+            int t2=timesum(s2);
+            int t=abs(abs(t1)-abs(t2));
+            return min(t,24*60-t);
+        };
+        sort(time.begin(),time.end());
+        if(time.size()==1)return 0;
+        int min_t=mintime(time[0],time[time.size()-1]);
+        for(int i=1;i<time.size();i++)
+        {
+            min_t=min(min_t,mintime(time[i],time[i-1]));
+        }
+        return min_t;
+    }
+};
