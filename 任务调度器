@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        if(n==0)return tasks.size();
+        vector<int> ret(26);
+        for(int i=0;i<tasks.size();i++)
+        {
+            ret[tasks[i]-'A']++;
+        }
+        sort(ret.begin(),ret.end());
+        int time=(ret[25]-1)*n+ret[25];
+        for(int i=0;i<25;i++)
+        {
+            if(ret[i]==ret[25])time++;
+        }
+        int m=tasks.size();
+        return max(time,m);
+    }
+};
