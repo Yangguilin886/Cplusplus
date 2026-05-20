@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        words.push_back("");
+        sort(words.begin(),words.end(),[](string& s1,string& s2)
+        {
+            if(s1.size()==s2.size())return s1<s2;
+            return s1.size()<s2.size();
+        });
+        unordered_map<string,int> hs;
+        hs[""]++;
+        string tmp;
+        for(int i=1;i<words.size();i++)
+        {
+            string s=words[i];
+            s.pop_back();
+            if(hs.count(s))
+            {
+                hs[words[i]]++;
+                if(words[i].size()>tmp.size())tmp=words[i];
+            }
+        }
+        return tmp;
+    }
+};
