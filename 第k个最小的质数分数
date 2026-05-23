@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
+        vector<double> ret;
+        unordered_map<double,vector<int>> hs;
+        for(int i=arr.size()-1;i>=0;i--)
+        {
+            for(int j=0;j<i;j++)
+            {
+                double x=arr[j]*1.0/arr[i];
+                ret.push_back(x);
+                hs[x].push_back(arr[j]);
+                hs[x].push_back(arr[i]);
+            }
+        }
+        sort(ret.begin(),ret.end(),[](double a,double b)
+        {
+            return a>b;
+        });
+        while(--k)
+        {
+            ret.pop_back();
+        }
+        return hs[ret.back()];
+    }
+};
