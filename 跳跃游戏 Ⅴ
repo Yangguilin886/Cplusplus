@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int n;
+    int dfs(vector<int>& dp,vector<int>& arr,int d,int i)
+    {
+        int& res=dp[i];
+        if(res)return res;
+        res=1;
+        for(int j=1;j<=d;j++)
+        {
+            if(i+j>=n||arr[i+j]>=arr[i])break;
+            res=max(res,dfs(dp,arr,d,i+j)+1);
+        }
+        for(int j=1;j<=d;j++)
+        {
+            if(i-j<0||arr[i-j]>=arr[i])break;
+            res=max(res,dfs(dp,arr,d,i-j)+1);
+        }
+        return res;
+    }
+    int maxJumps(vector<int>& arr, int d) {
+        vector<int> dp(arr.size());
+        n=arr.size();
+        int max_i=0;
+        for(int i=0;i<n;i++)
+        {
+            max_i=max(max_i,dfs(dp,arr,d,i));
+        }
+        return max_i;
+    }
+};
