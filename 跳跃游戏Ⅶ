@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool canReach(string s, int minJump, int maxJump) {
+        int n = s.size();
+        vector<int8_t> f(n);
+        vector<int> sum(n + 1); // f 的前缀和
+        f[0] = true;
+        sum[1] = 1;
+
+        for (int j = 1; j < n; j++) {
+            f[j] = j >= minJump && s[j] == '0' && sum[j - minJump + 1] > sum[max(j - maxJump, 0)];
+            sum[j + 1] = sum[j] + f[j];
+        }
+
+        return f[n - 1];
+    }
+};
