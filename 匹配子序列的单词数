@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+        sort(words.begin(),words.end(),[](string a,string b)
+        {
+            return a<b;
+        });
+        unordered_map<string,int> hs;
+        vector<string> ret;
+        for(int i=0;i<words.size();i++)
+        {
+            if(!hs.count(words[i]))
+            {
+                ret.push_back(words[i]);
+            }
+            hs[words[i]]++;
+        }
+        int sum=0;
+        for(int i=0;i<ret.size();i++)
+        {
+            int left=0,right=0;
+            while(left<s.size()&&right<ret[i].size())
+            {
+                if(s[left]==ret[i][right])
+                {
+                    right++;
+                }
+                left++;
+            }
+            if(right==ret[i].size())sum+=hs[ret[i]];
+        }
+        return sum;
+    }
+};
