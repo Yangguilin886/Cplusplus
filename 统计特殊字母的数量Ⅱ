@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int numberOfSpecialChars(string s) {
+        unordered_map<char,int> hs; 
+        int sum=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]>='a'&&s[i]<='z')
+            {
+                hs[s[i]]++;
+            }
+        }
+        unordered_map<char,int> ret;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]>='a'&&s[i]<='z')hs[s[i]]--;
+            else
+            {
+                if(!ret.count(s[i])&&hs.count(s[i]+32)&&hs[s[i]+32]==0)
+                {
+                    sum++;
+                }
+                ret[s[i]]++;
+            }
+        }
+        return sum;
+    }
+};
