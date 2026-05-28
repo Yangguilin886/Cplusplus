@@ -1,0 +1,58 @@
+class Solution {
+public:
+    void qs(vector<int>& dif, vector<int>& pro,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(dif,pro,left,mid);
+        qs(dif,pro,mid+1,right);
+        int i=left,j=mid+1;
+        int m=0;
+        vector<int> tmp1(right-left+1);
+        vector<int> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(dif[i]<dif[j])
+            {
+                tmp1[m]=dif[i];
+                tmp2[m++]=pro[i++];
+            }
+            else
+            {
+                tmp1[m]=dif[j];
+                tmp2[m++]=pro[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=dif[i];
+            tmp2[m++]=pro[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=dif[j];
+            tmp2[m++]=pro[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            dif[i+left]=tmp1[i];
+            pro[i+left]=tmp2[i];
+        }
+    }
+    int maxProfitAssignment(vector<int>& dif, vector<int>& pro, vector<int>& work) {
+        int n=dif.size();
+        sort(work.begin(),work.end());
+        qs(dif,pro,0,n-1);
+        int ant=0,j=0,max_i=0;
+        for(int i=0;i<work.size();i++)
+        {
+            while(j<n&&dif[j]<=work[i])
+            {
+                max_i=max(max_i,pro[j]);
+                j++;
+            }
+            ant+=max_i;
+        }
+        return ant;
+    }
+};
