@@ -1,0 +1,81 @@
+class Solution {
+public:
+    void qs(vector<int>& ind, vector<string>& sou, vector<string>& targets,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ind,sou,targets,left,mid);
+        qs(ind,sou,targets,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<int> tmp1(right-left+1);
+        vector<string> tmp2(right-left+1);
+        vector<string> tmp3(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(ind[i]<ind[j])
+            {
+                tmp1[m]=ind[i];
+                tmp2[m]=sou[i];
+                tmp3[m++]=targets[i++];
+            }
+            else
+            {
+                tmp1[m]=ind[j];
+                tmp2[m]=sou[j];
+                tmp3[m++]=targets[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ind[i];
+            tmp2[m]=sou[i];
+            tmp3[m++]=targets[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ind[j];
+            tmp2[m]=sou[j];
+            tmp3[m++]=targets[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ind[i+left]=tmp1[i];
+            sou[i+left]=tmp2[i];
+            targets[i+left]=tmp3[i];
+        }
+    }
+    string findReplaceString(string s, vector<int>& ind, vector<string>& sou, vector<string>& targets) {
+        int n=ind.size();
+        qs(ind,sou,targets,0,n-1);
+        string tmp;
+        int pt=0;
+        for(int i=0;i<s.size();)
+        {
+            while(pt<n&&ind[pt]<i)
+            {
+                pt++;
+            }
+            bool flag=false;
+            while(pt<n&&ind[pt]==i)
+            {
+                if(s.substr(i,sou[pt].size())==sou[pt])
+                {
+                    flag=true;
+                    break;
+                }
+                ++pt;
+            }
+            if(flag)
+            {
+                tmp+=targets[pt];
+                i+=sou[pt].size();
+            }
+            else
+            {
+                tmp+=s[i];
+                i++;
+            }
+        }
+        return tmp;
+    }
+};
