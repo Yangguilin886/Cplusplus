@@ -1,0 +1,77 @@
+class Solution {
+public:
+    void qs(vector<int>& ret,vector<int>& nums,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ret,nums,left,mid);
+        qs(ret,nums,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<int> tmp1(right-left+1);
+        vector<int> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(ret[i]<ret[j])
+            {
+                tmp1[m]=ret[i];
+                tmp2[m++]=nums[i++];
+            }
+            else
+            {
+                tmp1[m]=ret[j];
+                tmp2[m++]=nums[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ret[i];
+            tmp2[m++]=nums[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ret[j];
+            tmp2[m++]=nums[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ret[i+left]=tmp1[i];
+            nums[i+left]=tmp2[i];
+        }
+    }
+    int earliestFinishTime(vector<int>& nums1, vector<int>& nums2, vector<int>& ret1, vector<int>& ret2) {
+        qs(nums1,nums2,0,nums1.size()-1);
+        qs(ret1,ret2,0,ret1.size()-1);
+        int min_i=INT_MAX;
+        for(int i=0;i<nums1.size();i++)
+        {
+            int m=nums1[i]+nums2[i];
+            for(int j=0;j<ret1.size();j++)
+            {
+                if(ret1[j]<m)
+                {
+                    min_i=min(min_i,m+ret2[j]);
+                }
+                else
+                {
+                    min_i=min(min_i,ret1[j]+ret2[j]);
+                }
+            }
+        }
+        for(int i=0;i<ret1.size();i++)
+        {
+            int m=ret1[i]+ret2[i];
+            for(int j=0;j<nums1.size();j++)
+            {
+                if(nums1[j]<m)
+                {
+                    min_i=min(min_i,m+nums2[j]);
+                }
+                else
+                {
+                    min_i=min(min_i,nums1[j]+nums2[j]);
+                }
+            }
+        }
+        return min_i;
+    }
+};
