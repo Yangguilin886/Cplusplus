@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long totalWaviness(long long num1, long long num2) {
+        long long sum=0;
+        if(num1<101)num1=101;
+        for(int i=num1;i<=num2;i++)
+        {
+            string s=to_string(i);
+            int left=1,right=s.size()-2;
+            while(left<right)
+            {
+                if(s[left]>s[left+1]&&s[left]>s[left-1])sum++;
+                if(s[left]<s[left+1]&&s[left]<s[left-1])sum++;
+                if(s[right]>s[right+1]&&s[right]>s[right-1])sum++;
+                if(s[right]<s[right-1]&&s[right]<s[right+1])sum++;
+                left++;
+                right--;
+            }
+            if(left==right)
+            {
+                if(s[left]>s[left+1]&&s[left]>s[left-1])sum++;
+                if(s[left]<s[left+1]&&s[left]<s[left-1])sum++;
+            }
+        }
+        return sum;
+    }
+};
