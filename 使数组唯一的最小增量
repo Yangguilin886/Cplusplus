@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int sum=0;
+        unordered_map<int,int> hs;
+        int flag=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            int m=nums[i];
+            if(!hs.count(m))
+            {
+                hs[m]++;
+                flag=m;
+            }
+            else
+            {
+                sum+=flag-m+1;
+                hs[flag+1]++;
+                flag++;
+            }
+        }
+        return sum;
+    }
+};
