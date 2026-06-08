@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool canReorderDoubled(vector<int>& arr) {
+        unordered_map<int,int> hs;
+        int n=arr.size();
+        for(int i=0;i<n;i++)
+        {
+            hs[arr[i]]++;
+        }
+        sort(arr.begin(),arr.end());
+        int flag=0;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]>0)
+            {
+                flag=i;
+                break;
+            }
+        }
+        if(arr[n-1]<0)flag=n;
+        for(int i=flag;i<n;i++)
+        {
+            if(hs[arr[i]]==0)continue;
+            hs[arr[i]]--;
+            if(hs[arr[i]*2]>0)
+            {
+                hs[arr[i]*2]--;
+            }
+            else return false;
+        }
+        for(int i=flag-1;i>=0;i--)
+        {
+            if(hs[arr[i]]==0)continue;
+            hs[arr[i]]--;
+            if(hs[arr[i]*2]>0)
+            {
+                hs[arr[i]*2]--;
+            }
+            else return false;
+        }
+        return true;
+    }
+};
