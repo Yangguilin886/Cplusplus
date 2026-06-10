@@ -1,0 +1,56 @@
+class Solution {
+public:
+    void qs(vector<double>& ret,vector<vector<int>>& nums,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ret,nums,left,mid);
+        qs(ret,nums,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<double> tmp1(right-left+1);
+        vector<vector<int>> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(ret[i]<ret[j])
+            {
+                tmp1[m]=ret[i];
+                tmp2[m++]=nums[i++];
+            }
+            else
+            {
+                tmp1[m]=ret[j];
+                tmp2[m++]=nums[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ret[i];
+            tmp2[m++]=nums[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ret[j];
+            tmp2[m++]=nums[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ret[i+left]=tmp1[i];
+            nums[i+left]=tmp2[i];
+        }
+    }
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        vector<double> ret;
+        for(int i=0;i<points.size();i++)
+        {
+            int x=points[i][0],y=points[i][1];
+            ret.push_back(sqrt(x*x+y*y));
+        }
+        qs(ret,points,0,points.size()-1);
+        vector<vector<int>> tmp;
+        for(int i=0;i<k;i++)
+        {
+            tmp.push_back(points[i]);
+        }
+        return tmp;
+    }
+};
