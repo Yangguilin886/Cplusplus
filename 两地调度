@@ -1,0 +1,84 @@
+class Solution {
+public:
+    void qs(vector<int>& ret,vector<vector<int>>& nums,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ret,nums,left,mid);
+        qs(ret,nums,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<int> tmp1(right-left+1);
+        vector<vector<int>> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(ret[i]>ret[j])
+            {
+                tmp1[m]=ret[i];
+                tmp2[m++]=nums[i++];
+            }
+            else
+            {
+                tmp1[m]=ret[j];
+                tmp2[m++]=nums[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ret[i];
+            tmp2[m++]=nums[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ret[j];
+            tmp2[m++]=nums[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ret[i+left]=tmp1[i];
+            nums[i+left]=tmp2[i];
+        }
+    }
+    int twoCitySchedCost(vector<vector<int>>& costs) {
+        int n=costs.size();
+        vector<int> ret;
+        for(int i=0;i<n;i++)
+        {
+            int x=abs(costs[i][0]-costs[i][1]);
+            ret.push_back(x);
+        }
+        qs(ret,costs,0,n-1);
+        int left=0,right=0;
+        int sum=0;
+        int flag=n/2;
+        for(int i=0;i<n;i++)
+        {
+            if(costs[i][0]>costs[i][1])
+            {
+                if(right<flag)
+                {
+                    right++;
+                    sum+=costs[i][1];
+                }
+                else
+                {
+                    left++;
+                    sum+=costs[i][0];
+                }
+            }
+            else
+            {
+                if(left<flag)
+                {
+                    left++;
+                    sum+=costs[i][0];
+                }
+                else
+                {
+                    right++;
+                    sum+=costs[i][1];
+                }
+            }
+        }
+        return sum;
+    }
+};
