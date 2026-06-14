@@ -1,0 +1,58 @@
+class Solution {
+public:
+    void qs(vector<int>& nums,vector<vector<int>>& ret,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(nums,ret,left,mid);
+        qs(nums,ret,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<int> tmp1(right-left+1);
+        vector<vector<int>> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(nums[i]<nums[j])
+            {
+                tmp1[m]=nums[i];
+                tmp2[m++]=ret[i++];
+            }
+            else
+            {
+                tmp1[m]=nums[j];
+                tmp2[m++]=ret[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=nums[i];
+            tmp2[m++]=ret[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=nums[j];
+            tmp2[m++]=ret[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            nums[i+left]=tmp1[i];
+            ret[i+left]=tmp2[i];
+        }
+    }
+    vector<vector<int>> allCellsDistOrder(int rows, int cols, int r, int c) {
+        vector<vector<int>> ret;
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                ret.push_back({i,j});
+            }
+        }
+        vector<int> nums;
+        for(int i=0;i<ret.size();i++)
+        {
+            nums.push_back(abs(r-ret[i][0])+abs(c-ret[i][1]));
+        }
+        qs(nums,ret,0,ret.size()-1);
+        return ret;
+    }
+};
