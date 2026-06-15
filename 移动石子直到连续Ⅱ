@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> numMovesStonesII(vector<int>& s) {
+        sort(s.begin(),s.end());
+        int n=s.size();
+        int e1=s[n-1]-s[1]-n+2;
+        int e2=s[n-2]-s[0]-n+2;
+        int max_i=max(e1,e2);
+        if(e1==0||e2==0)
+        {
+            return {min(max_i,2),max_i};
+        }
+        int max_s=0,left=0;
+        for(int right=0;right<n;right++)
+        {
+            while(s[right]-s[left]+1>n)
+            {
+                left++;
+            }
+            max_s=max(max_s,right-left+1);
+        }
+        return {n-max_s,max_i};
+    }
+};
