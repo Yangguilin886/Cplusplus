@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxNumberOfBalloons(string text) {
+        unordered_map<char,int> hs;
+        for(int i=0;i<text.size();i++)
+        {
+            hs[text[i]]++;
+        }
+        int min_i=INT_MAX;
+        string s="balon";
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='l'||s[i]=='o')
+            {
+                min_i=min(min_i,hs[s[i]]/2);
+            }
+            else min_i=min(min_i,hs[s[i]]);
+        }
+        return min_i;
+    }
+};
