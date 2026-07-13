@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        string s="123456789";
+        int m=0,n=0;
+        int a=low,b=high;
+        while(a>0)
+        {
+            m++;
+            a/=10;
+        }
+        while(b>0)
+        {
+            n++;
+            b/=10;
+        }
+        vector<int> ret;
+        for(int i=m;i<=n;i++)
+        {
+            for(int left=0,right=0;right<s.size();right++)
+            {
+                if(right-left+1>i)left++;
+                if(right-left+1<i)continue;
+                string tmp=s.substr(left,right-left+1);
+                int x=stoi(tmp);
+                if(x>=low&&x<=high)ret.push_back(x);
+                left++;
+            }
+        }
+        return ret;
+    }
+};
