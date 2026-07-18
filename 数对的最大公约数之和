@@ -1,0 +1,24 @@
+class Solution {
+public:
+    long long gcdSum(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n+1);
+        for(int i=1;i<=n;i++)
+        {
+            dp[i]=max(dp[i-1],nums[i-1]);
+        }
+        vector<int> ret(n);
+        for(int i=0;i<n;i++)
+        {
+            ret[i]=gcd(nums[i],dp[i+1]);
+        }
+        sort(ret.begin(),ret.end());
+        int left=0,right=n-1;
+        long long sum=0;
+        while(left<right)
+        {
+            sum+=gcd(ret[left++],ret[right--]);
+        }
+        return sum;
+    }
+};
