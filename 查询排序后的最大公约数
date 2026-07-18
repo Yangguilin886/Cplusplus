@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int func(int x,int y)
+    {
+        if(y==0)return x;
+        return func(y,x%y);
+    }
+    vector<int> gcdValues(vector<int>& nums, vector<long long>& queries) {
+        vector<int> ret;
+        for(int i=1;i<nums.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                ret.push_back(func(nums[i],nums[j]));
+            }
+        }
+        sort(ret.begin(),ret.end());
+        vector<int> dp;
+        for(int i=0;i<queries.size();i++)
+        {
+            dp.push_back(ret[queries[i]]);
+        }
+        return dp;
+    }
+};
