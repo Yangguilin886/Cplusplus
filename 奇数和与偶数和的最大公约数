@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int gcdOfOddEvenSums(int n) {
+        int x=0,y=0;
+        int a=1,b=2;
+        for(int i=0;i<n;i++)
+        {
+            x+=a;
+            y+=b;
+            a+=2;
+            b+=2;
+        }
+        return gcd(x,y);
+    }
+};
