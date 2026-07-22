@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string smallestSubsequence(string s) {
+        vector<int> dp(26);
+        for(int i=0;i<s.size();i++)
+        {
+            dp[s[i]-'a']++;
+        }
+        vector<bool> tmp(26);
+        string ret;
+        for(auto x:s)
+        {
+            dp[x-'a']--;
+            if(tmp[x-'a'])continue;
+            while(!ret.empty()&&x<ret.back()&&dp[ret.back()-'a'])
+            {
+                tmp[ret.back()-'a']=false;
+                ret.pop_back();
+            }
+            ret+=x;
+            tmp[x-'a']=true;
+        } 
+        return ret;
+    }
+};
