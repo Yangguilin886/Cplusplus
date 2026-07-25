@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        int m=0;
+        for(int i=0;i<trips.size();i++)
+        {
+            m=max(m,trips[i][2]);
+        }
+        vector<int> dp(m+1);
+        for(int i=0;i<trips.size();i++)
+        {
+            for(int j=trips[i][1];j<trips[i][2];j++)
+            {
+                dp[j]+=trips[i][0];
+            }
+        }
+        for(int i=0;i<dp.size();i++)
+        {
+            if(dp[i]>capacity)return false;
+        }
+        return true;
+    }
+};
