@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minimumPushes(string word) {
+        vector<int> ret(26);
+        for(int i=0;i<word.size();i++)
+        {
+            ret[word[i]-'a']++;
+        }
+        sort(ret.begin(),ret.end());
+        int flag=8;
+        int sum=0;
+        for(int i=25;i>=0;i--)
+        {
+            if(ret[i]!=0)
+            {
+                sum+=ret[i]*(flag/8);
+                flag++;
+            }
+        }
+        return sum;
+    }
+};
