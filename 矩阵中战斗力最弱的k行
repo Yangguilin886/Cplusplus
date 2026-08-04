@@ -1,0 +1,63 @@
+class Solution {
+public:
+    void qs(vector<int>& ret,vector<int>& dp,int left,int right)
+    {
+        if(left>=right)return;
+        int mid=(left+right)/2;
+        qs(ret,dp,left,mid);
+        qs(ret,dp,mid+1,right);
+        int i=left,j=mid+1,m=0;
+        vector<int> tmp1(right-left+1);
+        vector<int> tmp2(right-left+1);
+        while(i<=mid&&j<=right)
+        {
+            if(ret[i]<=ret[j])
+            {
+                tmp1[m]=ret[i];
+                tmp2[m++]=dp[i++];
+            }
+            else
+            {
+                tmp1[m]=ret[j];
+                tmp2[m++]=dp[j++];
+            }
+        }
+        while(i<=mid)
+        {
+            tmp1[m]=ret[i];
+            tmp2[m++]=dp[i++];
+        }
+        while(j<=right)
+        {
+            tmp1[m]=ret[j];
+            tmp2[m++]=dp[j++];
+        }
+        for(int i=0;i<m;i++)
+        {
+            ret[i+left]=tmp1[i];
+            dp[i+left]=tmp2[i];
+        }
+    }
+    vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
+        int n=mat.size();
+        vector<int> ret(n);
+        vector<int> dp(n);
+        for(int i=0;i<n;i++)
+        {
+            dp[i]=i;
+        }
+        for(int i=0;i<n;i++)
+        {
+            int m=0;
+            for(int j=0;j<mat[i].size();j++)
+            {
+                if(mat[i][j]==0)break;
+                m++;
+            }
+            ret[i]=m;
+        }
+        qs(ret,dp,0,n-1);
+        vector<int> tmp(dp.begin(),dp.begin()+k);
+        return tmp;
+    }
+};
