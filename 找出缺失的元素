@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> findMissingElements(vector<int>& nums) {
+        unordered_map<int,int> dp;
+        int max_i=0,min_i=INT_MAX;
+        for(int i=0;i<nums.size();i++)
+        {
+            max_i=max(max_i,nums[i]);
+            min_i=min(min_i,nums[i]);
+            dp[nums[i]]++;
+        }
+        vector<int> ret;
+        for(int i=min_i;i<=max_i;i++)
+        {
+            if(!dp.count(i))ret.push_back(i);
+        }
+        return ret;
+    }
+};
