@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int smallestNumber(int n, int t) {
+        for(int i=n;i<=INT_MAX;i++)
+        {
+            int m=1;
+            int x=i;
+            while(x>0)
+            {
+                int y=x%10;
+                if(y==0)return i;
+                m*=y;
+                x/=10;
+            }
+            if(m%t==0)return i;
+        }
+        return 0;
+    }
+};
