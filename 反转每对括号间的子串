@@ -1,0 +1,43 @@
+class Solution {
+public:
+    void func(stack<char>& qs)
+    {
+        string s;
+        while(qs.top()!='(')
+        {
+            s+=qs.top();
+            qs.pop();
+        }
+        qs.pop();
+        for(int i=0;i<s.size();i++)
+        {
+            qs.push(s[i]);
+        }
+    }
+    string reverseParentheses(string s) {
+        stack<char> qs;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]==')')
+            {
+                func(qs);
+            }
+            else
+            {
+                qs.push(s[i]);
+            }
+        }
+        string tmp;
+        while(!qs.empty())
+        {
+            tmp+=qs.top();
+            qs.pop();
+        }
+        int left=0,right=tmp.size()-1;
+        while(left<right)
+        {
+            swap(tmp[left++],tmp[right--]);
+        }
+        return tmp;
+    }
+};
