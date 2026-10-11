@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minInsertions(string s) {
+        int i=0;
+        int sum=0;
+        int n=s.size();
+        stack<char> qs;
+        while(i<n)
+        {
+            if(s[i]=='(')
+            {
+                qs.push(s[i]);
+                i++;
+            }
+            else
+            {
+                if(!qs.empty())qs.pop();
+                else sum++;
+                if(i<n-1&&s[i+1]==')')i+=2;
+                else
+                {
+                    i++;
+                    sum++;
+                }
+            }
+        }
+        if(!qs.empty())sum+=qs.size()*2;
+        return sum;
+    }
+};
