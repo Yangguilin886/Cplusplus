@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        int sum=0;
+        stack<char> qs;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='(')qs.push(s[i]);
+            else
+            {
+                if(qs.empty())sum++;
+                else qs.pop();
+            }
+        }
+        if(!qs.empty())sum+=qs.size();
+        return sum;
+    }
+};
