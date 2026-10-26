@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int dx[4]={1,0,-1,0};
+    int dy[4]={0,1,0,-1};
+    void dfs(vector<vector<int>>& grid,vector<vector<bool>>& ret,int a,int b)
+    {
+        ret[a][b]=true;
+        for(int i=0;i<4;i++)
+        {
+            int x=dx[i]+a;
+            int y=dy[i]+b;
+            if(x>=0&&x<grid.size()&&y>=0&&y<grid[0].size()&&grid[x][y]!=1&&!ret[x][y])
+            {
+                dfs(grid,ret,x,y);
+            }
+        }
+    }
+    int closedIsland(vector<vector<int>>& grid) {
+        vector<vector<bool>> ret(grid.size(),vector<bool>(grid[0].size()));
+        int n=grid.size(),m=grid[0].size();
+        for(int i=0;i<n;i++)
+        {
+            if(grid[i][0]!=1&&!ret[i][0])dfs(grid,ret,i,0);
+            if(grid[i][m-1]!=1&&!ret[i][m-1])dfs(grid,ret,i,m-1);
+        }
+        for(int i=0;i<m;i++)
+        {
+            if(grid[0][i]!=1&&!ret[0][i])dfs(grid,ret,0,i);
+            if(grid[n-1][i]!=1&&!ret[n-1][i])dfs(grid,ret,n-1,i);
+        }
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]!=1&&!ret[i][j])
+                {
+                    sum++;
+                    dfs(grid,ret,i,j);
+                }
+            }
+        }
+        return sum;
+    }
+};
