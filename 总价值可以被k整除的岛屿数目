@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int dx[4]={1,0,-1,0};
+    int dy[4]={0,1,0,-1};
+    void dfs(vector<vector<int>>&grid,vector<vector<bool>>& ret,int a,int b,long long& n)
+    {
+        ret[a][b]=true;
+        n+=grid[a][b];
+        for(int i=0;i<4;i++)
+        {
+            int x=a+dx[i];
+            int y=b+dy[i];
+            if(x>=0&&x<grid.size()&&y>=0&&y<grid[0].size()&&grid[x][y]!=0&&!ret[x][y])
+            {
+                dfs(grid,ret,x,y,n);
+            }
+        }
+    }
+    int countIslands(vector<vector<int>>& grid, int k) {
+        vector<vector<bool>> ret(grid.size(),vector<bool>(grid[0].size()));
+        int m=0;
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[i].size();j++)
+            {
+                if(grid[i][j]!=0&&!ret[i][j])
+                {
+                    long long n=0;
+                    dfs(grid,ret,i,j,n);
+                    if(n%k==0)m++;
+                }
+            }
+        }
+        return m;
+    }
+};
