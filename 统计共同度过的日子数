@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int dx[13]={0,31,59,90,120,151,181,212,243,273,304,334,365};
+    int Get_day(string s)
+    {
+        int x=(s[0]-'0')*10+(s[1]-'0');
+        int y=(s[3]-'0')*10+(s[4]-'0');
+        return dx[x-1]+y;
+    }
+    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
+        int left=Get_day(max(arriveAlice,arriveBob));
+        int right=Get_day(min(leaveAlice,leaveBob));
+        return max(0,right-left+1);
+    }
+};
