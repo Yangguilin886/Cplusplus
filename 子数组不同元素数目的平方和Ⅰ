@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int sumCounts(vector<int>& nums) {
+        int n=nums.size();
+        int sum=0;
+        vector<vector<int>> ret(n,vector<int>(n));
+        for(int i=0;i<n;i++)
+        {
+            int x=0;
+            int dx[101]={0};
+            for(int j=i;j<n;j++)
+            {
+                if(dx[nums[j]]==0)
+                {
+                    dx[nums[j]]++;
+                    x++;
+                }
+                ret[i][j]=x;
+                sum+=x*x;
+            }
+        }
+        return sum;
+    }
+};
