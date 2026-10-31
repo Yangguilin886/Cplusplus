@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string toHex(int num) {
+        if(num==0)return "0";
+        string s="0123456789abcdef";
+        unsigned int n=num;
+        string tmp;
+        while(n>0)
+        {
+            tmp+=s[n%16];
+            n/=16;
+        }
+        int left=0,right=tmp.size()-1;
+        while(left<right)
+        {
+            swap(tmp[left++],tmp[right--]);
+        }
+        return tmp;
+    }
+};
