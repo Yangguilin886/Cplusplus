@@ -1,0 +1,59 @@
+class Solution {
+public:
+    bool isTree(TreeNode* root,int n,int flag)
+    {
+        if(root==nullptr)return true;
+        if(flag&&root->val>=n)
+        {
+            return false;
+        }
+        if(flag==0&&root->val<=n)
+        {
+            return false;
+        }
+        return isTree(root->left,n,flag)&&isTree(root->right,n,flag);
+    }
+    void prevTree(TreeNode* root,int& flag)
+    {
+        if(root==nullptr)return;
+        if(!isTree(root->left,root->val,1))
+        {
+            flag=0;
+        }
+        if(!isTree(root->right,root->val,0))
+        {
+            flag=0;
+        }
+        prevTree(root->left,flag);
+        prevTree(root->right,flag);
+    }
+    bool isValidBST(TreeNode* root) {
+        int flag=1;
+        prevTree(root,flag);
+        return flag;
+    }
+};
+//方法二
+class Solution {
+public:
+    int n=INT_MIN;
+    int m=0;
+    void prevTree(TreeNode* root, int& flag)
+    {
+        if(root==nullptr)return ;
+        prevTree(root->left,flag);
+        if(m&&root->val<=n)
+        {
+            flag=0;
+            return;
+        }
+        n=root->val;
+        m++;
+        prevTree(root->right,flag);
+    }
+    bool isValidBST(TreeNode* root) {
+        int flag=1;
+        prevTree(root,flag);
+        return flag;
+    }
+};
